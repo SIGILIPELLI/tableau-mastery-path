@@ -1,0 +1,100 @@
+site_name: Tableau Mastery Path
+site_description: A structured, module-wise Tableau training program from entry level to master level, covering visualizations, dashboards, calculated fields, and enterprise BI strategy.
+site_url: https://sigilipelli.github.io/tableau-mastery-path/
+repo_url: https://github.com/SIGILIPELLI/tableau-mastery-path
+repo_name: tableau-mastery-path
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Privacy Policy: privacy-policy.md
+  - "Level 1 · Entry":
+      - Overview: level-1/index.md
+      - "01 · What Is Tableau?": level-1/01-what-is-tableau.md
+      - "02 · Connecting to Data Sources": level-1/02-connecting-data-sources.md
+      - "03 · Building Your First Visualization": level-1/03-first-visualization.md
+      - "04 · Chart Types & When to Use Them": level-1/04-chart-types.md
+      - "05 · Building Dashboards Basics": level-1/05-dashboards-basics.md
+      - "06 · Calculated Fields Basics": level-1/06-calculated-fields-basics.md
+      - "07 · Filters & Parameters": level-1/07-filters-parameters.md
+      - "08 · Table Calculations Basics": level-1/08-table-calculations-basics.md
+      - "09 · Maps & Geographic Data": level-1/09-maps-geographic-data.md
+      - "10 · Project — Sales Performance Dashboard": level-1/10-project-sales-performance-dashboard.md
+  - "Level 2 · Intermediate":
+      - Overview: level-2/index.md
+      - "01 · Advanced Calculated Fields": level-2/01-advanced-calculated-fields.md
+      - "02 · Advanced Dashboard Design & Interactivity": level-2/02-advanced-dashboard-design.md
+      - "03 · Data Blending vs Joins vs Relationships": level-2/03-blending-joins-relationships.md
+      - "04 · Advanced Table Calculations": level-2/04-advanced-table-calculations.md
+      - "05 · Formatting & Storytelling with Data": level-2/05-formatting-storytelling.md
+      - "06 · Tableau Prep Basics": level-2/06-tableau-prep-basics.md
+      - "07 · Working with Multiple Data Sources": level-2/07-multiple-data-sources.md
+      - "08 · Performance Optimization Basics": level-2/08-performance-optimization-basics.md
+      - "09 · Publishing to Tableau Public/Server": level-2/09-publishing-tableau-public-server.md
+      - "10 · Project — Multi-Source Executive Dashboard": level-2/10-project-executive-dashboard.md
+  - "Level 3 · Advanced":
+      - Overview: level-3/index.md
+      - "01 · Advanced LOD Expressions": level-3/01-advanced-lod-expressions.md
+      - "02 · Tableau Server/Cloud Administration Basics": level-3/02-server-cloud-administration.md
+      - "03 · Row-Level Security": level-3/03-row-level-security.md
+      - "04 · Advanced Tableau Prep Workflows": level-3/04-advanced-prep-workflows.md
+      - "05 · Custom Visualizations & Extensions Overview": level-3/05-custom-visualizations-extensions.md
+      - "06 · Advanced Performance Tuning": level-3/06-advanced-performance-tuning.md
+      - "07 · Integrating Tableau with Databases at Scale": level-3/07-databases-at-scale.md
+      - "08 · Governance & Data Source Certification": level-3/08-governance-certification.md
+      - "09 · Embedding Tableau Dashboards": level-3/09-embedding-dashboards.md
+      - "10 · Project — Enterprise Dashboard with Row-Level Security": level-3/10-project-enterprise-dashboard-rls.md
+  - "Level 4 · Master":
+      - Overview: level-4/index.md
+      - "01 · Enterprise Tableau Architecture": level-4/01-enterprise-architecture.md
+      - "02 · Building a BI Center of Excellence": level-4/02-bi-center-of-excellence.md
+      - "03 · Advanced Governance & Content Strategy": level-4/03-advanced-governance-content-strategy.md
+      - "04 · Tableau + Advanced Analytics Integration": level-4/04-advanced-analytics-integration.md
+      - "05 · Scaling Tableau Server Deployments": level-4/05-scaling-server-deployments.md
+      - "06 · Data Strategy & Self-Service BI Enablement": level-4/06-data-strategy-self-service-bi.md
+      - "07 · Advanced Embedding & Tableau Extensions API Overview": level-4/07-advanced-embedding-extensions-api.md
+      - "08 · Cost & License Management at Scale": level-4/08-cost-license-management.md
+      - "09 · Career Growth: Analyst to BI Leader": level-4/09-career-growth-analyst-to-bi-leader.md
+      - "10 · Capstone — Full BI Program Design": level-4/10-capstone-full-bi-program-design.md
