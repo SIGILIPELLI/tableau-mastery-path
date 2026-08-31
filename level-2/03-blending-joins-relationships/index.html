@@ -92,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#02-data-blending-vs-joins-vs-relationships" class="md-skip">
+        <a href="#03-data-blending-vs-joins-vs-relationships" class="md-skip">
           Skip to content
         </a>
       
@@ -998,6 +998,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Data Blending vs Joins vs Relationships
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1014,6 +1032,113 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-two-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The two tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-joins-physical-single-table-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Joins (physical, single-table result)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-relationships-default-noeditable-double-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Relationships (default, noeditable double line)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-data-blending-separate-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Data blending (separate data sources)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-choosing-among-the-three" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Choosing among the three
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-verifying-with-hand-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Verifying with hand arithmetic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2116,102 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-two-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The two tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-joins-physical-single-table-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Joins (physical, single-table result)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-relationships-default-noeditable-double-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Relationships (default, noeditable double line)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-data-blending-separate-data-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Data blending (separate data sources)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-choosing-among-the-three" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Choosing among the three
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-verifying-with-hand-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Verifying with hand arithmetic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2009,9 +2230,164 @@
   
 
 
-<h1 id="02-data-blending-vs-joins-vs-relationships">02 · Data Blending vs Joins vs Relationships<a class="headerlink" href="#02-data-blending-vs-joins-vs-relationships" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<h1 id="03-data-blending-vs-joins-vs-relationships">03 · Data Blending vs Joins vs Relationships<a class="headerlink" href="#03-data-blending-vs-joins-vs-relationships" title="Permanent link">&para;</a></h1>
+<p>Level 1 used one flat <code>Orders</code> table. Real projects split data across
+tables — this module covers the three ways Tableau combines them, using a
+second table, <code>Reps</code> (sales reps by Region), alongside <code>Orders</code>.</p>
+<h2 id="1-the-two-tables">1. The two tables<a class="headerlink" href="#1-the-two-tables" title="Permanent link">&para;</a></h2>
+<p><code>Orders</code> (from Level 1 Module 1, 8 rows) and a new lookup table <code>Reps</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>Rep Name</th>
+<th>Rep Quota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>East</td>
+<td>Alice</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>West</td>
+<td>Bob</td>
+<td>3000</td>
+</tr>
+<tr>
+<td>Central</td>
+<td>Carol</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>Both share the <code>Region</code> field — the join/relationship key throughout this
+module.</p>
+<h2 id="2-joins-physical-single-table-result">2. Joins (physical, single-table result)<a class="headerlink" href="#2-joins-physical-single-table-result" title="Permanent link">&para;</a></h2>
+<ol>
+<li>On the Data Source page, drag both tables onto the canvas; Tableau
+   defaults to a <strong>relationship</strong> (Section 3) — click the join icon between
+   them to instead configure a physical <strong>join</strong>: Inner, Left, Right, or
+   Full Outer, matched on <code>Region = Region</code>.</li>
+<li><strong>Inner join</strong>: keeps only rows where Region exists in both tables.
+   Since all three Regions (East, West, Central) exist in both <code>Orders</code> and
+   <code>Reps</code>, an inner join here returns all 8 <code>Orders</code> rows, each duplicated
+   with its rep's name and quota attached — no rows lost.</li>
+<li>To see a join actually drop or duplicate rows, imagine a 4th <code>Reps</code> row
+   for "South" with no matching <code>Orders</code> rows: an inner join excludes
+   South entirely (0 orders), while a <strong>left join</strong> from <code>Orders</code> still
+   excludes it too (South never appears as an Order region); a left join
+   from <code>Reps</code> would keep South as one row with null Order fields.</li>
+<li><strong>Join culprit — duplicated rows</strong>: if <code>Reps</code> instead had <em>two</em> rows for
+   East (e.g. Alice and a second East rep), joining would duplicate every
+   East <code>Orders</code> row once per matching <code>Reps</code> row, silently inflating
+   <code>SUM(Sales)</code> for East. Always verify total Sales stays 6880 after any
+   join — this is the standard sanity check.</li>
+</ol>
+<h2 id="3-relationships-default-noeditable-double-line">3. Relationships (default, noeditable double line)<a class="headerlink" href="#3-relationships-default-noeditable-double-line" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <strong>relationship</strong> is the modern default when dragging a second table
+   onto the canvas — it does <em>not</em> pre-join the tables into one row set.
+   Instead, Tableau queries each table at its <strong>native level of detail</strong>
+   and combines results only when a sheet actually uses fields from both.</li>
+<li>Because no physical join happens up front, a relationship avoids the
+   row-duplication risk in Section 2.4: <code>SUM([Sales])</code> from <code>Orders</code>
+   stays 6880 regardless of how many <code>Reps</code> rows share a Region, since
+   Sales is aggregated within <code>Orders</code> before combining.</li>
+<li>Verify: build a view with <code>Region</code>, <code>SUM(Sales)</code>, and <code>Rep Name</code>. East
+   shows Sales 2210 with Rep "Alice" — the relationship correctly resolves
+   the many-Orders-to-one-Rep link without duplicating the 2210 total.</li>
+</ol>
+<h2 id="4-data-blending-separate-data-sources">4. Data blending (separate data sources)<a class="headerlink" href="#4-data-blending-separate-data-sources" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Blending applies when <code>Orders</code> and <code>Reps</code> are two <strong>separate published
+   data sources</strong> (not two tables in one connection) — e.g. <code>Orders</code> lives
+   in an Excel file and <code>Reps</code> in a separate Google Sheet.</li>
+<li>Blending works at the <strong>aggregate</strong> level: the secondary source's data
+   is aggregated to match the primary sheet's granularity <em>before</em>
+   combining, using a common linking field (Region, marked with a small
+   chain-link icon in the field list).</li>
+<li>Practical consequence: blending cannot push filters from the secondary
+   source back onto the primary source's row-level detail — it's a
+   one-directional, aggregate-only combination, which is why Tableau
+   recommends relationships/joins whenever both tables are reachable from
+   one connection.</li>
+</ol>
+<h2 id="5-choosing-among-the-three">5. Choosing among the three<a class="headerlink" href="#5-choosing-among-the-three" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tables in the same connection, need row-level combined detail</td>
+<td>Join</td>
+</tr>
+<tr>
+<td>Tables in the same connection, different levels of detail (as here)</td>
+<td>Relationship</td>
+</tr>
+<tr>
+<td>Tables from genuinely separate data sources/connections</td>
+<td>Blend</td>
+</tr>
+<tr>
+<td>Risk of fan-out row duplication from a one-to-many key</td>
+<td>Prefer relationship over join</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-verifying-with-hand-arithmetic">6. Verifying with hand arithmetic<a class="headerlink" href="#6-verifying-with-hand-arithmetic" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Build <code>SUM(Sales)</code> by Region using the relationship from Section 3:
+   East 2210, West 3750, Central 920 — identical to Level 1's single-table
+   numbers, confirming the relationship introduced no duplication.</li>
+<li>Add <code>Rep Quota</code> (from <code>Reps</code>) alongside: East 2210 vs quota 2000 (110%
+   attainment), West 3750 vs 3000 (125%), Central 920 vs 1000 (92%).
+   Compute attainment by hand: 2210/2000=1.10, 3750/3000=1.25,
+   920/1000=0.92 — these become the <code>Sales / [Rep Quota]</code> calculated
+   field, verified against the manual division.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Key trait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Join</td>
+<td>Physical row combination; risk of fan-out duplication</td>
+</tr>
+<tr>
+<td>Relationship</td>
+<td>Default; aggregates each table at native detail first</td>
+</tr>
+<tr>
+<td>Blend</td>
+<td>For separate data sources; aggregate-only, one-directional</td>
+</tr>
+<tr>
+<td>Fan-out risk</td>
+<td>One-to-many join key duplicates the "one" side's measures</td>
+</tr>
+<tr>
+<td>Sanity check</td>
+<td>Grand total (6880) should survive any join/relationship</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Add a 4th <code>Reps</code> row: Region "East", Rep Name "Dana", Rep Quota 500 (so
+East now has two reps). Using an <strong>inner join</strong> (not a relationship),
+explain by hand why <code>SUM(Sales)</code> for East would incorrectly show 4420
+(double 2210) instead of 2210, and why switching to a relationship fixes it.</p>
 
 
 

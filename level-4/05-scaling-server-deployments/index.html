@@ -1802,6 +1802,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Scaling Tableau Server Deployments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1818,6 +1836,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-vertical-vs-horizontal-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Vertical vs. horizontal scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-identifying-the-bottleneck-before-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Identifying the bottleneck before scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-load-testing-before-a-scale-up-commitment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Load testing before a scale-up commitment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-extract-refresh-scheduling-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Extract refresh scheduling at scale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-monitoring-and-alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Monitoring and alerting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-vertical-vs-horizontal-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Vertical vs. horizontal scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-identifying-the-bottleneck-before-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Identifying the bottleneck before scaling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-load-testing-before-a-scale-up-commitment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Load testing before a scale-up commitment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-extract-refresh-scheduling-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Extract refresh scheduling at scale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-monitoring-and-alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Monitoring and alerting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,112 @@
 
 
 <h1 id="04-scaling-tableau-server-deployments">04 · Scaling Tableau Server Deployments<a class="headerlink" href="#04-scaling-tableau-server-deployments" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Building on Module 1's architecture, this module covers the operational
+side of scaling an existing deployment as usage grows — adding nodes,
+load-testing, and monitoring — using the same <code>Orders</code>-scale workload as a
+concrete (if tiny) reference point for the reasoning.</p>
+<h2 id="1-vertical-vs-horizontal-scaling">1. Vertical vs. horizontal scaling<a class="headerlink" href="#1-vertical-vs-horizontal-scaling" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Vertical scaling</strong>: adding CPU/RAM to an existing node — the simplest
+   first step when a single VizQL Server node is CPU-bound rendering
+   dashboards like the Level 3 Module 10 RLS project for many concurrent
+   viewers.</li>
+<li><strong>Horizontal scaling</strong>: adding more nodes running the same process
+   (e.g. a second and third VizQL Server node) behind a load balancer —
+   needed once vertical scaling hits diminishing returns or a single
+   machine's ceiling, and the approach that also improves availability
+   (Module 1, Section 3).</li>
+</ol>
+<h2 id="2-identifying-the-bottleneck-before-scaling">2. Identifying the bottleneck before scaling<a class="headerlink" href="#2-identifying-the-bottleneck-before-scaling" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Don't scale blindly — use the Performance Recording approach (Level 3
+   Module 5) at the server level: Tableau Server's <strong>Admin Views</strong>
+   (TS status pages) break down load by process (VizQL, Backgrounder,
+   Data Server) so you can see which one is actually saturated.</li>
+<li>Worked reasoning: if Backgrounder is at 95% utilization overnight
+   running extract refreshes (e.g. many <code>Orders</code>-style incremental
+   refreshes per Level 3 Module 4) while VizQL sits at 20% during the day,
+   adding VizQL nodes (Section 1) does nothing for the actual bottleneck —
+   the fix is more Backgrounder capacity or refresh schedule spreading,
+   per Module 1 Section 2's sizing guidance.</li>
+</ol>
+<h2 id="3-load-testing-before-a-scale-up-commitment">3. Load testing before a scale-up commitment<a class="headerlink" href="#3-load-testing-before-a-scale-up-commitment" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Tableau's <strong>TabJolt</strong> (or equivalent load-testing approach) replays a
+   representative mix of viewer interactions against a staging deployment
+   to measure response time under increasing concurrent load, before
+   committing to a production topology change.</li>
+<li>A meaningful test workload should reflect real usage patterns — testing
+   only simple views (a single Region bar chart) when production
+   dashboards are RLS-gated, LOD-heavy pages like Level 3 Module 10's
+   project understates real load, since RLS filters (Level 3 Module 3,
+   marked as context) and nested FIXED LODs (Level 3 Module 1) cost more
+   per render than a plain bar chart.</li>
+</ol>
+<h2 id="4-extract-refresh-scheduling-at-scale">4. Extract refresh scheduling at scale<a class="headerlink" href="#4-extract-refresh-scheduling-at-scale" title="Permanent link">&para;</a></h2>
+<ol>
+<li>As the number of published extracts grows, naive "everything refreshes
+   at 2 AM" scheduling creates a Backgrounder traffic spike — spreading
+   refresh windows (e.g. staggering extracts across 2 AM–6 AM based on
+   dependency order and priority) avoids the overrun scenario from Module
+   1's exercise (300 refreshes crammed into 1 hour).</li>
+<li>Incremental refresh (Level 3 Module 4) reduces per-run cost but doesn't
+   eliminate the need for scheduling discipline — 300 incremental refreshes
+   still each carry some fixed overhead (connection setup, metadata
+   checks) even if the row-level work is small.</li>
+</ol>
+<h2 id="5-monitoring-and-alerting">5. Monitoring and alerting<a class="headerlink" href="#5-monitoring-and-alerting" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Key metrics to alert on: Backgrounder queue depth/backlog (a rising
+   trend indicates refresh capacity is falling behind schedule), VizQL
+   response time percentiles (p95/p99, not just average — a slow-render
+   worksheet like a table-calc-heavy view, Level 3 Module 5, can be masked
+   by a fast average if most other views are simple), and Repository
+   (Postgres) health, since it's a single point of failure for metadata
+   even in an otherwise horizontally-scaled deployment.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely bottleneck</th>
+<th>Scaling response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slow dashboard render, viewers complain during business hours</td>
+<td>VizQL Server saturated</td>
+<td>Add VizQL nodes (horizontal) or vertical scale</td>
+</tr>
+<tr>
+<td>Refresh jobs run late/queue backs up overnight</td>
+<td>Backgrounder saturated</td>
+<td>Add Backgrounder capacity, stagger schedules</td>
+</tr>
+<tr>
+<td>Metadata operations (publish, permissions) slow</td>
+<td>Repository (Postgres) under load</td>
+<td>Vertical scale Repository node, check for backup/vacuum conflicts</td>
+</tr>
+<tr>
+<td>All processes fine individually, but content-level views slow</td>
+<td>Calc complexity (LOD/table calc heavy)</td>
+<td>Optimize workbook (Level 3 Module 5), not infrastructure</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Admin Views show VizQL Server at 30% average utilization but p99 response
+time is 8 seconds on a specific dashboard, while every other dashboard
+responds in under 1 second. Using Section 5's guidance, explain why adding
+VizQL nodes is unlikely to fix this specific complaint, and what you'd
+check instead. (Low average utilization with one slow outlier points to a
+workbook-level problem — e.g. an unoptimized table calc or FIXED LOD
+chain (Level 3 Module 5) — not insufficient server capacity; check that
+dashboard's Performance Recording before scaling infrastructure that
+isn't actually the bottleneck.)</p>
 
 
 

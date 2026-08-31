@@ -1540,6 +1540,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Embedding Tableau Dashboards
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1556,6 +1574,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-basic-embed-with-the-js-embedding-api-v3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Basic embed with the JS Embedding API v3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-authentication-how-an-embedded-view-resolves-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Authentication: how an embedded view resolves permissions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-passing-filters-into-an-embedded-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Passing filters into an embedded view
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-listening-for-events-from-the-embedded-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Listening for events from the embedded view
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-licensing-and-viewer-counts-for-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Licensing and viewer counts for embedding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-basic-embed-with-the-js-embedding-api-v3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Basic embed with the JS Embedding API v3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-authentication-how-an-embedded-view-resolves-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Authentication: how an embedded view resolves permissions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-passing-filters-into-an-embedded-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Passing filters into an embedded view
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-listening-for-events-from-the-embedded-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Listening for events from the embedded view
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-licensing-and-viewer-counts-for-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Licensing and viewer counts for embedding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,118 @@
 
 
 <h1 id="08-embedding-tableau-dashboards">08 · Embedding Tableau Dashboards<a class="headerlink" href="#08-embedding-tableau-dashboards" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Embedding puts a Tableau view inside another web page or application. This
+module covers the Embedding API v3, ticketed/trusted authentication, and
+filter pass-through — verified against the <code>Orders</code> dashboard.</p>
+<h2 id="1-basic-embed-with-the-js-embedding-api-v3">1. Basic embed with the JS Embedding API v3<a class="headerlink" href="#1-basic-embed-with-the-js-embedding-api-v3" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Embedding a published view uses a custom element:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">&lt;</span><span class="nt">tableau-viz</span> <span class="na">id</span><span class="o">=</span><span class="s">"ordersViz"</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  <span class="na">src</span><span class="o">=</span><span class="s">"https://server.example.com/views/Northwind/OrdersDashboard"</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  <span class="na">toolbar</span><span class="o">=</span><span class="s">"bottom"</span><span class="p">&gt;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">&lt;/</span><span class="nt">tableau-viz</span><span class="p">&gt;</span>
+</code></pre></div>
+</li>
+<li>
+<p>This renders the same dashboard a Server user would see by navigating
+   directly to it — including the same 8-row <code>Orders</code> data and 6880 grand
+   total — inside the host page's DOM, subject to the viewer's own
+   permissions on Server.</p>
+</li>
+</ol>
+<h2 id="2-authentication-how-an-embedded-view-resolves-permissions">2. Authentication: how an embedded view resolves permissions<a class="headerlink" href="#2-authentication-how-an-embedded-view-resolves-permissions" title="Permanent link">&para;</a></h2>
+<ol>
+<li>If the embedding host page's visitor is <strong>not</strong> already signed into
+   Tableau Server/Cloud in that browser, the embed either prompts for
+   Tableau credentials directly, or — in most production embeds — uses
+   <strong>connected apps</strong> (OAuth-based trusted authentication, replacing the
+   older ticket-based trusted auth) so the host application vouches for
+   the user without a separate Tableau login prompt.</li>
+<li>Whichever visitor is authenticated, <strong>all of Level 3 Module 3's RLS
+   still applies</strong> — an embedded view is not a bypass of row-level
+   security. If the authenticated user maps to <code>alice@co.com</code> in
+   <code>RegionAccess</code>, the embedded dashboard still shows only the 3 East
+   orders totaling 2210, exactly as it would viewing directly on Server.</li>
+</ol>
+<h2 id="3-passing-filters-into-an-embedded-view">3. Passing filters into an embedded view<a class="headerlink" href="#3-passing-filters-into-an-embedded-view" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>The Embedding API lets the host page set filters programmatically:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">viz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'ordersViz'</span><span class="p">);</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">await</span><span class="w"> </span><span class="nx">viz</span><span class="p">.</span><span class="nx">workbook</span><span class="p">.</span><span class="nx">activeSheet</span><span class="p">.</span><span class="nx">applyFilterAsync</span><span class="p">(</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="s1">'Region'</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s1">'West'</span><span class="p">],</span><span class="w"> </span><span class="s1">'replace'</span><span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p>Verify: after this call, the embedded dashboard's Sales total should
+   read 3750 (West's total from every prior module), not the full 6880 —
+   if it still shows 6880, the filter call targeted the wrong sheet object
+   or fired before the viz finished loading (a common embedding bug — wait
+   for the <code>firstinteractive</code> event before calling filter methods).</p>
+</li>
+</ol>
+<h2 id="4-listening-for-events-from-the-embedded-view">4. Listening for events from the embedded view<a class="headerlink" href="#4-listening-for-events-from-the-embedded-view" title="Permanent link">&para;</a></h2>
+<ol>
+<li>The embed fires events the host page can react to, e.g.
+   <code>viz.addEventListener('markselectionchanged', handler)</code> — a host
+   application could use this to show a custom detail panel when a user
+   clicks the East bar in a Region chart.</li>
+<li>Hand-verify the event payload's data matches expectations: clicking the
+   East bar should deliver mark data whose Sales value is 2210 (or, if the
+   chart's granularity is per-order rather than per-region, the individual
+   Order IDs/Sales for 1001, 1003, 1006) — a payload showing an unrelated
+   region's numbers indicates a stale/cached viz reference in the host
+   page's JavaScript.</li>
+</ol>
+<h2 id="5-licensing-and-viewer-counts-for-embedding">5. Licensing and viewer counts for embedding<a class="headerlink" href="#5-licensing-and-viewer-counts-for-embedding" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Every person who views an embedded dashboard still consumes a Tableau
+   Server/Cloud viewer license (or falls under an embedded analytics
+   licensing agreement, if the host application is customer-facing at
+   scale) — embedding is a <em>delivery mechanism</em>, not a way to avoid
+   licensing, a governance point that connects to Module 8's cost topics
+   (Level 4 Module 8 covers license management at scale).</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>API call/mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic embed</td>
+<td><code>&lt;tableau-viz src="..." toolbar="bottom"&gt;</code></td>
+</tr>
+<tr>
+<td>Authenticate host visitor</td>
+<td>Connected apps (OAuth) or trusted ticket</td>
+</tr>
+<tr>
+<td>Apply a filter from host page</td>
+<td><code>applyFilterAsync(field, values, 'replace')</code></td>
+</tr>
+<tr>
+<td>React to a click in the viz</td>
+<td><code>markselectionchanged</code> event</td>
+</tr>
+<tr>
+<td>RLS inside an embed</td>
+<td>Still enforced — same as direct Server access</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>A host page embeds the <code>Orders</code> dashboard for a visitor authenticated as
+<code>carol@co.com</code> (Central-only access per Module 3's <code>RegionAccess</code> table),
+then calls <code>applyFilterAsync('Region', ['East'], 'replace')</code>. Hand-reason
+what the embedded view should show: RLS restricts Carol to Central rows
+regardless of the filter call, and the filter additionally asks for East —
+the intersection of "Central only" and "East only" is empty, so the
+dashboard should render <strong>zero rows</strong>, not an error and not Central's 920.</p>
 
 
 

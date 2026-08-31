@@ -1428,6 +1428,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Custom Visualizations & Extensions Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1444,6 +1462,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-a-dashboard-extension-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What a dashboard extension is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-reading-data-into-an-extension-summary-vs-underlying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Reading data into an extension: summary vs. underlying
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-setting-a-filter-from-an-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Setting a filter from an extension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-worked-mini-extension-reset-all-filters-button" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A worked mini-extension: "reset all filters" button
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-when-to-reach-for-an-extension-vs-built-in-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. When to reach for an extension vs. built-in features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-a-dashboard-extension-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What a dashboard extension is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-reading-data-into-an-extension-summary-vs-underlying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Reading data into an extension: summary vs. underlying
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-setting-a-filter-from-an-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Setting a filter from an extension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-worked-mini-extension-reset-all-filters-button" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A worked mini-extension: "reset all filters" button
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-when-to-reach-for-an-extension-vs-built-in-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. When to reach for an extension vs. built-in features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,133 @@
 
 
 <h1 id="04-custom-visualizations-extensions-overview">04 · Custom Visualizations &amp; Extensions Overview<a class="headerlink" href="#04-custom-visualizations-extensions-overview" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Tableau's built-in chart types cover most needs, but some requirements
+(a custom control, a third-party JS chart library, writing data back to a
+source system) need the <strong>Extensions API</strong>. This module is conceptual —
+verification is by hand-tracing the data that would flow to/from an
+extension, against the familiar <code>Orders</code> table.</p>
+<h2 id="1-what-a-dashboard-extension-is">1. What a dashboard extension is<a class="headerlink" href="#1-what-a-dashboard-extension-is" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <strong>dashboard extension</strong> is a sandboxed web application (HTML/JS)
+   loaded into a <strong>zone</strong> on a Tableau dashboard, communicating with the
+   workbook through the <strong>Extensions API</strong> (<code>tableau.extensions.*</code>
+   JavaScript library) — it can read summary/underlying data from
+   worksheets, read/set parameters and filters, and in newer API versions
+   write data back to a source.</li>
+<li>Extensions run in an iframe. Tableau Desktop/Server/Cloud must
+   explicitly enable extensions (they're off by default in locked-down
+   deployments) and, for network-hosted extensions, an admin allow-lists
+   the domain — a governance control covered further in Module 8.</li>
+</ol>
+<h2 id="2-reading-data-into-an-extension-summary-vs-underlying">2. Reading data into an extension: summary vs. underlying<a class="headerlink" href="#2-reading-data-into-an-extension-summary-vs-underlying" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>worksheet.getSummaryDataAsync()</code> returns the <strong>aggregated</strong> data
+   currently rendered in a worksheet — e.g. a bar chart of Region vs.
+   SUM(Sales) returns exactly 3 rows: East 2210, West 3750, Central 920.</li>
+<li><code>worksheet.getUnderlyingDataAsync()</code> returns the <strong>row-level</strong> data
+   feeding the view, before the aggregation shown on screen — for the same
+   worksheet this returns up to 8 rows (one per <code>Orders</code> record), because
+   the aggregation is a rendering step, not a data reduction.</li>
+<li>Hand-check: an extension summing the <code>Sales</code> field from
+   <code>getSummaryDataAsync()</code> should get 2210+3750+920 = 6880. An extension
+   summing <code>Sales</code> from <code>getUnderlyingDataAsync()</code> should also get 6880
+   (1200+450+60+800+2200+950+120+1100) — same total, different row count
+   (3 vs. 8), which is the distinction to test for if a custom chart looks
+   right but a downstream calculation is off by a factor tied to
+   duplicate-counting granularity.</li>
+</ol>
+<h2 id="3-setting-a-filter-from-an-extension">3. Setting a filter from an extension<a class="headerlink" href="#3-setting-a-filter-from-an-extension" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>worksheet.applyFilterAsync('Region', ['East'], FilterUpdateType.Replace)</code>
+   sets the Region filter to East only, from the extension's UI rather
+   than a native Tableau filter card.</li>
+<li>Verify the effect the same way as any Region filter: the dashboard's
+   other worksheets (if using the same filtered field) should now total
+   2210, matching Section 1's East-only figure from prior modules.</li>
+</ol>
+<h2 id="4-a-worked-mini-extension-reset-all-filters-button">4. A worked mini-extension: "reset all filters" button<a class="headerlink" href="#4-a-worked-mini-extension-reset-all-filters-button" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Requirement: a button in the extension zone that clears every filter on
+   the dashboard back to "show all."</li>
+<li>Implementation sketch: iterate <code>tableau.extensions.dashboardContent
+   .dashboard.worksheets</code>, and for each worksheet call
+   <code>worksheet.clearFilterAsync(fieldName)</code> for each active filter field.</li>
+<li>Test by hand: before reset, with Region=East applied, total Sales
+   showing is 2210. After the reset click fires, every worksheet should
+   re-render at the full 6880 — if it shows something else (e.g. still
+   2210, or an intermediate 3160 = 2210+950), the reset loop missed a
+   worksheet or a filter field.</li>
+</ol>
+<h2 id="5-when-to-reach-for-an-extension-vs-built-in-features">5. When to reach for an extension vs. built-in features<a class="headerlink" href="#5-when-to-reach-for-an-extension-vs-built-in-features" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Built-in Tableau</th>
+<th>Extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard chart types, filters, actions</td>
+<td>Yes</td>
+<td>Not needed</td>
+</tr>
+<tr>
+<td>Third-party chart library (e.g. a Sankey, custom map)</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Writing values back to an external system</td>
+<td>No (until write-back APIs)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Custom UI controls beyond parameters/filters</td>
+<td>Limited</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Must work with zero admin config</td>
+<td>Yes</td>
+<td>No — requires enabling extensions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>API call</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getSummaryDataAsync()</code></td>
+<td>Aggregated rows as rendered (e.g. 3 Region rows)</td>
+</tr>
+<tr>
+<td><code>getUnderlyingDataAsync()</code></td>
+<td>Row-level data (up to 8 Orders rows)</td>
+</tr>
+<tr>
+<td><code>applyFilterAsync(field, values, type)</code></td>
+<td>Sets a filter programmatically</td>
+</tr>
+<tr>
+<td><code>clearFilterAsync(field)</code></td>
+<td>Removes a filter</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>An extension calls <code>getSummaryDataAsync()</code> on a worksheet showing
+Category vs. SUM(Profit). Using Level 1's <code>Orders</code> table, hand-compute the
+3 rows it should return: Furniture = 180+96-40+150 = 386, Electronics =
+90+330 = 420, Office Supplies = 18+42 = 60. Confirm these sum to the
+workbook's total profit, 386+420+60 = 866.</p>
 
 
 

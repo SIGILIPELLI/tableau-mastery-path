@@ -1484,6 +1484,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Integrating Tableau with Databases at Scale
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1500,6 +1518,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-splitting-orders-into-a-star-ish-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Splitting Orders into a star-ish schema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-joining-in-tableau-vs-pushing-the-join-to-the-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Joining in Tableau vs. pushing the join to the database
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-join-type-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Join type verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-cross-database-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Cross-database join
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-connection-pooling-and-query-load-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Connection pooling and query load at scale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-splitting-orders-into-a-star-ish-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Splitting Orders into a star-ish schema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-joining-in-tableau-vs-pushing-the-join-to-the-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Joining in Tableau vs. pushing the join to the database
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-join-type-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Join type verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-cross-database-join" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Cross-database join
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-connection-pooling-and-query-load-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Connection pooling and query load at scale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,197 @@
 
 
 <h1 id="06-integrating-tableau-with-databases-at-scale">06 · Integrating Tableau with Databases at Scale<a class="headerlink" href="#06-integrating-tableau-with-databases-at-scale" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>This module covers connecting Tableau to production-scale database
+patterns — joins across large tables, custom SQL, and cross-database
+joins — using <code>Orders</code> split across two related tables to keep every
+number hand-checkable.</p>
+<h2 id="1-splitting-orders-into-a-star-ish-schema">1. Splitting <code>Orders</code> into a star-ish schema<a class="headerlink" href="#1-splitting-orders-into-a-star-ish-schema" title="Permanent link">&para;</a></h2>
+<p>For this module, <code>Orders</code> is normalized into two tables:</p>
+<p><strong><code>OrderFacts</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Region Code</th>
+<th>Sales</th>
+<th>Profit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1001</td>
+<td>R-E</td>
+<td>1200</td>
+<td>180</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>R-W</td>
+<td>450</td>
+<td>90</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>R-E</td>
+<td>60</td>
+<td>18</td>
+</tr>
+<tr>
+<td>1004</td>
+<td>R-C</td>
+<td>800</td>
+<td>96</td>
+</tr>
+<tr>
+<td>1005</td>
+<td>R-W</td>
+<td>2200</td>
+<td>330</td>
+</tr>
+<tr>
+<td>1006</td>
+<td>R-E</td>
+<td>950</td>
+<td>-40</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>R-C</td>
+<td>120</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1008</td>
+<td>R-W</td>
+<td>1100</td>
+<td>150</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>RegionDim</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Region Code</th>
+<th>Region Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R-E</td>
+<td>East</td>
+</tr>
+<tr>
+<td>R-W</td>
+<td>West</td>
+</tr>
+<tr>
+<td>R-C</td>
+<td>Central</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-joining-in-tableau-vs-pushing-the-join-to-the-database">2. Joining in Tableau vs. pushing the join to the database<a class="headerlink" href="#2-joining-in-tableau-vs-pushing-the-join-to-the-database" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A Tableau <strong>join</strong> (Data pane, drag both tables in, join on <code>Region
+   Code</code>) reconstructs the same 8-row table as Level 1's <code>Orders</code>, with
+   <code>Region Name</code> in place of the raw code — verify: filtering the joined
+   result to Region Name = East should return rows 1001, 1003, 1006,
+   summing Sales to 1200+60+950 = 2210, matching every prior module.</li>
+<li>For large fact tables (millions of rows) joined to small dimension
+   tables (a handful of rows, like <code>RegionDim</code>'s 3), pushing the join to
+   the database via <strong>custom SQL</strong> —
+   <code>SELECT f.*, d.[Region Name] FROM OrderFacts f JOIN RegionDim d ON
+   f.[Region Code] = d.[Region Code]</code> — lets the database's own optimizer
+   and indexes handle the join, which typically outperforms Tableau
+   re-joining a live connection's raw tables row by row on every query.</li>
+<li>Trade-off: custom SQL is treated by Tableau as a single opaque table —
+   individual columns from <code>OrderFacts</code>/<code>RegionDim</code> are no longer available
+   separately for join optimization, and Tableau can't push filters down
+   into a custom SQL query as efficiently as it can into an ordinary table
+   reference. Use a native join first; reach for custom SQL only when the
+   database-side join is measurably faster (Module 5's Performance
+   Recording) or a query needs SQL Tableau's join UI can't express.</li>
+</ol>
+<h2 id="3-join-type-verification">3. Join type verification<a class="headerlink" href="#3-join-type-verification" title="Permanent link">&para;</a></h2>
+<ol>
+<li>An <strong>inner join</strong> on <code>Region Code</code> keeps only matching rows — here,
+   every <code>OrderFacts</code> row has a matching <code>RegionDim</code> row, so an inner join
+   returns all 8 rows.</li>
+<li>Confirm what happens with an unmatched row: add a 9th <code>OrderFacts</code> row
+   with <code>Region Code = "R-S"</code> (South — not in <code>RegionDim</code>). An inner join
+   drops this row entirely (9 → 8 visible rows, Sales total unchanged at
+   6880); a <strong>left join</strong> (OrderFacts as the left table) keeps it with
+   <code>Region Name</code> = null, so a Sales total by Region Name would still show
+   6880 across the 3 known regions, plus the new row's Sales appearing
+   under a null/blank Region Name group — the grand total across <em>all</em>
+   rows (6880 + new row's Sales) diverges from the by-Region-name subtotal
+   unless the null group is included.</li>
+</ol>
+<h2 id="4-cross-database-join">4. Cross-database join<a class="headerlink" href="#4-cross-database-join" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <strong>cross-database join</strong> joins tables from two different connections
+   (e.g. <code>OrderFacts</code> in a SQL Server database, <code>RegionDim</code> in an Excel
+   file) — Tableau performs this join itself (it can't push it to either
+   source's engine, since no single engine sees both tables), so it's
+   inherently a Tableau-side (not push-down) join, generally read via an
+   extract for tables above trivial size.</li>
+<li>For <code>OrderFacts</code>/<code>RegionDim</code>, a cross-database join produces the exact
+   same 8-row, 2210/3750/920-by-region result as the same-database join in
+   Section 2 — cross-database joins change <em>where</em> the join executes, not
+   the logical result, provided the join key (<code>Region Code</code>) matches
+   exactly (case, whitespace) across both sources, per Module 3's cleaning
+   lessons.</li>
+</ol>
+<h2 id="5-connection-pooling-and-query-load-at-scale">5. Connection pooling and query load at scale<a class="headerlink" href="#5-connection-pooling-and-query-load-at-scale" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Multiple Tableau Server users viewing a live-connected dashboard each
+   generate separate queries against the source database — for <code>Orders</code>'
+   scale this is negligible, but at production scale this is why Tableau
+   Server's Data Server component (Module 2) caches results and why
+   extracts (refreshed on a schedule, e.g. nightly) are typically preferred
+   for high-concurrency published dashboards over many simultaneous live
+   connections hitting the same OLTP database.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Where the join runs</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native join (Data pane)</td>
+<td>Tableau (live) or extract build</td>
+<td>Small-to-medium dims joined to a fact</td>
+</tr>
+<tr>
+<td>Custom SQL</td>
+<td>Database</td>
+<td>Complex logic, DB-side optimization</td>
+</tr>
+<tr>
+<td>Cross-database join</td>
+<td>Tableau only</td>
+<td>Tables live in different systems</td>
+</tr>
+<tr>
+<td>Left join with unmatched key</td>
+<td>Tableau/DB per join location</td>
+<td>Preserving orphan rows (nulls surface)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p><code>OrderFacts</code> gains Order ID 1009, Region Code <code>"R-S"</code>, Sales 300, Profit
+45 — with no matching row in <code>RegionDim</code>. Using a <strong>left join</strong>
+(OrderFacts left), hand-compute the grand total Sales across all rows
+(6880 + 300 = <strong>7180</strong>) and explain why a view broken out <strong>by Region
+Name</strong> would still show only East/West/Central/(Null) as the four groups,
+with the Null group holding exactly the 300 from row 1009.</p>
 
 
 

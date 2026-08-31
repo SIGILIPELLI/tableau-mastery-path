@@ -92,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#advanced-calculated-fields" class="md-skip">
+        <a href="#01-advanced-calculated-fields" class="md-skip">
           Skip to content
         </a>
       
@@ -942,6 +942,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Advanced Calculated Fields
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -958,6 +976,124 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-lod-expressions-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why LOD expressions exist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-fixed-region-total-sales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. FIXED: Region Total Sales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-percent-of-region-total-fixed-row-level-math" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Percent of Region Total (FIXED + row-level math)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-include-average-order-size-per-category-independent-of-region" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. INCLUDE: average order size per category, independent of region
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exclude-category-share-ignoring-region" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. EXCLUDE: category share ignoring region
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-nested-logic-a-three-tier-discount-eligibility-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Nested logic: a three-tier discount-eligibility field
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-string-and-date-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. String and date functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2127,113 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-lod-expressions-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why LOD expressions exist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-fixed-region-total-sales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. FIXED: Region Total Sales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-percent-of-region-total-fixed-row-level-math" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Percent of Region Total (FIXED + row-level math)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-include-average-order-size-per-category-independent-of-region" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. INCLUDE: average order size per category, independent of region
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exclude-category-share-ignoring-region" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. EXCLUDE: category share ignoring region
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-nested-logic-a-three-tier-discount-eligibility-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Nested logic: a three-tier discount-eligibility field
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-string-and-date-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. String and date functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2009,9 +2252,174 @@
   
 
 
-<h1 id="advanced-calculated-fields">· Advanced Calculated Fields<a class="headerlink" href="#advanced-calculated-fields" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<h1 id="01-advanced-calculated-fields">01 · Advanced Calculated Fields<a class="headerlink" href="#01-advanced-calculated-fields" title="Permanent link">&para;</a></h1>
+<p>Level 1 Module 6 covered aggregate ratios and row-level <code>IF</code> logic. This
+module goes further: <strong>LOD (Level of Detail) expressions</strong>, nested logic,
+and <strong>string/date functions</strong> — all hand-verified against the <code>Orders</code>
+table from Level 1 Module 1.</p>
+<h2 id="1-why-lod-expressions-exist">1. Why LOD expressions exist<a class="headerlink" href="#1-why-lod-expressions-exist" title="Permanent link">&para;</a></h2>
+<p>A normal aggregate calculation like <code>SUM([Sales])</code> computes at the
+<strong>view's</strong> level of detail — whatever dimensions are on the shelves. LOD
+expressions let a calculation compute at a level <em>finer, coarser, or
+independent of</em> the view.</p>
+<p>There are three forms:</p>
+<ul>
+<li><code>{FIXED [dim] : AGG(...)}</code> — compute at exactly the dimension(s) named,
+  ignoring whatever else is in the view.</li>
+<li><code>{INCLUDE [dim] : AGG(...)}</code> — compute at the view's level of detail
+  <em>plus</em> the named dimension, then re-aggregate up.</li>
+<li><code>{EXCLUDE [dim] : AGG(...)}</code> — compute at the view's level of detail
+  <em>minus</em> the named dimension.</li>
+</ul>
+<h2 id="2-fixed-region-total-sales">2. FIXED: Region Total Sales<a class="headerlink" href="#2-fixed-region-total-sales" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Create a calculated field <code>Region Total Sales</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{FIXED [Region] : SUM([Sales])}
+</code></pre></div>
+</li>
+<li>
+<p>Drag <strong>Region</strong>, <strong>Product</strong>, and <code>Region Total Sales</code> to Rows. Every
+   product row within a region shows the <em>same</em> number — the region's
+   total, not the product's — because FIXED ignores Product entirely.</p>
+</li>
+<li>Verify by hand: East's two products are Desk (Sales 1200) and Paper
+   (Sales 60) and Bookcase (Sales 950) — wait, East has three: Desk 1200,
+   Paper 60, Bookcase 950. Sum = 1200 + 60 + 950 = <strong>2210</strong>. Every East row
+   in the view should show 2210 for <code>Region Total Sales</code>, regardless of
+   which product that row is.</li>
+<li>West: Monitor 450 + Laptop 2200 + Desk 1100 = <strong>3750</strong>. Central: Chair
+   800 + Binders 120 = <strong>920</strong>. These three numbers (2210, 3750, 920) sum to
+   6880 — the full <code>Orders</code> Sales total — confirming FIXED partitions the
+   whole table without double-counting or dropping rows.</li>
+</ol>
+<h2 id="3-percent-of-region-total-fixed-row-level-math">3. Percent of Region Total (FIXED + row-level math)<a class="headerlink" href="#3-percent-of-region-total-fixed-row-level-math" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Create <code>Pct of Region Sales</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>SUM([Sales]) / {FIXED [Region] : SUM([Sales])}
+</code></pre></div>
+</li>
+<li>
+<p>With Region and Product on Rows, this divides each product's sales by
+   its region's fixed total. Verify East/Bookcase: 950 / 2210 ≈ <strong>43.0%</strong>.
+   East/Desk: 1200 / 2210 ≈ <strong>54.3%</strong>. East/Paper: 60 / 2210 ≈ <strong>2.7%</strong>.
+   These three percentages sum to 100.0% (43.0 + 54.3 + 2.7 = 100.0),
+   confirming the FIXED denominator is correct — each region's products
+   partition that region's total exactly.</p>
+</li>
+</ol>
+<h2 id="4-include-average-order-size-per-category-independent-of-region">4. INCLUDE: average order size per category, independent of region<a class="headerlink" href="#4-include-average-order-size-per-category-independent-of-region" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Create <code>Avg Order Sales per Category</code> using INCLUDE to force
+   per-order-level granularity before averaging, even if the view is
+   rolled up to Category only:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>{INCLUDE [Order ID] : SUM([Sales])}
+</code></pre></div>
+</li>
+<li>
+<p>Then a separate field <code>Avg per Category</code> = <code>AVG([Avg Order Sales per
+   Category])</code> when only Category is on Rows — this computes the average
+   <em>order</em> size within a category (not the average of category totals).</p>
+</li>
+<li>Verify Furniture (Desk 1200, Chair 800, Bookcase 950, Desk 1100 = 4
+   orders): average = (1200+800+950+1100)/4 = 4050/4 = <strong>1012.5</strong>. This
+   matches AVG(SUM(Sales)) computed at Order ID detail, included even
+   though the view itself only shows Category.</li>
+</ol>
+<h2 id="5-exclude-category-share-ignoring-region">5. EXCLUDE: category share ignoring region<a class="headerlink" href="#5-exclude-category-share-ignoring-region" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Create <code>Sales Ignoring Region</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{EXCLUDE [Region] : SUM([Sales])}
+</code></pre></div>
+</li>
+<li>
+<p>With Region and Category on Rows, every Category row across every
+   Region shows that category's <em>global</em> total (Region excluded from the
+   computation), not the region-specific total. Verify Furniture (any
+   region row): 800 (Central) + 2150 (East: Desk 1200 + Bookcase 950) +
+   1100 (West) = <strong>4050</strong> — matches the category-only total from Level 1.</p>
+</li>
+</ol>
+<h2 id="6-nested-logic-a-three-tier-discount-eligibility-field">6. Nested logic: a three-tier discount-eligibility field<a class="headerlink" href="#6-nested-logic-a-three-tier-discount-eligibility-field" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Create <code>Discount Tier</code> with nested <code>IF</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>IF [Profit] &lt; 0 THEN "Review"
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ELSEIF SUM([Sales]) &gt;= 1000 AND [Profit] / [Sales] &gt;= 0.15 THEN "Tier A"
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>ELSEIF SUM([Sales]) &gt;= 1000 THEN "Tier B"
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>ELSE "Tier C"
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>END
+</code></pre></div>
+</li>
+<li>
+<p>Verify row-by-row (using each order's own Sales/Profit, since this is a
+   row-level calc, not aggregated): Order 1001 (Sales 1200, Profit 180,
+   ratio 0.15) → Sales≥1000 and ratio≥0.15 → <strong>Tier A</strong>. Order 1005 (Sales
+   2200, Profit 330, ratio 0.15) → <strong>Tier A</strong>. Order 1008 (Sales 1100,
+   Profit 150, ratio 0.136) → Sales≥1000 but ratio&lt;0.15 → <strong>Tier B</strong>. Order
+   1006 (Profit -40) → <strong>Review</strong>. Orders 1002, 1003, 1004, 1007 all have
+   Sales &lt; 1000 → <strong>Tier C</strong>.</p>
+</li>
+</ol>
+<h2 id="7-string-and-date-functions">7. String and date functions<a class="headerlink" href="#7-string-and-date-functions" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>LEFT([Product], 4)</code> on <code>Desk</code> returns <code>"Desk"</code>; on <code>Bookcase</code> returns
+   <code>"Book"</code> — useful for building short codes.</li>
+<li><code>DATENAME('month', [Order Date])</code> on Order 1005 (<code>2024-03-01</code>) returns
+   <code>"March"</code>; <code>DATEPART('quarter', [Order Date])</code> returns <code>1</code> (Jan–Mar is
+   Q1 in a standard calendar).</li>
+<li><code>DATEDIFF('day', [Order Date], TODAY())</code> — a running age-of-order field,
+   useful for a "days since ordered" KPI on an operations dashboard.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{FIXED [dim] : AGG}</code></td>
+<td>Computes at named dim(s) only, ignores view</td>
+</tr>
+<tr>
+<td><code>{INCLUDE [dim] : AGG}</code></td>
+<td>View detail + named dim, then re-aggregate</td>
+</tr>
+<tr>
+<td><code>{EXCLUDE [dim] : AGG}</code></td>
+<td>View detail minus named dim</td>
+</tr>
+<tr>
+<td>Percent of fixed total</td>
+<td><code>SUM([X]) / {FIXED [dim]: SUM([X])}</code></td>
+</tr>
+<tr>
+<td>Nested IF</td>
+<td><code>IF...ELSEIF...ELSEIF...ELSE...END</code></td>
+</tr>
+<tr>
+<td>Month name</td>
+<td><code>DATENAME('month', [date])</code></td>
+</tr>
+<tr>
+<td>Quarter number</td>
+<td><code>DATEPART('quarter', [date])</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Using <code>{FIXED [Category] : SUM([Profit])}</code>, compute by hand each category's
+fixed profit total (Furniture, Electronics, Office Supplies) from the
+<code>Orders</code> table, then build <code>Pct of Category Profit</code> = <code>SUM([Profit]) /
+{FIXED [Category]: SUM([Profit])}</code> and verify the Bookcase row's
+percentage is negative (since its Profit is -40) even though its category
+total (Furniture, 386) is positive.</p>
 
 
 

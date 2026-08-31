@@ -92,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#enterprise-tableau-architecture" class="md-skip">
+        <a href="#01-enterprise-tableau-architecture" class="md-skip">
           Skip to content
         </a>
       
@@ -1690,6 +1690,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Enterprise Tableau Architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1706,6 +1724,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-reference-architecture-single-site-vs-multi-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Reference architecture: single-site vs. multi-site
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-node-topology-and-process-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Node topology and process distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-high-availability-and-disaster-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. High availability and disaster recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-capacity-planning-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Capacity planning inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-choosing-server-vs-cloud-at-the-architecture-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Choosing Server vs. Cloud at the architecture level
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-reference-architecture-single-site-vs-multi-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Reference architecture: single-site vs. multi-site
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-node-topology-and-process-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Node topology and process distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-high-availability-and-disaster-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. High availability and disaster recovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-capacity-planning-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Capacity planning inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-choosing-server-vs-cloud-at-the-architecture-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Choosing Server vs. Cloud at the architecture level
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2009,9 +2208,141 @@
   
 
 
-<h1 id="enterprise-tableau-architecture">· Enterprise Tableau Architecture<a class="headerlink" href="#enterprise-tableau-architecture" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<h1 id="01-enterprise-tableau-architecture">01 · Enterprise Tableau Architecture<a class="headerlink" href="#01-enterprise-tableau-architecture" title="Permanent link">&para;</a></h1>
+<p>Level 4 shifts from building/administering one deployment to designing
+one across an organization. This module lays out reference architectures,
+sizing considerations, and disaster-recovery patterns, grounding examples
+in the <code>Northwind Retail</code> data used throughout the course.</p>
+<h2 id="1-reference-architecture-single-site-vs-multi-site">1. Reference architecture: single-site vs. multi-site<a class="headerlink" href="#1-reference-architecture-single-site-vs-multi-site" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <strong>single-site</strong> Tableau Server deployment puts every team's content
+   (Sales' <code>Orders</code> dashboards, Finance's reports, etc.) under one Site,
+   relying on Projects and permissions (Level 3 Module 2) to separate
+   audiences.</li>
+<li>A <strong>multi-site</strong> deployment isolates tenants completely — e.g. a
+   "Sales" site holding the <code>Northwind Analytics</code> project from Level 2,
+   and a separate "Finance" site with no shared users or content by
+   default — appropriate when regulatory or organizational boundaries
+   require hard separation (different data residency rules, or
+   subsidiaries that shouldn't see each other's content at all).</li>
+<li>Trade-off: multi-site avoids any cross-team leakage risk but duplicates
+   admin overhead (server processes, license pools' scoping if
+   applicable) — most enterprises start single-site with strong project
+   permissions, and split into sites only for a specific isolation
+   requirement.</li>
+</ol>
+<h2 id="2-node-topology-and-process-distribution">2. Node topology and process distribution<a class="headerlink" href="#2-node-topology-and-process-distribution" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A minimal production Server deployment separates roles across nodes:
+   e.g. one node running Gateway + VizQL Server (handling viewer traffic),
+   a second running Backgrounder (running the nightly extract refresh for
+   <code>Orders</code>, per Level 3 Module 4's incremental refresh pattern) and Data
+   Server, and a third running the Repository (Postgres metadata).</li>
+<li>Sizing decision: Backgrounder capacity should scale with the number and
+   size of scheduled extract refreshes, not viewer count — a deployment
+   with a handful of viewers but hundreds of nightly extract jobs (each
+   like the <code>Orders</code> incremental refresh from Level 3 Module 4) needs more
+   Backgrounder capacity than viewer-facing capacity, and vice versa for a
+   read-heavy, refresh-light deployment.</li>
+</ol>
+<h2 id="3-high-availability-and-disaster-recovery">3. High availability and disaster recovery<a class="headerlink" href="#3-high-availability-and-disaster-recovery" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>High availability (HA)</strong> adds redundant nodes for each critical
+   process so a single node failure doesn't take the whole Server down —
+   e.g. two Gateway nodes behind a load balancer so viewer traffic to the
+   <code>Orders</code> dashboard continues if one Gateway node fails.</li>
+<li><strong>Disaster recovery (DR)</strong> is a separate concern: a secondary Server
+   deployment (often in a different data center/region) that can be
+   promoted if the primary deployment is lost entirely — this typically
+   relies on a Backup/Restore (<code>tsm maintenance backup</code>) taken on a
+   schedule and shipped to the DR site, meaning DR recovery point is
+   bounded by backup frequency (a nightly backup means up to 24 hours of
+   content changes could be lost in a DR failover — e.g. a same-day fix to
+   the <code>Orders</code> RLS entitlement table, Level 3 Module 3, made after the
+   last backup would need to be reapplied manually after a DR failover).</li>
+</ol>
+<h2 id="4-capacity-planning-inputs">4. Capacity planning inputs<a class="headerlink" href="#4-capacity-planning-inputs" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Four inputs drive sizing: concurrent viewer count, extract refresh
+   volume/frequency (Backgrounder load), workbook complexity (calc-heavy
+   dashboards like Level 3 Module 10's project cost more per view than a
+   simple bar chart), and data volume per extract (an <code>Orders</code>-scale
+   8-row extract is negligible; a production fact table at millions of
+   rows changes memory/CPU sizing substantially).</li>
+<li>A common mistake is sizing only for viewer count and ignoring
+   Backgrounder load — a deployment that looks "right-sized" for 500
+   concurrent viewers can still fail its nightly refresh window if 200
+   scheduled extracts (each independently no larger than <code>Orders</code>, but
+   collectively large) are all scheduled to run in the same 2-hour
+   window.</li>
+</ol>
+<h2 id="5-choosing-server-vs-cloud-at-the-architecture-level">5. Choosing Server vs. Cloud at the architecture level<a class="headerlink" href="#5-choosing-server-vs-cloud-at-the-architecture-level" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Favors Server (self-hosted)</th>
+<th>Favors Cloud (SaaS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data residency/on-prem source proximity</td>
+<td>Yes — data stays behind firewall</td>
+<td>Requires bridge/gateway for on-prem sources</td>
+</tr>
+<tr>
+<td>Ops team capacity</td>
+<td>Needs dedicated admin capacity</td>
+<td>Salesforce manages infra</td>
+</tr>
+<tr>
+<td>Custom node topology (Section 2)</td>
+<td>Full control</td>
+<td>Managed, less topology control</td>
+</tr>
+<tr>
+<td>Scaling speed</td>
+<td>Manual node provisioning</td>
+<td>Elastic, managed by vendor</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Key architecture decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tenant isolation</td>
+<td>Single site + strong permissions vs. multi-site</td>
+</tr>
+<tr>
+<td>Process placement</td>
+<td>Separate Gateway/VizQL from Backgrounder for large refresh volume</td>
+</tr>
+<tr>
+<td>Resilience</td>
+<td>HA (node redundancy) vs. DR (separate site + backup)</td>
+</tr>
+<tr>
+<td>Sizing</td>
+<td>Viewer count AND Backgrounder/refresh load, not just one</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>A company runs 300 nightly extract refreshes, each roughly the complexity
+of the Level 3 Module 4 <code>Orders</code> flow, all scheduled in a 1-hour window,
+alongside 50 concurrent daytime viewers. Which capacity input (Section 4)
+is most likely under-provisioned if the nightly refresh window regularly
+overruns, and which node role (Section 2) should be scaled first? (The
+refresh-volume input is under-provisioned; scale Backgrounder capacity,
+not Gateway/VizQL, since the viewer count of 50 is comparatively light.)</p>
 
 
 

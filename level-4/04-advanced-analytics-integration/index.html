@@ -1774,6 +1774,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Tableau + Advanced Analytics Integration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1790,6 +1808,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-how-the-integration-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. How the integration works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-worked-example-forecasting-with-a-trivial-linear-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Worked example: forecasting with a trivial linear fit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-argument-binding-and-common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Argument binding and common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-when-to-use-tabpyrserve-vs-a-native-lodtable-calc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. When to use TabPy/Rserve vs. a native LOD/table calc
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-governance-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Governance implications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-how-the-integration-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. How the integration works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-worked-example-forecasting-with-a-trivial-linear-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Worked example: forecasting with a trivial linear fit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-argument-binding-and-common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Argument binding and common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-when-to-use-tabpyrserve-vs-a-native-lodtable-calc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. When to use TabPy/Rserve vs. a native LOD/table calc
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-governance-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Governance implications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,137 @@
 
 
 <h1 id="03-tableau-advanced-analytics-integration-rpython-via-tableau">03 · Tableau + Advanced Analytics Integration (R/Python via Tableau)<a class="headerlink" href="#03-tableau-advanced-analytics-integration-rpython-via-tableau" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Tableau can call out to R or Python for statistical/ML logic beyond its
+built-in calculations, via <strong>TabPy</strong> (Python) or an <strong>Rserve</strong> connection.
+This module walks through both integration points against <code>Orders</code>,
+hand-verifying the simplest possible model so the mechanism — not the
+statistics — is the focus.</p>
+<h2 id="1-how-the-integration-works">1. How the integration works<a class="headerlink" href="#1-how-the-integration-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Tableau sends a calculated field's inputs to an external analytics
+   service (TabPy for Python, Rserve for R) over a network connection
+   configured once (Server/Cloud admin settings, or Desktop's Analytics
+   Extension preferences), receives back a computed value per row/partition,
+   and displays it like any other calculated field.</li>
+<li>The calculation itself is written inline using <code>SCRIPT_REAL</code>,
+   <code>SCRIPT_STR</code>, <code>SCRIPT_BOOL</code>, or <code>SCRIPT_INT</code>, wrapping a Python or R
+   snippet as a string, with <code>_argN</code> placeholders bound to Tableau
+   field arguments in order.</li>
+</ol>
+<h2 id="2-worked-example-forecasting-with-a-trivial-linear-fit">2. Worked example: forecasting with a trivial linear fit<a class="headerlink" href="#2-worked-example-forecasting-with-a-trivial-linear-fit" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Using <code>Orders</code> aggregated by month (Level 1's dataset spans Jan–Apr
+   2024), suppose monthly Sales totals are: Jan 1200+450 = wait — use
+   actual monthly rollups: Jan (1001, 1002) = 1200+450=1650; Feb (1003,
+   1004) = 60+800=860; Mar (1005,1006,1007) = 2200+950+120=3270; Apr
+   (1008) = 1100.</li>
+<li>A <code>SCRIPT_REAL</code> calc could call a Python linear regression
+   (<code>numpy.polyfit</code>) over these 4 points to project May. This module
+   doesn't require running TabPy to understand the mechanism — the key
+   verification habit is: before trusting any script-based result, hand
+   sanity-check inputs and outputs the same way as any other calc. Here,
+   confirm the 4 monthly inputs first sum to the known grand total:
+   1650+860+3270+1100 = 6880 ✓ (matches every prior module) — if the
+   script's input array doesn't sum to 6880, the aggregation feeding the
+   script is wrong before the model logic even runs.</li>
+</ol>
+<h2 id="3-argument-binding-and-common-mistakes">3. Argument binding and common mistakes<a class="headerlink" href="#3-argument-binding-and-common-mistakes" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>SCRIPT_REAL("return [x*2 for x in _arg1]", SUM([Sales]))</code> binds
+   <code>_arg1</code> to the aggregated <code>SUM([Sales])</code> values partitioned per the
+   view's granularity — with the view broken out by Region, <code>_arg1</code>
+   receives <code>[2210, 3750, 920]</code> (East, West, Central, in whatever order
+   Tableau's partition delivers them) and the script would return
+   <code>[4420, 7500, 1840]</code> — verify: 2210<em>2 = 4420, 3750</em>2 = 7500, 920*2 =
+   1840 — a mismatched output length or a value that doesn't correspond
+   to any doubled input signals an argument-order or partition-alignment
+   bug, one of the most common failure modes with <code>SCRIPT_*</code> calcs.</li>
+<li><code>SCRIPT_*</code> functions are <strong>table calculations</strong> under the hood (Level 3
+   Module 5's cost discussion applies) — they run per partition as
+   currently laid out in the view, so changing which dimensions are on
+   the view changes what <code>_arg1</code> contains, even though the script text
+   never changed.</li>
+</ol>
+<h2 id="4-when-to-use-tabpyrserve-vs-a-native-lodtable-calc">4. When to use TabPy/Rserve vs. a native LOD/table calc<a class="headerlink" href="#4-when-to-use-tabpyrserve-vs-a-native-lodtable-calc" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard aggregation, ranking, running total</td>
+<td>Native LOD/table calc (Level 2–3)</td>
+</tr>
+<tr>
+<td>Statistical model (regression, clustering) not expressible in Tableau's calc language</td>
+<td>TabPy/Rserve</td>
+</tr>
+<tr>
+<td>A one-off analysis, not needed live/interactively</td>
+<td>Python/R run separately, results imported as a data source</td>
+</tr>
+<tr>
+<td>Real-time model scoring inside a live dashboard</td>
+<td>TabPy/Rserve (accepting the network round-trip cost, Level 3 Module 5)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-governance-implications">5. Governance implications<a class="headerlink" href="#5-governance-implications" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <code>SCRIPT_*</code> calculation is a black box to anyone reviewing the
+   workbook unless the script is documented — Level 4 Module 2/3's
+   governance practices (shared/certified calculations) apply doubly here:
+   a certified, well-commented <code>SCRIPT_REAL</code> calc should state its exact
+   model, inputs, and expected output range (e.g. "returns Sales doubled,
+   for input validation only — see Section 3.1") so a future maintainer
+   can hand-verify it the same way this module did.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SCRIPT_REAL</code></td>
+<td>Floating-point result per partition</td>
+</tr>
+<tr>
+<td><code>SCRIPT_STR</code></td>
+<td>String result</td>
+</tr>
+<tr>
+<td><code>SCRIPT_BOOL</code></td>
+<td>Boolean result</td>
+</tr>
+<tr>
+<td><code>SCRIPT_INT</code></td>
+<td>Integer result</td>
+</tr>
+<tr>
+<td><code>_argN</code></td>
+<td>Nth Tableau field/aggregation passed into the script</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>A <code>SCRIPT_REAL</code> calc computes <code>_arg1</code> as <code>SUM([Sales])</code> partitioned by
+Category, expecting Tableau to pass <code>[4050, 2650, 180]</code> (Furniture,
+Electronics, Office Supplies, per Level 1's totals). The script instead
+receives <code>[4050, 180, 2650]</code>. Explain what this indicates (the partition's
+category ordering differs from the order assumed when writing the script
+— <code>SCRIPT_*</code> functions are positional, not labeled, so any code that
+assumes a fixed category order, rather than reading dimension labels
+alongside <code>_arg1</code>, will silently misattribute results) and what a safer
+script would do (return results in the same order as the input, and let
+Tableau realign them positionally against the same partition — never
+hardcode an assumed category order).</p>
 
 
 

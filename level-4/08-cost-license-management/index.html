@@ -1886,6 +1886,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Cost & License Management at Scale
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1902,6 +1920,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-license-tiers-recap-and-cost-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. License tiers recap and cost shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-worked-example-right-sizing-a-50-person-org" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Worked example: right-sizing a 50-person org
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-identifying-over-licensed-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Identifying over-licensed users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-extract-and-storage-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Extract and storage costs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-building-a-licensecost-review-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Building a license/cost review cadence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-license-tiers-recap-and-cost-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. License tiers recap and cost shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-worked-example-right-sizing-a-50-person-org" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Worked example: right-sizing a 50-person org
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-identifying-over-licensed-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Identifying over-licensed users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-extract-and-storage-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Extract and storage costs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-building-a-licensecost-review-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Building a license/cost review cadence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,116 @@
 
 
 <h1 id="07-cost-license-management-at-scale">07 · Cost &amp; License Management at Scale<a class="headerlink" href="#07-cost-license-management-at-scale" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Tableau licensing (Creator/Explorer/Viewer roles, Level 3 Module 2) has
+real cost implications at enterprise scale. This module covers license
+optimization and cost governance, with worked arithmetic on a small
+representative user base.</p>
+<h2 id="1-license-tiers-recap-and-cost-shape">1. License tiers recap and cost shape<a class="headerlink" href="#1-license-tiers-recap-and-cost-shape" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Creator</strong>: can build and publish new workbooks/data sources —
+   typically the most expensive tier per seat.</li>
+<li><strong>Explorer</strong>: can build from published data sources (can't create new
+   connections) — mid-cost.</li>
+<li><strong>Viewer</strong>: can only view/interact with published content — lowest
+   cost per seat, but usually licensed in larger blocks or bundled
+   pricing.</li>
+<li>Cost governance's core question: is each person licensed at the
+   <em>lowest</em> tier that covers their actual usage, not the tier that's
+   simply convenient to assign everyone by default?</li>
+</ol>
+<h2 id="2-worked-example-right-sizing-a-50-person-org">2. Worked example: right-sizing a 50-person org<a class="headerlink" href="#2-worked-example-right-sizing-a-50-person-org" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Suppose a 50-person org has: 5 people who build new data sources and
+   workbooks (need Creator), 15 who build dashboards from the certified
+   <code>Orders</code> source but never create new connections (need Explorer), and
+   30 who only view published dashboards like the Level 3 Module 10
+   project (need Viewer).</li>
+<li>If every one of the 50 is licensed as Creator "to be safe," and Creator
+   costs (hypothetically, for this arithmetic) 3x an Explorer seat and 6x
+   a Viewer seat, the org pays for 50 Creator-equivalents = 300 Viewer-
+   equivalent cost units, versus a right-sized mix of 5 Creator (5×6=30
+   units) + 15 Explorer (15×3=45 units) + 30 Viewer (30×1=30 units) = 105
+   units — a drop from 300 to 105, roughly a 65% reduction, just from
+   tier-matching, with no loss of actual capability for anyone.</li>
+<li>This is the single highest-leverage cost lever in most Tableau
+   deployments: auditing actual usage (who has ever published a new data
+   source vs. who has only ever built from existing ones vs. who has only
+   ever viewed) against assigned license tier.</li>
+</ol>
+<h2 id="3-identifying-over-licensed-users">3. Identifying over-licensed users<a class="headerlink" href="#3-identifying-over-licensed-users" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Server/Cloud admin views (Level 4 Module 4's Admin Views) show each
+   user's actual activity — a Creator-licensed user with zero "published a
+   new data source" events in the last 90 days is a strong candidate for
+   downgrade to Explorer, pending confirmation they don't need it
+   occasionally (e.g. quarterly, not never).</li>
+<li>Caution: don't downgrade purely on a snapshot — a Creator who published
+   once, 100 days ago, for a legitimate quarterly report, isn't actually
+   over-licensed; combine usage history with a conversation, not just a
+   dashboard number.</li>
+</ol>
+<h2 id="4-extract-and-storage-costs">4. Extract and storage costs<a class="headerlink" href="#4-extract-and-storage-costs" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Beyond seat licenses, extract-heavy deployments (Level 4 Module 1's
+   Backgrounder sizing) carry infrastructure/storage costs that scale with
+   the number and size of <code>.hyper</code> extracts — redundant extracts (e.g.
+   the Level 3 Module 8 scenario's 3 near-duplicate <code>Orders</code> copies, each
+   independently refreshed nightly) triple both refresh compute and
+   storage cost for data that should exist once, certified.</li>
+<li>Cost governance therefore overlaps directly with content governance
+   (Level 4 Module 3): consolidating duplicate sources isn't just a
+   correctness fix, it's a cost optimization, since fewer, well-governed
+   extracts mean less redundant Backgrounder and storage spend.</li>
+</ol>
+<h2 id="5-building-a-licensecost-review-cadence">5. Building a license/cost review cadence<a class="headerlink" href="#5-building-a-licensecost-review-cadence" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Recommended cadence: quarterly review of (a) license tier vs. actual
+   usage per Section 3, (b) duplicate/redundant data source count per
+   Level 4 Module 2's metrics, and (c) extract refresh volume trend
+   (growing faster than user count growth is a signal worth
+   investigating, per Module 4's capacity discussion).</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Mechanism</th>
+<th>Where covered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tier right-sizing</td>
+<td>Match license to actual usage, not convenience</td>
+<td>Section 2</td>
+</tr>
+<tr>
+<td>Usage-based downgrade</td>
+<td>Admin Views activity history</td>
+<td>Section 3</td>
+</tr>
+<tr>
+<td>Extract consolidation</td>
+<td>Fewer duplicate sources = less refresh/storage cost</td>
+<td>Section 4, Level 4 Module 2/3</td>
+</tr>
+<tr>
+<td>Quarterly review</td>
+<td>Recurring cadence catches drift early</td>
+<td>Section 5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Using Section 2's cost-unit model, a 20-person team has 8 Creators, 2
+Explorers, 10 Viewers. An audit shows 5 of the 8 Creators have never
+published a new data source in the last 6 months and only build from
+existing certified sources. Recompute the cost-unit total before and
+after downgrading those 5 to Explorer, using the ratio Creator=3,
+Explorer=1, Viewer=0.5 units: Before = 8(3)+2(1)+10(0.5) = 24+2+5 = 31.
+After downgrading 5 Creators to Explorer = 3(3)+7(1)+10(0.5) = 9+7+5 =
+<strong>21</strong>, roughly a 32% reduction.</p>
 
 
 

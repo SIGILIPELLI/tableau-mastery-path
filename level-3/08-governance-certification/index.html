@@ -1512,6 +1512,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Governance & Data Source Certification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1528,6 +1546,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-problem-certification-solves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The problem certification solves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-certifying-a-data-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Certifying a data source
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-data-quality-warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Data quality warnings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-managed-metadata-lineage-and-impact-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Managed metadata: lineage and impact analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-governance-roles-and-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Governance roles and workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-problem-certification-solves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The problem certification solves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-certifying-a-data-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Certifying a data source
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-data-quality-warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Data quality warnings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-managed-metadata-lineage-and-impact-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Managed metadata: lineage and impact analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-governance-roles-and-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Governance roles and workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,118 @@
 
 
 <h1 id="07-governance-data-source-certification">07 · Governance &amp; Data Source Certification<a class="headerlink" href="#07-governance-data-source-certification" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Once multiple teams publish workbooks against <code>Orders</code>-like data, governance
+answers: which data source is the trustworthy one, who can change it, and
+how do consumers know. This module works through certification and
+governance using the published data source from Level 2 Module 9/10.</p>
+<h2 id="1-the-problem-certification-solves">1. The problem certification solves<a class="headerlink" href="#1-the-problem-certification-solves" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Suppose three analysts each publish their own extract of <code>Orders</code> to
+   Tableau Server: Analyst A's copy has the full 8 rows (6880 total sales),
+   Analyst B's is missing the two Office Supplies rows (accidentally
+   filtered, totaling 6880 − 60 − 120 = 6700), and Analyst C's has a stale
+   extract from before order 1008 was added (6880 − 1100 = 5780).</li>
+<li>Without governance, a viewer searching Server for "Orders" finds three
+   data sources with three different Sales totals and no way to tell which
+   is authoritative — a governance failure that produces silently wrong
+   downstream reports.</li>
+</ol>
+<h2 id="2-certifying-a-data-source">2. Certifying a data source<a class="headerlink" href="#2-certifying-a-data-source" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A site admin or designated <strong>certifier</strong> marks one published data
+   source (Analyst A's complete, correct 6880-total version) as
+   <strong>Certified</strong> — it then shows a badge in the Server/Cloud catalog, and
+   Tableau's connection dialog recommends it above uncertified sources
+   with a similar name.</li>
+<li>Certification doesn't technically prevent someone from still using
+   Analyst B's or C's uncertified copies — it's a discoverability and
+   trust signal, not an access control. Pair certification with actually
+   removing or archiving the incorrect duplicates once discovered, since a
+   badge alone doesn't fix the 6700 and 5780 totals still sitting on
+   Server.</li>
+</ol>
+<h2 id="3-data-quality-warnings">3. Data quality warnings<a class="headerlink" href="#3-data-quality-warnings" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Independent of certification, any data source can carry a <strong>data
+   quality warning</strong> — e.g. "Warning: this extract's last successful
+   refresh was 2024-01-10; the source table has since added rows through
+   1008" — shown to every viewer who opens a workbook built on it.</li>
+<li>Verify the warning's value: if Analyst C's stale source (5780 total,
+   missing order 1008's 1100 in Sales) is flagged with a warning, a viewer
+   who sees "6880" on a certified dashboard and "5780" with a warning
+   banner on Analyst C's has enough information to know which number to
+   trust and why they differ (5780 + 1100 = 6880 — exactly the missing
+   order).</li>
+</ol>
+<h2 id="4-managed-metadata-lineage-and-impact-analysis">4. Managed metadata: lineage and impact analysis<a class="headerlink" href="#4-managed-metadata-lineage-and-impact-analysis" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Tableau's <strong>Data Catalog / lineage</strong> view traces a field like <code>Sales</code>
+   backward to its source column and forward to every workbook/view that
+   uses it — for the certified <code>Orders</code> source, lineage would show every
+   downstream dashboard built on it (e.g. the Level 2 Module 9/10 sales
+   dashboard, Level 3 Module 3's RLS dashboard).</li>
+<li><strong>Impact analysis</strong> answers "if I change or deprecate this data
+   source, what breaks?" — before archiving Analyst B's incorrect 6700-total
+   source, lineage confirms whether any published dashboard currently
+   depends on it, so removing it doesn't silently break a report someone
+   still relies on.</li>
+</ol>
+<h2 id="5-governance-roles-and-workflow">5. Governance roles and workflow<a class="headerlink" href="#5-governance-roles-and-workflow" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Typical governance workflow: an analyst builds and validates a data
+   source (hand-checking totals as done throughout this course); a
+   designated certifier (often a BI team lead) reviews it against known-
+   correct totals (6880 grand total, 2210/3750/920 by Region); once
+   confirmed, the certifier applies the Certified badge; any subsequent
+   change to the certified source ideally goes through the same review
+   before republishing, so the badge continues to mean something.</li>
+<li>This module's dataset makes the review step concrete: a reviewer
+   checking a to-be-certified <code>Orders</code> source can independently re-derive
+   6880 (East 2210 + West 3750 + Central 920) from the raw 8 rows before
+   approving — exactly the kind of hand-verification this course has used
+   throughout, applied as an actual governance gate.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>What it does</th>
+<th>What it does NOT do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certification</td>
+<td>Marks the recommended, trusted source</td>
+<td>Doesn't block use of other sources</td>
+</tr>
+<tr>
+<td>Data quality warning</td>
+<td>Flags known issues (staleness, etc.)</td>
+<td>Doesn't fix the underlying data</td>
+</tr>
+<tr>
+<td>Lineage</td>
+<td>Shows source → field → downstream use</td>
+<td>Doesn't prevent breaking changes alone</td>
+</tr>
+<tr>
+<td>Impact analysis</td>
+<td>Shows what breaks before a change</td>
+<td>Doesn't make the change safe automatically</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>A fourth analyst's data source shows a Sales grand total of 6940 — 60
+more than the certified 6880. Using the certified source's per-region
+breakdown (East 2210, West 3750, Central 920) as ground truth, describe
+the governance steps you'd take before either certifying or rejecting the
+new source (re-derive its per-region totals from its own row-level data,
+locate which row(s) account for the extra 60, and determine whether it
+reflects a legitimately new order or a data error) — do not assume either
+number is correct without recomputing from raw rows.</p>
 
 
 

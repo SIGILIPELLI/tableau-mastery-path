@@ -1858,6 +1858,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Advanced Embedding & Tableau Extensions API Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1874,6 +1892,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-multi-tenant-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Multi-tenant embedding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extension-allow-listing-and-security-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extension allow-listing and security review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-write-back-extensions-and-data-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Write-back extensions and data integrity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-embedding-performance-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Embedding performance at scale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-enterprise-embedding-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Enterprise embedding checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2094,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-multi-tenant-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Multi-tenant embedding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extension-allow-listing-and-security-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extension allow-listing and security review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-write-back-extensions-and-data-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Write-back extensions and data integrity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-embedding-performance-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Embedding performance at scale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-enterprise-embedding-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Enterprise embedding checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2187,113 @@
 
 
 <h1 id="06-advanced-embedding-tableau-extensions-api-overview">06 · Advanced Embedding &amp; Tableau Extensions API Overview<a class="headerlink" href="#06-advanced-embedding-tableau-extensions-api-overview" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Building on Level 3 Modules 5 and 9, this module covers enterprise-scale
+embedding and extension governance: multi-tenant embedding, extension
+allow-listing, and write-back patterns, using <code>Orders</code> scenarios.</p>
+<h2 id="1-multi-tenant-embedding">1. Multi-tenant embedding<a class="headerlink" href="#1-multi-tenant-embedding" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A SaaS product embedding Tableau dashboards for many customer
+   organizations needs each customer to see only their own data — the
+   embedding equivalent of Level 3 Module 3's RLS, but keyed to a tenant
+   identifier rather than (or in addition to) a username.</li>
+<li>Pattern: extend <code>RegionAccess</code>-style entitlement with a <code>Tenant ID</code>
+   column, and a combined RLS calc:
+   <code>[Tenant ID] = PARAMETER([TenantParam])</code> alongside the region check —
+   the embedding host page sets <code>TenantParam</code> via the Embedding API
+   (Level 3 Module 9, Section 3's <code>applyFilterAsync</code> pattern extends to
+   parameters via <code>parameter.changeValueAsync</code>) so each customer's
+   embedded view is scoped both by tenant and by their own RLS.</li>
+<li>Verify: Tenant A's East-region user should see the same 2210 total as
+   <code>alice@co.com</code> did in Level 3 Module 3 — but only if Tenant A's data is
+   also isolated; a bug where the tenant filter is applied as a <em>plain</em>
+   dimension filter rather than a context filter ahead of any FIXED LODs
+   could leak a FIXED calc's denominator across tenants (the same pitfall
+   as Level 3 Module 1, Section 4, now with tenant isolation at stake
+   rather than just a stale total).</li>
+</ol>
+<h2 id="2-extension-allow-listing-and-security-review">2. Extension allow-listing and security review<a class="headerlink" href="#2-extension-allow-listing-and-security-review" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Enterprise deployments require explicit allow-listing of extension
+   domains (Level 3 Module 5) at the Server/Cloud admin level — an
+   ungoverned deployment that allows "any extension" effectively lets any
+   dashboard author embed arbitrary third-party JavaScript with access to
+   <code>getUnderlyingDataAsync()</code> (Level 3 Module 5, Section 2), which for a
+   dashboard built on sensitive RLS-gated data is a real exfiltration
+   risk: a malicious or careless extension could read all 8 underlying
+   <code>Orders</code> rows (bypassing the visual-only 3-row Region summary) and
+   send them to an external endpoint.</li>
+<li>Governance response: maintain an explicit allow-list of vetted
+   extension domains/manifests (analogous to Level 4 Module 3's
+   content-lifecycle discipline, applied to extensions instead of data
+   sources), and require security review before any new extension is
+   allow-listed, checking exactly what data access (<code>getSummaryDataAsync</code>
+   vs. <code>getUnderlyingDataAsync</code>, per Level 3 Module 5 Section 2) it
+   requests.</li>
+</ol>
+<h2 id="3-write-back-extensions-and-data-integrity">3. Write-back extensions and data integrity<a class="headerlink" href="#3-write-back-extensions-and-data-integrity" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Newer Extensions API capabilities allow an extension to write values
+   back to a source (e.g. an approval workflow extension writing a
+   "Reviewed: Y/N" flag against each <code>Orders</code> row) — this introduces a
+   new integrity surface: unlike read-only dashboards, a write-back
+   extension can <em>change</em> the numbers everyone else sees.</li>
+<li>Guardrail: any write-back extension touching a certified source (Level
+   3 Module 8) should itself go through the same certification-adjacent
+   review — e.g. requiring the write path to preserve referential
+   integrity (an extension that could set <code>Order ID</code>, breaking the primary
+   key uniqueness <code>Orders</code> relies on for every prior module's row counts,
+   is a governance failure equivalent to a bad ETL job) and logging every
+   write for audit.</li>
+</ol>
+<h2 id="4-embedding-performance-at-scale">4. Embedding performance at scale<a class="headerlink" href="#4-embedding-performance-at-scale" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Each embedded <code>&lt;tableau-viz&gt;</code> instance on a host page is effectively a
+   VizQL Server session — a host page embedding 20 small dashboards (e.g.
+   one per Region×Category combination) generates 20 times the VizQL load
+   of a single combined dashboard using filters, which is a Module 4
+   (Level 4) scaling concern in miniature: prefer fewer, well-designed
+   embedded views with interactive filters over many small
+   single-purpose embeds when the same data could be shown one way.</li>
+</ol>
+<h2 id="5-enterprise-embedding-checklist">5. Enterprise embedding checklist<a class="headerlink" href="#5-enterprise-embedding-checklist" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tenant isolation</td>
+<td>RLS + tenant filter combined, tenant filter applied as context</td>
+</tr>
+<tr>
+<td>Extension access scope</td>
+<td>Summary vs. underlying data, reviewed before allow-listing</td>
+</tr>
+<tr>
+<td>Write-back integrity</td>
+<td>Referential integrity preserved, all writes audited</td>
+</tr>
+<tr>
+<td>Embedding load</td>
+<td>Consolidated views with filters, not many redundant small embeds</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>A newly proposed extension requests <code>getUnderlyingDataAsync()</code> access on
+a dashboard built on the RLS-gated certified <code>Orders</code> source, but its
+stated purpose ("show a bar chart with totals by Region") only needs
+<code>getSummaryDataAsync()</code>. Using Section 2's reasoning, explain why this
+mismatch should block allow-listing until resolved (requesting row-level
+underlying data for a purely aggregate use case is disproportionate
+access — it would let the extension see all 8 individual orders,
+including for regions the current viewer's RLS should otherwise restrict
+via the dashboard's visual layer, undermining Level 3 Module 3's
+entitlement model even if the extension's UI itself only displays
+aggregates).</p>
 
 
 

@@ -1456,6 +1456,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Advanced Performance Tuning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1472,6 +1490,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-reading-the-performance-recording" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Reading the Performance Recording
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extract-vs-live-quantifying-the-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extract vs. live: quantifying the difference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-calculated-field-cost-row-level-vs-aggregate-vs-table-calc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Calculated field cost: row-level vs. aggregate vs. table calc
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-filters-dimension-filter-vs-context-filter-vs-data-source-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Filters: dimension filter vs. context filter vs. data source filter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-worked-diagnosis-a-slow-dashboard-with-4-worksheets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Worked diagnosis: a slow dashboard with 4 worksheets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-reading-the-performance-recording" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Reading the Performance Recording
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extract-vs-live-quantifying-the-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extract vs. live: quantifying the difference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-calculated-field-cost-row-level-vs-aggregate-vs-table-calc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Calculated field cost: row-level vs. aggregate vs. table calc
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-filters-dimension-filter-vs-context-filter-vs-data-source-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Filters: dimension filter vs. context filter vs. data source filter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-worked-diagnosis-a-slow-dashboard-with-4-worksheets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Worked diagnosis: a slow dashboard with 4 worksheets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,144 @@
 
 
 <h1 id="05-advanced-performance-tuning">05 · Advanced Performance Tuning<a class="headerlink" href="#05-advanced-performance-tuning" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Slow dashboards usually trace to one of a handful of causes. This module
+diagnoses each against the <code>Orders</code> workbook, quantifying "how much work"
+each fix removes using row/calculation counts you can verify by hand.</p>
+<h2 id="1-reading-the-performance-recording">1. Reading the Performance Recording<a class="headerlink" href="#1-reading-the-performance-recording" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Tableau Desktop's <strong>Help → Settings and Performance → Start Performing
+   Recording</strong> captures a timeline of every query, calculation, layout, and
+   rendering event while you interact with a workbook, then opens a
+   dashboard of results when you stop recording.</li>
+<li>The recording's events are sorted by duration — the top bar is almost
+   always either "Executing Query" (time spent waiting on the data source)
+   or "Computing Layout" (time spent rendering marks) for a workbook this
+   small; for larger production workbooks, "Executing Query" typically
+   dominates for live connections, "Computing Layout" for dashboards with
+   many zones/filters.</li>
+</ol>
+<h2 id="2-extract-vs-live-quantifying-the-difference">2. Extract vs. live: quantifying the difference<a class="headerlink" href="#2-extract-vs-live-quantifying-the-difference" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>Orders</code> has 8 rows — trivially fast either way — but the pattern for
+   reasoning about it scales: a live connection re-runs a query against
+   the source (e.g. <code>SELECT Region, SUM(Sales) FROM Orders GROUP BY
+   Region</code>) on every filter change, while an extract answers from a local
+   <code>.hyper</code> copy.</li>
+<li>If <code>Orders</code> had 8 million rows instead of 8, the query cost scales
+   with the source engine's ability to aggregate that volume; an extract
+   pre-indexes and compresses data specifically for the aggregations
+   Tableau needs, so the same GROUP BY typically returns faster from a
+   <code>.hyper</code> extract than from a live query hitting an un-indexed table —
+   the actual multiplier depends on the source, which is why Tableau's own
+   guidance is "test both," not a fixed rule.</li>
+</ol>
+<h2 id="3-calculated-field-cost-row-level-vs-aggregate-vs-table-calc">3. Calculated field cost: row-level vs. aggregate vs. table calc<a class="headerlink" href="#3-calculated-field-cost-row-level-vs-aggregate-vs-table-calc" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Row-level calculations</strong> (e.g. <code>[Sales] * 1.1</code>) execute once per row
+   — 8 evaluations for <code>Orders</code>.</li>
+<li><strong>Aggregate calculations</strong> (e.g. <code>SUM([Sales])</code>) execute once per
+   rendered mark/group — 3 evaluations if grouped by Region (East, West,
+   Central).</li>
+<li><strong>Table calculations</strong> (e.g. a running total) execute once per mark but
+   also require the <em>entire</em> partition materialized in memory to compute
+   relative to other marks — for <code>Orders</code> grouped by Region, that's still
+   3, but the cost of a table calc grows with partition size in a way flat
+   aggregates don't, because each cell's answer depends on its neighbors.</li>
+<li>Rule of thumb ranked by relative cost per row of underlying data: LOD
+   FIXED calcs (computed once per unique combination, cached) ≤ aggregate
+   ≤ row-level ≤ table calc ≤ LOD with non-aggregate dependency chains.</li>
+</ol>
+<h2 id="4-filters-dimension-filter-vs-context-filter-vs-data-source-filter">4. Filters: dimension filter vs. context filter vs. data source filter<a class="headerlink" href="#4-filters-dimension-filter-vs-context-filter-vs-data-source-filter" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A <strong>data source filter</strong> (Level 1) is applied earliest, at the query
+   itself — e.g. filtering <code>Orders</code> to <code>Category != "Office Supplies"</code>
+   means only 6 rows (excluding 1003, 1007) are ever pulled into the
+   workbook, reducing every downstream calculation's input size from 8 to
+   6 rows.</li>
+<li>A <strong>context filter</strong> (Level 2 Module 8) is applied next, materializing
+   an intermediate result other filters/calcs then run against — useful
+   when a FIXED LOD needs to respect a filter (Level 3 Module 1, Section 4)
+   but comes at a small recomputation cost whenever the context filter's
+   own value changes.</li>
+<li>A plain <strong>dimension/measure filter</strong> runs last, against whatever the
+   context (or full data source) already produced — cheapest to change
+   interactively, since it doesn't force recomputation of LODs or context.</li>
+</ol>
+<h2 id="5-worked-diagnosis-a-slow-dashboard-with-4-worksheets">5. Worked diagnosis: a slow dashboard with 4 worksheets<a class="headerlink" href="#5-worked-diagnosis-a-slow-dashboard-with-4-worksheets" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Symptom: a dashboard combining 4 worksheets (Region bar chart, Category
+   pie, a table with 3 table calcs, and a map) takes 8 seconds to render
+   after a filter change on a live connection.</li>
+<li>Diagnostic order: (a) check Performance Recording for the dominant
+   event type; (b) if "Executing Query" dominates, test converting the
+   live connection to an extract, and re-measure; (c) if "Computing
+   Layout" or calc time dominates instead, count how many table calcs
+   recompute per filter change (3 in the table worksheet) versus how many
+   are LOD FIXED calcs (which don't need to fully recompute if the filter
+   isn't in their FIXED dimension list, per Module 1 Section 4) — a table
+   calc-heavy worksheet recomputing across a large partition is a common
+   hidden cost that an extract alone won't fix.</li>
+<li>Verify the fix numerically where possible: after switching to an
+   extract, the underlying <code>Orders</code> totals must stay identical (Region
+   East 2210, West 3750, Central 920, grand total 6880) — performance
+   tuning should never change a result, only the time to produce it; if a
+   total changes after a tuning change, that's a correctness regression,
+   not a performance win.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Effect</th>
+<th>Cost order (cheapest → priciest per row)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data source filter</td>
+<td>Reduces rows pulled</td>
+<td>Earliest, cheapest overall</td>
+</tr>
+<tr>
+<td>Extract vs. live</td>
+<td>Removes per-query source round-trip</td>
+<td>Depends on source, test both</td>
+</tr>
+<tr>
+<td>LOD FIXED</td>
+<td>Computed once, cached</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Aggregate calc</td>
+<td>Once per rendered group</td>
+<td>Low–Medium</td>
+</tr>
+<tr>
+<td>Row-level calc</td>
+<td>Once per row</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Table calc</td>
+<td>Once per mark, needs full partition</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Context filter</td>
+<td>Materializes before other filters/LODs</td>
+<td>Medium (recomputes on change)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>A workbook applies a data source filter <code>Category != "Electronics"</code>
+before anything else. Hand-compute: how many <code>Orders</code> rows remain (6 —
+excluding 1002 and 1005), and what is the new grand total of <code>Sales</code>
+across the remaining rows? (6880 − 450 − 2200 = <strong>4230</strong>.) Explain why a
+row-level calculation like <code>[Sales]*1.1</code> now only evaluates 6 times
+instead of 8.</p>
 
 
 

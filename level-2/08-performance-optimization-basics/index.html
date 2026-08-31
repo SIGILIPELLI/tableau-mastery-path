@@ -92,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#07-performance-optimization-basics" class="md-skip">
+        <a href="#08-performance-optimization-basics" class="md-skip">
           Skip to content
         </a>
       
@@ -1138,6 +1138,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Performance Optimization Basics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1154,6 +1172,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-performance-recording-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Performance Recording tool
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extracts-vs-live-for-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extracts vs. live for performance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-filters-extract-filters-vs-context-filters-vs-quick-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Filters: extract filters vs. context filters vs. quick filters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-reducing-marks-and-calculation-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Reducing marks and calculation complexity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verifying-an-optimization-actually-helped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verifying an optimization actually helped
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-performance-recording-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Performance Recording tool
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extracts-vs-live-for-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extracts vs. live for performance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-filters-extract-filters-vs-context-filters-vs-quick-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Filters: extract filters vs. context filters vs. quick filters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-reducing-marks-and-calculation-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Reducing marks and calculation complexity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verifying-an-optimization-actually-helped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verifying an optimization actually helped
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2009,9 +2208,115 @@
   
 
 
-<h1 id="07-performance-optimization-basics">07 · Performance Optimization Basics<a class="headerlink" href="#07-performance-optimization-basics" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<h1 id="08-performance-optimization-basics">08 · Performance Optimization Basics<a class="headerlink" href="#08-performance-optimization-basics" title="Permanent link">&para;</a></h1>
+<p><code>Orders</code> has only 8 rows, so nothing here will actually feel slow — but the
+diagnostic habits taught in this module apply identically at 8 rows or 8
+million. We'll reason about <em>why</em> each technique helps using this dataset's
+known numbers.</p>
+<h2 id="1-the-performance-recording-tool">1. The Performance Recording tool<a class="headerlink" href="#1-the-performance-recording-tool" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Help → Settings and Performance → Start Performance Recording</strong>, use
+   the workbook, then <strong>Stop Performance Recording</strong> — Tableau opens a
+   generated dashboard showing a timeline of every query, layout, and
+   rendering event with its duration.</li>
+<li>Events worth watching for real workbooks: "Executing Query" bars far
+   longer than others usually mean the data source query itself (not
+   Tableau's rendering) is the bottleneck — the fix is almost always on the
+   data/extract side, not the worksheet design.</li>
+</ol>
+<h2 id="2-extracts-vs-live-for-performance">2. Extracts vs. live for performance<a class="headerlink" href="#2-extracts-vs-live-for-performance" title="Permanent link">&para;</a></h2>
+<ol>
+<li>An <strong>extract</strong> (<code>.hyper</code> file) pre-aggregates and compresses data into
+   Tableau's own columnar engine — for <code>Orders</code>, extracting means every
+   view (Region totals, Category totals) is served from a local
+   already-optimized copy rather than re-querying the source file.</li>
+<li><strong>Extract with aggregation</strong>: Data Source page → Extract → Edit →
+   check "Aggregate data for visible dimensions" — for a workbook that
+   only ever needs Region/Category-level totals (2210/3750/920 and
+   4050/2650/180), this option pre-collapses the 8 row-level records into
+   the 3+3 aggregate rows actually used, shrinking the extract further.</li>
+</ol>
+<h2 id="3-filters-extract-filters-vs-context-filters-vs-quick-filters">3. Filters: extract filters vs. context filters vs. quick filters<a class="headerlink" href="#3-filters-extract-filters-vs-context-filters-vs-quick-filters" title="Permanent link">&para;</a></h2>
+<ol>
+<li>An <strong>extract filter</strong> (Data Source page → Extract → Filters) removes
+   rows <em>before</em> they ever enter the <code>.hyper</code> file — e.g. filtering to
+   <code>Order Date &gt;= 2024-02-01</code> at extract time would drop orders 1001 and
+   1002 (Jan) permanently from that extract, reducing every downstream
+   query's scan size.</li>
+<li>A <strong>context filter</strong> (right-click a filter pill → Add to Context)
+   forces that filter to run first, before other filters/table calcs,
+   which both fixes certain table-calc-ordering bugs (Level 2 Module 4)
+   and, for a large dataset, lets Tableau cache the reduced result set
+   once instead of recomputing it for every other filter change.</li>
+<li><strong>Quick filters</strong> (a filter card left on the dashboard for viewers) are
+   the most expensive per-interaction — each click re-queries — so keep
+   the number of quick filters and their cardinality (distinct value
+   count) low; <code>Region</code> (3 distinct values) is a cheap quick filter, a
+   hypothetical <code>Order ID</code> (8, or millions in a real dataset) is not.</li>
+</ol>
+<h2 id="4-reducing-marks-and-calculation-complexity">4. Reducing marks and calculation complexity<a class="headerlink" href="#4-reducing-marks-and-calculation-complexity" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A view rendering one mark per <code>Order ID</code> (8 marks here) is cheap; the
+   same <em>pattern</em> at real scale — one mark per row in a million-row table
+   — is a common performance mistake. Prefer aggregating to Region/Category
+   (3–4 marks) whenever the analysis question doesn't require row-level
+   detail.</li>
+<li>Nested LOD expressions (Level 2 Module 1) recompute per underlying row
+   before aggregating — a <code>{FIXED [Region]: SUM([Sales])}</code> over 8 rows is
+   instant, but the same construct over a large fact table forces a full
+   table scan per LOD, so prefer a pre-aggregated extract (Section 2) when
+   an LOD's underlying grain is much finer than the view needs.</li>
+</ol>
+<h2 id="5-verifying-an-optimization-actually-helped">5. Verifying an optimization actually helped<a class="headerlink" href="#5-verifying-an-optimization-actually-helped" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Before/after check: extract-filter the workbook to <code>Order Date &gt;=
+   2024-02-01</code> (Section 3.1) and confirm <code>SUM(Sales)</code> now reads 60 + 800 +
+   2200 + 950 + 120 + 1100 = <strong>5230</strong> (orders 1003–1008), not 6880 — this
+   confirms the filter genuinely reduced the row set rather than just
+   hiding rows visually.</li>
+<li>Any optimization step should be paired with exactly this kind of
+   before/after total check — performance work that silently changes your
+   numbers is a correctness bug, not a speed win.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Extract (<code>.hyper</code>)</td>
+<td>Local, pre-optimized copy vs. live re-query</td>
+</tr>
+<tr>
+<td>Extract with aggregation</td>
+<td>Collapses to only the dimensions used</td>
+</tr>
+<tr>
+<td>Extract filter</td>
+<td>Drops rows before the extract is built</td>
+</tr>
+<tr>
+<td>Context filter</td>
+<td>Runs first; can be cached; fixes calc-order bugs</td>
+</tr>
+<tr>
+<td>Fewer marks / less granularity</td>
+<td>Less rendering + query work</td>
+</tr>
+<tr>
+<td>Performance Recording</td>
+<td>Diagnoses where time is actually spent</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Using an extract filter of <code>Order Date &gt;= 2024-03-01</code>, list which Order IDs
+remain (1005, 1006, 1007, 1008) and hand-verify the new <code>SUM(Sales)</code> total
+is 2200+950+120+1100 = 4370.</p>
 
 
 

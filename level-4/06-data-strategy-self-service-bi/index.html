@@ -1830,6 +1830,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Data Strategy & Self-Service BI Enablement
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1846,6 +1864,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-self-service-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The self-service spectrum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-makes-self-service-safe-the-certified-data-source-as-the-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What makes self-service safe: the certified data source as the gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-enablement-training-self-service-authors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Enablement: training self-service authors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-self-service-guardrails-without-recreating-the-bottleneck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Self-service guardrails without recreating the bottleneck
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-measuring-self-service-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Measuring self-service health
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2094,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-self-service-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The self-service spectrum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-makes-self-service-safe-the-certified-data-source-as-the-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What makes self-service safe: the certified data source as the gate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-enablement-training-self-service-authors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Enablement: training self-service authors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-self-service-guardrails-without-recreating-the-bottleneck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Self-service guardrails without recreating the bottleneck
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-measuring-self-service-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Measuring self-service health
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2187,103 @@
 
 
 <h1 id="05-data-strategy-self-service-bi-enablement">05 · Data Strategy &amp; Self-Service BI Enablement<a class="headerlink" href="#05-data-strategy-self-service-bi-enablement" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Self-service BI means giving analysts across an organization the ability
+to build their own dashboards on governed data, without every request
+routing through a central team. This module covers how to make that safe,
+using the certified <code>Orders</code> source and CoE structure from Modules 2–3.</p>
+<h2 id="1-the-self-service-spectrum">1. The self-service spectrum<a class="headerlink" href="#1-the-self-service-spectrum" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Fully centralized</strong>: only a BI team builds anything; every request is
+   a ticket. Safe but slow, and doesn't scale past a small number of
+   dashboards.</li>
+<li><strong>Fully decentralized (uncontrolled)</strong>: anyone connects to raw source
+   tables and builds whatever they want — the Level 3 Module 8 scenario
+   (three conflicting <code>Orders</code> totals) is the predictable outcome at
+   scale.</li>
+<li><strong>Governed self-service</strong>: analysts build their own workbooks, but
+   against certified data sources (Level 3 Module 8) with governed
+   calculated fields (Level 4 Module 3) — the goal state most mature CoEs
+   aim for.</li>
+</ol>
+<h2 id="2-what-makes-self-service-safe-the-certified-data-source-as-the-gate">2. What makes self-service safe: the certified data source as the gate<a class="headerlink" href="#2-what-makes-self-service-safe-the-certified-data-source-as-the-gate" title="Permanent link">&para;</a></h2>
+<ol>
+<li>If every self-service author connects to the certified <code>Orders</code> source
+   (grand total 6880, verified in Level 3 Module 8) rather than raw
+   tables, their individual dashboards inherit correctness by
+   construction — an author building a new "Profit by Category" view atop
+   the certified source should get Furniture 386, Electronics 420, Office
+   Supplies 60 (Level 3 Module 5, Section 5) without re-deriving those
+   numbers themselves, because the certified source's row-level Profit
+   values are already correct.</li>
+<li>This is the practical payoff of Modules 2–3's governance investment:
+   self-service scales precisely because the guardrail (certification) is
+   upstream of individual authors, not something each author has to
+   re-establish per workbook.</li>
+</ol>
+<h2 id="3-enablement-training-self-service-authors">3. Enablement: training self-service authors<a class="headerlink" href="#3-enablement-training-self-service-authors" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Minimum skill baseline for a self-service author, mapped to this
+   course: distinguishing dimensions/measures and live/extract (Level 1),
+   writing basic calculated fields and using filters correctly including
+   context filters (Level 2), and knowing when a data source is certified
+   vs. not (Level 3 Module 8) before building on it.</li>
+<li>A common enablement gap: authors who can build visually compelling
+   dashboards but don't know to hand-verify a number before publishing
+   (the habit this entire course has built) — training should explicitly
+   include "how do I know this number is right," not just tool mechanics.</li>
+</ol>
+<h2 id="4-self-service-guardrails-without-recreating-the-bottleneck">4. Self-service guardrails without recreating the bottleneck<a class="headerlink" href="#4-self-service-guardrails-without-recreating-the-bottleneck" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Row-level security by default</strong> on sensitive certified sources
+   (Level 3 Module 3) — a self-service author building on the certified
+   <code>Orders</code> source shouldn't need to build RLS themselves; it should
+   already be enforced at the source, so every workbook built on it
+   inherits the same Region-scoping automatically.</li>
+<li><strong>Publish-time validation</strong>, not build-time restriction — e.g. a
+   lightweight automated check that a newly published workbook's key
+   metric (grand total Sales) falls within an expected range compared to
+   the certified source's own total, flagging (not blocking) anomalies
+   for CoE review, similar in spirit to Level 3 Module 8's manual
+   discrepancy check but automated.</li>
+</ol>
+<h2 id="5-measuring-self-service-health">5. Measuring self-service health<a class="headerlink" href="#5-measuring-self-service-health" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What it indicates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>% of workbooks built on certified sources</td>
+<td>Whether the gate in Section 2 is actually being used</td>
+</tr>
+<tr>
+<td>Ratio of self-service to BI-team-built dashboards</td>
+<td>How much load has shifted off the central team</td>
+</tr>
+<tr>
+<td>Discrepancy reports per month (Level 4 Module 2 metric)</td>
+<td>Whether governance is holding up as self-service scales</td>
+</tr>
+<tr>
+<td>Time from data need to published dashboard</td>
+<td>The actual speed benefit self-service is meant to deliver</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>An organization has 40 self-service-built dashboards; an audit finds 12
+connect directly to a raw, uncertified copy of <code>Orders</code> rather than the
+certified source. Using Section 2's reasoning, explain the specific risk
+this creates (each of those 12 dashboards could silently diverge from the
+certified 6880 total if the raw copy is stale or filtered differently,
+recreating Level 3 Module 8's multi-source problem at a larger scale) and
+the remediation step that follows Level 4 Module 3's deprecation workflow
+(migrate the 12 dashboards to the certified source, verify each still
+reports 6880/2210/3750/920, then restrict or deprecate direct access to
+the raw table).</p>
 
 
 

@@ -1746,6 +1746,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Advanced Governance & Content Strategy
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1762,6 +1780,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-content-lifecycle-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Content lifecycle stages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tagging-and-naming-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tagging and naming taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-deprecation-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Deprecation workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-governance-for-calculated-fields-and-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Governance for calculated fields and metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-content-strategy-scorecard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Content strategy scorecard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2094,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-content-lifecycle-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Content lifecycle stages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tagging-and-naming-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tagging and naming taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-deprecation-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Deprecation workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-governance-for-calculated-fields-and-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Governance for calculated fields and metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-content-strategy-scorecard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Content strategy scorecard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2187,113 @@
 
 
 <h1 id="02-advanced-governance-content-strategy">02 · Advanced Governance &amp; Content Strategy<a class="headerlink" href="#02-advanced-governance-content-strategy" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Building on Level 3 Module 8's certification and Level 4 Module 2's CoE,
+this module covers content strategy at scale: lifecycle policy, tagging
+taxonomy, and deprecation, using the <code>Orders</code>-family sources as the
+running example.</p>
+<h2 id="1-content-lifecycle-stages">1. Content lifecycle stages<a class="headerlink" href="#1-content-lifecycle-stages" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Draft</strong> — an analyst is building against <code>Orders</code> (or a certified
+   copy of it), not yet published for others.</li>
+<li><strong>Published, uncertified</strong> — shared to Server but not yet reviewed;
+   this is where Level 3 Module 8's three conflicting analyst copies
+   (6880, 6700, 5780) would sit before governance review.</li>
+<li><strong>Certified</strong> — reviewed and marked as the trusted source, per Level 3
+   Module 8.</li>
+<li><strong>Deprecated</strong> — still accessible but flagged for retirement (e.g. the
+   old <code>OrderFacts</code>/<code>RegionDim</code> split from Level 3 Module 6 being replaced
+   by a newer certified single-table source).</li>
+<li><strong>Archived/removed</strong> — no longer accessible; only performed after
+   impact analysis (Level 3 Module 8, Section 4) confirms nothing
+   published still depends on it.</li>
+</ol>
+<h2 id="2-tagging-and-naming-taxonomy">2. Tagging and naming taxonomy<a class="headerlink" href="#2-tagging-and-naming-taxonomy" title="Permanent link">&para;</a></h2>
+<ol>
+<li>A consistent taxonomy makes discovery scale — e.g. tagging every
+   Northwind-related source with <code>domain:sales</code>, <code>region:all</code> or
+   <code>region:east</code> for RLS-scoped variants, and <code>status:certified</code>.</li>
+<li>Naming convention example: <code>[Domain] Subject — Grain</code> — e.g. "Sales
+   Orders — Order Line" for the row-level <code>Orders</code> table, vs. "Sales
+   Orders — Region Summary" for a pre-aggregated Region-level extract (the
+   3-row East/West/Central summary used in several Level 3 modules) — the
+   grain suffix prevents someone joining or comparing two sources at
+   different grains and getting confused by why a summary source's 3 rows
+   don't match a detail source's 8.</li>
+</ol>
+<h2 id="3-deprecation-workflow">3. Deprecation workflow<a class="headerlink" href="#3-deprecation-workflow" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Before deprecating the old <code>OrderFacts</code>/<code>RegionDim</code> two-table source in
+   favor of a newer single joined certified source, run impact analysis
+   (Level 3 Module 8, Section 4) to find every workbook still connected to
+   the old tables.</li>
+<li>Notify owners of dependent workbooks with a concrete migration path and
+   a deadline; verify post-migration that totals match — e.g. a dashboard
+   migrated from the old split source to the new one should still report
+   East 2210, West 3750, Central 920, grand total 6880; any drift signals
+   a join or filter difference introduced during migration, not an
+   acceptable "close enough."</li>
+<li>Only after all dependents have migrated (confirmed via lineage,
+   ideally re-run at deprecation-plus-30-days) does the old source move to
+   Archived/removed.</li>
+</ol>
+<h2 id="4-governance-for-calculated-fields-and-metrics">4. Governance for calculated fields and metrics<a class="headerlink" href="#4-governance-for-calculated-fields-and-metrics" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Reusable calculated fields (e.g. <code>Category Sales in Region</code> from Level
+   3 Module 1) proliferate copy-pasted and subtly modified across
+   workbooks if not governed — a <strong>certified/shared calculation</strong> (via a
+   published data source's defined fields, or Tableau's metrics
+   definitions) keeps one authoritative formula rather than N slightly
+   different reimplementations.</li>
+<li>Concrete failure mode without this governance: one team's copy of
+   <code>Pct of Region</code> divides by <code>{FIXED [Region]: SUM([Sales])}</code> (correct,
+   matches Level 3 Module 1's 97.3%/70.7%/87.0%), while another team's
+   copy accidentally divides by the grand total 6880 instead — producing
+   East 2210/6880 = 32.1%, a different and less useful number that looks
+   plausible enough to go unnoticed without governance catching the
+   formula drift.</li>
+</ol>
+<h2 id="5-content-strategy-scorecard">5. Content strategy scorecard<a class="headerlink" href="#5-content-strategy-scorecard" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Poor</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lifecycle clarity</td>
+<td>No visible stage; everything looks equally "official"</td>
+<td>Draft/Published/Certified/Deprecated visibly tagged</td>
+</tr>
+<tr>
+<td>Naming</td>
+<td>"Orders2," "Orders_final," "Orders_final_v3"</td>
+<td>Consistent domain–subject–grain convention</td>
+</tr>
+<tr>
+<td>Calculation reuse</td>
+<td>Formula copy-pasted and drifted across workbooks</td>
+<td>Shared/certified calculated fields, single source of truth</td>
+</tr>
+<tr>
+<td>Deprecation discipline</td>
+<td>Old sources silently left online indefinitely</td>
+<td>Time-boxed migration + impact analysis before archive</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>Two workbooks report different totals for "East Region Share of Sales":
+one shows 97.3%, another shows 32.1%. Using Section 4.2, identify which
+formula each workbook is likely using, and state which one matches Level
+3 Module 1's definition of <code>Pct of Region</code>. (97.3% = 2210/2210-region-total
+share of Furniture within East, or more directly East's Sales as a share
+of East's own regional total — matches the FIXED-per-Region denominator
+definition; 32.1% = 2210/6880, dividing by the grand total instead of the
+Region's own total — a drifted, non-matching formula that should be
+corrected to the certified definition.)</p>
 
 
 

@@ -1718,6 +1718,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Building a BI Center of Excellence
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1734,6 +1752,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-a-coe-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why a CoE exists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-core-coe-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Core CoE functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-maturity-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Maturity model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-metrics-a-coe-should-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Metrics a CoE should track
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-common-coe-anti-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Common CoE anti-patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-a-coe-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Why a CoE exists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-core-coe-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Core CoE functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-maturity-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Maturity model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-metrics-a-coe-should-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Metrics a CoE should track
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-common-coe-anti-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Common CoE anti-patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,133 @@
 
 
 <h1 id="01-building-a-bi-center-of-excellence">01 · Building a BI Center of Excellence<a class="headerlink" href="#01-building-a-bi-center-of-excellence" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>A <strong>BI Center of Excellence (CoE)</strong> is the organizational structure that
+turns scattered Tableau usage (like the ad-hoc <code>Orders</code> copies from Level 3
+Module 8) into a governed, consistent practice. This module covers what a
+CoE does and how to measure whether it's working.</p>
+<h2 id="1-why-a-coe-exists">1. Why a CoE exists<a class="headerlink" href="#1-why-a-coe-exists" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Recall Level 3 Module 8's problem: three analysts published three
+   different <code>Orders</code> totals (6880 correct, 6700 and 5780 wrong) with no
+   process to catch the discrepancy before it reached a viewer. A CoE is
+   the standing team/function whose job is to prevent that class of
+   problem at scale — not by personally checking every workbook, but by
+   setting the certification process (Module 8), training, and support
+   structure that make correct-by-default the easy path.</li>
+<li>A CoE is not the same as a single admin doing Server maintenance
+   (Level 3 Module 2) — it typically includes governance (certification
+   process owners), enablement (training/support for self-service
+   authors), and platform (capacity/architecture from Module 1) functions,
+   which can be one overloaded person in a small org or several dedicated
+   roles in a large one.</li>
+</ol>
+<h2 id="2-core-coe-functions">2. Core CoE functions<a class="headerlink" href="#2-core-coe-functions" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Governance</strong>: owns the certification workflow (Level 3 Module 8),
+   naming/tagging standards, and content lifecycle policy (archiving
+   Analyst B's and C's incorrect <code>Orders</code> copies once the CoE identifies
+   them).</li>
+<li><strong>Enablement</strong>: trains new Creators on the patterns this course covers
+   — e.g. ensuring every new analyst knows to hand-verify a data source's
+   grand total (6880) before building on it, per the review habit in
+   Level 3 Module 8, Section 5.</li>
+<li><strong>Platform</strong>: owns architecture and capacity decisions from Module 1 —
+   sizing Backgrounder for refresh volume, deciding single- vs. multi-site.</li>
+<li><strong>Support</strong>: the escalation path when a viewer finds a discrepancy —
+   e.g. someone reporting "I see 6700, not 6880" should have a clear
+   channel to the CoE, which then re-derives the correct total from raw
+   rows (as in Level 3 Module 8's exercise) before resolving.</li>
+</ol>
+<h2 id="3-maturity-model">3. Maturity model<a class="headerlink" href="#3-maturity-model" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ad hoc</td>
+<td>Anyone publishes anything; no certification; duplicate/conflicting sources (Level 3 Module 8's 3-analyst problem) common</td>
+</tr>
+<tr>
+<td>Managed</td>
+<td>Certification process exists but is inconsistently followed; some governed, some shadow sources</td>
+</tr>
+<tr>
+<td>Governed</td>
+<td>Certification enforced for production dashboards; clear ownership; lineage tracked (Level 3 Module 8)</td>
+</tr>
+<tr>
+<td>Optimized</td>
+<td>Governance is largely self-service — Creators default to certified sources; CoE spends most effort on enablement/platform, not firefighting</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-metrics-a-coe-should-track">4. Metrics a CoE should track<a class="headerlink" href="#4-metrics-a-coe-should-track" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>% of published data sources certified</strong> — a rising trend indicates
+   the governance process is being adopted rather than bypassed.</li>
+<li><strong>Duplicate source count</strong> — e.g. counting how many <code>Orders</code>-equivalent
+   sources exist server-wide; ideally converging toward 1 certified source
+   plus legitimate departmental variants, not 3+ near-duplicates with
+   silently different totals.</li>
+<li><strong>Time-to-certify</strong> — how long a new data source waits between
+   submission and certification review; too long encourages authors to
+   skip the process and publish uncertified.</li>
+<li><strong>Support ticket volume tied to data discrepancies</strong> — a proxy for how
+   often the ad-hoc-stage problem (conflicting totals) is still reaching
+   end users despite governance.</li>
+</ol>
+<h2 id="5-common-coe-anti-patterns">5. Common CoE anti-patterns<a class="headerlink" href="#5-common-coe-anti-patterns" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Governance without enablement</strong>: mandating certification but not
+   training analysts on <em>how</em> to validate a source (e.g. skipping the
+   hand-verification habit from Level 3 Module 8) — produces slow,
+   resented gatekeeping rather than faster, more trustworthy publishing.</li>
+<li><strong>CoE as sole bottleneck</strong>: routing every single workbook through a
+   small central team to certify, rather than training domain teams to
+   self-certify against clear standards — doesn't scale past a handful of
+   data sources.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>CoE function</th>
+<th>Analogous course module</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Governance</td>
+<td>Level 3 Module 8 — certification</td>
+</tr>
+<tr>
+<td>Enablement</td>
+<td>Training authors in course techniques (LOD, RLS, Prep)</td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Level 4 Module 1 — architecture/capacity</td>
+</tr>
+<tr>
+<td>Support</td>
+<td>Resolving discrepancies like the 6880 vs. 6700 case</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p>A CoE inherits a Server with 12 data sources named some variant of
+"Orders" or "Sales Data," none certified. Outline the first three steps
+you'd take (in order) before certifying any of them, using Level 3 Module
+8's verification approach as a model. (1. Pull each source's grand total
+and per-region breakdown, re-deriving from raw rows rather than trusting
+the displayed total. 2. Identify which — if any — matches the known-correct
+6880/2210/3750/920 structure. 3. Certify the one correct source, flag or
+archive the rest, and document why, before opening any certification
+workflow to future authors.)</p>
 
 
 

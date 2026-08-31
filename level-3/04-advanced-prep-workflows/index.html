@@ -1400,6 +1400,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Advanced Tableau Prep Workflows
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1416,6 +1434,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-messy-source-orders_raw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The messy source: Orders_Raw
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-flow-step-1-clean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Flow step 1: Clean
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-flow-step-2-aggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Flow step 2: Aggregate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-flow-step-3-pivot-for-a-wide-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Flow step 3: Pivot for a wide output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-output-step-and-incremental-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Output step and incremental refresh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1991,6 +2105,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-messy-source-orders_raw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The messy source: Orders_Raw
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-flow-step-1-clean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Flow step 1: Clean
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-flow-step-2-aggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Flow step 2: Aggregate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-flow-step-3-pivot-for-a-wide-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Flow step 3: Pivot for a wide output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-output-step-and-incremental-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Output step and incremental refresh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2010,8 +2209,216 @@
 
 
 <h1 id="03-advanced-tableau-prep-workflows">03 · Advanced Tableau Prep Workflows<a class="headerlink" href="#03-advanced-tableau-prep-workflows" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Level 2 introduced Tableau Prep for basic cleaning. This module builds a
+multi-step Prep flow against an expanded version of <code>Orders</code> that includes
+messy real-world artifacts, and hand-verifies every output.</p>
+<h2 id="1-the-messy-source-orders_raw">1. The messy source: <code>Orders_Raw</code><a class="headerlink" href="#1-the-messy-source-orders_raw" title="Permanent link">&para;</a></h2>
+<p><code>Orders_Raw</code> is the same 8 orders as the Level 1 <code>Orders</code> table, but as it
+would actually arrive from an export — extra whitespace, inconsistent
+casing, and a <code>Shipping Cost</code> column that's a text field with a currency
+symbol:</p>
+<table>
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Region</th>
+<th>Category</th>
+<th>Sales</th>
+<th>Shipping Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1001</td>
+<td>" East"</td>
+<td>furniture</td>
+<td>1200</td>
+<td>"$24.00"</td>
+</tr>
+<tr>
+<td>1002</td>
+<td>"West "</td>
+<td>Electronics</td>
+<td>450</td>
+<td>"$9.00"</td>
+</tr>
+<tr>
+<td>1003</td>
+<td>"East"</td>
+<td>OFFICE SUPPLIES</td>
+<td>60</td>
+<td>"$3.00"</td>
+</tr>
+<tr>
+<td>1004</td>
+<td>"Central"</td>
+<td>Furniture</td>
+<td>800</td>
+<td>"$16.00"</td>
+</tr>
+<tr>
+<td>1005</td>
+<td>"West"</td>
+<td>electronics</td>
+<td>2200</td>
+<td>"$44.00"</td>
+</tr>
+<tr>
+<td>1006</td>
+<td>"East"</td>
+<td>Furniture</td>
+<td>950</td>
+<td>"$19.00"</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>"Central"</td>
+<td>office supplies</td>
+<td>120</td>
+<td>"$2.40"</td>
+</tr>
+<tr>
+<td>1008</td>
+<td>" West"</td>
+<td>furniture</td>
+<td>1100</td>
+<td>"$22.00"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-flow-step-1-clean">2. Flow step 1: Clean<a class="headerlink" href="#2-flow-step-1-clean" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Trim whitespace</strong>: apply Prep's auto-suggested "Trim" transform to
+   <code>Region</code> — this strips the leading/trailing spaces from " East", "West
+   ", and " West", leaving <code>East</code>, <code>West</code>, <code>West</code>.</li>
+<li><strong>Standardize case</strong>: apply "Change Case → Proper Case" to <code>Category</code> —
+   <code>furniture</code> → <code>Furniture</code>, <code>OFFICE SUPPLIES</code> → <code>Office Supplies</code>,
+   <code>electronics</code> → <code>Electronics</code>. After this step, grouping by <code>Category</code>
+   collapses to exactly 3 distinct values instead of 6 (furniture,
+   Furniture, OFFICE SUPPLIES, Office Supplies, electronics, Electronics
+   all present pre-clean).</li>
+<li><strong>Parse currency text to number</strong>: <code>Shipping Cost</code> arrives as a string
+   with a <code>$</code>. Use a calculated field <code>Shipping Cost (Num)</code> =
+   <code>FLOAT(REPLACE([Shipping Cost], "$", ""))</code>. Verify by hand: <code>"$24.00"</code> →
+   remove <code>$</code> → <code>"24.00"</code> → FLOAT → <code>24.0</code>. Do this for all 8 rows; the sum
+   should be 24+9+3+16+44+19+2.4+22 = <strong>139.4</strong>.</li>
+</ol>
+<h2 id="3-flow-step-2-aggregate">3. Flow step 2: Aggregate<a class="headerlink" href="#3-flow-step-2-aggregate" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Add an <strong>Aggregate</strong> step grouping by cleaned <code>Region</code>, summing <code>Sales</code>
+   and <code>Shipping Cost (Num)</code>.</li>
+<li>Hand-compute the expected output:</li>
+<li>East: Sales 1200+60+950=2210, Shipping 24+3+19=46</li>
+<li>West: Sales 450+2200+1100=3750, Shipping 9+44+22=75</li>
+<li>Central: Sales 800+120=920, Shipping 16+2.4=18.4</li>
+<li>Check the totals: Sales 2210+3750+920 = 6880 (matches the Level 1
+   grand total — cleaning didn't change any Sales values, only text
+   formatting). Shipping: 46+75+18.4 = 139.4 (matches Section 2.3).</li>
+</ol>
+<h2 id="4-flow-step-3-pivot-for-a-wide-output">4. Flow step 3: Pivot for a wide output<a class="headerlink" href="#4-flow-step-3-pivot-for-a-wide-output" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Suppose a downstream report wants one row per Region with a column per
+   Category's Sales, rather than one row per Region+Category. Use Prep's
+   <strong>Pivot (rows to columns)</strong> step, pivoting <code>Category</code> into column
+   headers with <code>Sales</code> as the value.</li>
+<li>
+<p>Expected wide table:</p>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>Furniture</th>
+<th>Electronics</th>
+<th>Office Supplies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>East</td>
+<td>2150</td>
+<td>0 (blank)</td>
+<td>60</td>
+</tr>
+<tr>
+<td>West</td>
+<td>1100</td>
+<td>2650</td>
+<td>(blank)</td>
+</tr>
+<tr>
+<td>Central</td>
+<td>800</td>
+<td>(blank)</td>
+<td>120</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Verify each row sums back to the Region total from Section 3.2: East
+   2150+60 = 2210 ✓. West 1100+2650 = 3750 ✓. Central 800+120 = 920 ✓.</p>
+</li>
+</ol>
+<h2 id="5-output-step-and-incremental-refresh">5. Output step and incremental refresh<a class="headerlink" href="#5-output-step-and-incremental-refresh" title="Permanent link">&para;</a></h2>
+<ol>
+<li>The <strong>Output</strong> step writes the flow's result to a <code>.hyper</code> extract or
+   back to a database table. For a flow that runs nightly against a
+   growing <code>Orders_Raw</code> table, enable <strong>incremental refresh</strong> keyed on
+   <code>Order ID</code>, so Prep only processes new/changed rows on each run rather
+   than reprocessing all 8 (or, in production, all N) rows every time.</li>
+<li>Incremental refresh requires the key column to be reliably
+   increasing/new-row-only (an Order ID that's never reused or edited
+   after creation) — editing a historical row's Sales value would not be
+   picked up by an incremental refresh keyed this way, which is the
+   trade-off for the speed gain.</li>
+</ol>
+<h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Purpose</th>
+<th>Verified output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clean (Trim, Change Case)</td>
+<td>Fix formatting inconsistency</td>
+<td>3 distinct Regions/Categories</td>
+</tr>
+<tr>
+<td>Calculated field (parse currency)</td>
+<td>Text → number</td>
+<td>Shipping total 139.4</td>
+</tr>
+<tr>
+<td>Aggregate</td>
+<td>Group by cleaned Region</td>
+<td>East 2210, West 3750, Central 920</td>
+</tr>
+<tr>
+<td>Pivot</td>
+<td>Rows → columns</td>
+<td>Wide table, rows sum to Region totals</td>
+</tr>
+<tr>
+<td>Output + incremental refresh</td>
+<td>Efficient nightly load</td>
+<td>Keyed on non-reused Order ID</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<p><code>Orders_Raw</code> gets a 9th row: Order ID 1009, Region <code>" east"</code> (lowercase,
+leading space), Category <code>"FURNITURE"</code>, Sales 300, Shipping Cost <code>"$6.00"</code>.
+After the same Clean step (trim + proper case), which existing Region and
+Category does this row join, and what are the new East and Furniture
+totals? (Region "East" — trim removes the space, proper case would need a
+capitalization rule too, but Prep's "Change Case" on Region isn't applied
+in this flow, so confirm whether a separate proper-case step on Region is
+needed. New East Sales = 2210+300 = 2510. New Furniture wide-column total
+= 2150+300 = 2450.)</p>
 
 
 
