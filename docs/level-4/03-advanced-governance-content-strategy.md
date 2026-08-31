@@ -1,5 +1,88 @@
 # 02 · Advanced Governance & Content Strategy
 
-This module is part of Level 4 · Master.
+Building on Level 3 Module 8's certification and Level 4 Module 2's CoE,
+this module covers content strategy at scale: lifecycle policy, tagging
+taxonomy, and deprecation, using the `Orders`-family sources as the
+running example.
 
-More lessons are on the way — check back soon.
+## 1. Content lifecycle stages
+
+1. **Draft** — an analyst is building against `Orders` (or a certified
+   copy of it), not yet published for others.
+2. **Published, uncertified** — shared to Server but not yet reviewed;
+   this is where Level 3 Module 8's three conflicting analyst copies
+   (6880, 6700, 5780) would sit before governance review.
+3. **Certified** — reviewed and marked as the trusted source, per Level 3
+   Module 8.
+4. **Deprecated** — still accessible but flagged for retirement (e.g. the
+   old `OrderFacts`/`RegionDim` split from Level 3 Module 6 being replaced
+   by a newer certified single-table source).
+5. **Archived/removed** — no longer accessible; only performed after
+   impact analysis (Level 3 Module 8, Section 4) confirms nothing
+   published still depends on it.
+
+## 2. Tagging and naming taxonomy
+
+1. A consistent taxonomy makes discovery scale — e.g. tagging every
+   Northwind-related source with `domain:sales`, `region:all` or
+   `region:east` for RLS-scoped variants, and `status:certified`.
+2. Naming convention example: `[Domain] Subject — Grain` — e.g. "Sales
+   Orders — Order Line" for the row-level `Orders` table, vs. "Sales
+   Orders — Region Summary" for a pre-aggregated Region-level extract (the
+   3-row East/West/Central summary used in several Level 3 modules) — the
+   grain suffix prevents someone joining or comparing two sources at
+   different grains and getting confused by why a summary source's 3 rows
+   don't match a detail source's 8.
+
+## 3. Deprecation workflow
+
+1. Before deprecating the old `OrderFacts`/`RegionDim` two-table source in
+   favor of a newer single joined certified source, run impact analysis
+   (Level 3 Module 8, Section 4) to find every workbook still connected to
+   the old tables.
+2. Notify owners of dependent workbooks with a concrete migration path and
+   a deadline; verify post-migration that totals match — e.g. a dashboard
+   migrated from the old split source to the new one should still report
+   East 2210, West 3750, Central 920, grand total 6880; any drift signals
+   a join or filter difference introduced during migration, not an
+   acceptable "close enough."
+3. Only after all dependents have migrated (confirmed via lineage,
+   ideally re-run at deprecation-plus-30-days) does the old source move to
+   Archived/removed.
+
+## 4. Governance for calculated fields and metrics
+
+1. Reusable calculated fields (e.g. `Category Sales in Region` from Level
+   3 Module 1) proliferate copy-pasted and subtly modified across
+   workbooks if not governed — a **certified/shared calculation** (via a
+   published data source's defined fields, or Tableau's metrics
+   definitions) keeps one authoritative formula rather than N slightly
+   different reimplementations.
+2. Concrete failure mode without this governance: one team's copy of
+   `Pct of Region` divides by `{FIXED [Region]: SUM([Sales])}` (correct,
+   matches Level 3 Module 1's 97.3%/70.7%/87.0%), while another team's
+   copy accidentally divides by the grand total 6880 instead — producing
+   East 2210/6880 = 32.1%, a different and less useful number that looks
+   plausible enough to go unnoticed without governance catching the
+   formula drift.
+
+## 5. Content strategy scorecard
+
+| Dimension | Poor | Good |
+|---|---|---|
+| Lifecycle clarity | No visible stage; everything looks equally "official" | Draft/Published/Certified/Deprecated visibly tagged |
+| Naming | "Orders2," "Orders_final," "Orders_final_v3" | Consistent domain–subject–grain convention |
+| Calculation reuse | Formula copy-pasted and drifted across workbooks | Shared/certified calculated fields, single source of truth |
+| Deprecation discipline | Old sources silently left online indefinitely | Time-boxed migration + impact analysis before archive |
+
+## Exercise
+
+Two workbooks report different totals for "East Region Share of Sales":
+one shows 97.3%, another shows 32.1%. Using Section 4.2, identify which
+formula each workbook is likely using, and state which one matches Level
+3 Module 1's definition of `Pct of Region`. (97.3% = 2210/2210-region-total
+share of Furniture within East, or more directly East's Sales as a share
+of East's own regional total — matches the FIXED-per-Region denominator
+definition; 32.1% = 2210/6880, dividing by the grand total instead of the
+Region's own total — a drifted, non-matching formula that should be
+corrected to the certified definition.)
