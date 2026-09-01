@@ -1,8 +1,8 @@
 site_name: Tableau Mastery Path
 site_description: A structured, module-wise Tableau training program from entry level to master level, covering visualizations, dashboards, calculated fields, and enterprise BI strategy.
-site_url: https://sigilipelli.github.io/tableau-skillmastery/
-repo_url: https://github.com/SIGILIPELLI/tableau-skillmastery
-repo_name: tableau-skillmastery
+site_url: https://sigilipelli.github.io/tableau-mastery-path/
+repo_url: https://github.com/SIGILIPELLI/tableau-mastery-path
+repo_name: tableau-mastery-path
 
 theme:
   name: material
