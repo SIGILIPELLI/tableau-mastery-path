@@ -80,6 +80,50 @@ should see everything.
    computed once and cached, rather than re-evaluated per user interaction
    (Level 2 Module 8).
 
+## How It Actually Works
+
+RLS is not a separate security layer bolted onto Tableau's query engine —
+it's the *same* join-then-filter mechanism from Level 2 Module 3, driven by
+a function (`USERNAME()`/`ISMEMBEROF()`) whose return value depends on the
+requesting session's identity:
+
+1. `USERNAME()` is evaluated by VizQL Server **per query, per session** —
+   it isn't a stored column or a value baked into the extract; it's
+   resolved at query-generation time from whichever authenticated user's
+   session issued the request. This is precisely why the same published
+   workbook produces a different effective query for Alice than for Bob:
+   Alice's session compiles `Region Is Visible` to `[Username] =
+   'alice@co.com'`, Bob's compiles the identical calculated field
+   definition to `[Username] = 'bob@co.com'` — one calculation, one stored
+   formula, but a session-dependent literal substituted in at evaluation
+   time, much like a parameter (Level 1 Module 7) but sourced from
+   authentication state instead of a UI control.
+2. The `RegionAccess` join (Section 2) means the filter's truth value
+   depends on whether the join between `Orders` and `RegionAccess` produces
+   *any* matching row for the current username and that row's Region —
+   mechanically identical to Level 2 Module 3's join mechanics, with the
+   fan-out risk inverted into a *feature*: Admin's three `RegionAccess` rows
+   (one per Region) deliberately fan out the join so all three Regions
+   satisfy `[Username] = USERNAME()`, which is why Admin's total correctly
+   comes out to the full 6880 rather than being capped at one Region.
+3. **Why the zero-row test matters mechanically** (Section 4.1): a user
+   absent from `RegionAccess` produces zero matching join rows for *every*
+   `Orders` row, so `Region Is Visible` evaluates to `FALSE` universally —
+   the filter (set to True) then excludes all 8 rows. This is a
+   fail-**closed** design purely because of how the join and filter compose
+   (no match → false → excluded); a fail-**open** bug would require an
+   `OR` clause or a missing filter that lets unmatched rows default to
+   visible, which is exactly the kind of formula mistake this test is
+   designed to catch.
+4. **Context-filter promotion for RLS** (Section 5) matters for the same
+   pipeline-ordering reason as Level 3 Module 1: without it, the RLS filter
+   sits at the same late pipeline stage as any other dimension filter, so a
+   FIXED LOD elsewhere in the workbook could evaluate against the
+   *unfiltered* full 8-row table, potentially leaking cross-region totals
+   into a FIXED calculation even though the visible marks are correctly
+   restricted — promoting the RLS filter to context forces it to run before
+   any FIXED subquery, closing that leak.
+
 ## Cheat sheet
 
 | Approach | Best for |

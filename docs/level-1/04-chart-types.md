@@ -91,6 +91,37 @@ isn't) the right choice.
 - Share of a whole, 2–5 categories → **pie chart** (bar chart otherwise).
 - Geographic patterns → **map** (Module 9).
 
+## How It Actually Works
+
+A "chart type" in Tableau is not a separate rendering mode with its own
+query logic — every chart type in this module issues the *same style* of
+`GROUP BY` aggregate query; what changes is purely how VizQL maps the
+returned rows onto marks:
+
+1. **Bar vs. line**: both a Category-bar chart and an Order-Date line chart
+   generate a `SELECT <dimension>, SUM(Sales) FROM Orders GROUP BY
+   <dimension>` query — the difference is that a continuous date field
+   (Month, treated as continuous per Module 3's technique) is placed on an
+   interpolated numeric axis and connected point-to-point, while a discrete
+   dimension (Category) produces separate header positions with independent
+   bars. Swap Order Date from continuous to discrete and the "line" chart
+   would fall back to disconnected marks — same query, same result set,
+   different mark geometry.
+2. **Scatter plot**: putting a measure on both Columns and Rows (e.g.
+   SUM(Sales) and SUM(Profit) per order) with a dimension on Detail
+   generates one row per Order ID rather than one per Region, because
+   Detail — unlike Color/Label — still forces its field into the `GROUP BY`
+   even though nothing renders it visually; it exists purely to keep marks
+   from being aggregated together.
+3. **Pie chart**: internally still a `GROUP BY Category` aggregate, but the
+   Angle shelf tells VizQL to render each group's proportion of the sum as a
+   wedge angle rather than a bar length — verify by hand: Office Supplies'
+   share of total Sales is (60+120) / 6880 ≈ 2.6%, a wedge so thin it's
+   nearly invisible next to Electronics' (450+2200)/6880 ≈ 38.5% — the exact
+   readability failure mode Section 4 describes, and the reason a pie's
+   accuracy problem is perceptual (angle vs. length judgment), not a
+   difference in the underlying arithmetic.
+
 ## Cheat sheet
 
 | Question being answered | Chart type | Key shelf setup |

@@ -89,6 +89,36 @@ fields against the `Orders` table (Module 1).
    several fields (⌘/Ctrl-click), right-click → **Group by Folder** — a
    pure organization aid with no effect on the calculations themselves.
 
+## How It Actually Works
+
+Whether a calculated field is computed **row-by-row before aggregation** or
+**as part of the aggregate query itself** depends entirely on where the
+aggregation function sits inside its formula — and that distinction is the
+real mechanism behind Section 2's warning about ratios:
+
+1. `Profit Ratio` (`SUM([Profit]) / SUM([Sales])`) is an **aggregate
+   calculation**: VizQL folds it directly into the generated `SELECT`
+   clause as `SUM(Profit) / SUM(Sales)`, computed once per `GROUP BY` group
+   *after* every row in that group has been summed. For East: SUM(Profit) =
+   180 + 18 + (-40) = 158, SUM(Sales) = 1200 + 60 + 950 = 2210, so the query
+   returns 158/2210 ≈ 7.15% in one step — matching Section 2's hand check.
+2. `Order Size` (the IF/ELSEIF formula with no aggregation function inside)
+   is a **row-level calculation**: Tableau evaluates it once per underlying
+   row, *before* any `GROUP BY` — effectively as a computed column added to
+   the query's `SELECT` list ahead of grouping, e.g. conceptually `CASE WHEN
+   Sales >= 1000 THEN 'Large' ... END AS OrderSize`. This is exactly why it
+   comes back as a dimension (blue) rather than a measure: its result is one
+   value per row, groupable, not an aggregate needing further summarization.
+3. The mechanical reason a naive "average of each row's ratio" is wrong
+   (Section 2.3): computing `Profit/Sales` per row *then* averaging would
+   require the row-level pattern (like Order Size), producing `AVG(Profit /
+   Sales)` — a completely different query shape from `SUM(Profit) /
+   SUM(Sales)`, and one that weights a $60 order's ratio equally with a
+   $2200 order's ratio instead of by dollar volume. Hand-check: East's
+   naive average would be (180/1200 + 18/60 + -40/950)/3 ≈ (0.15 + 0.30 +
+   -0.042)/3 ≈ 13.6% — nowhere near the correct 7.15%, because it lets a
+   small, high-margin order dominate the average.
+
 ## Cheat sheet
 
 | Action | How |

@@ -77,6 +77,42 @@ than a real date type.
    **Prep Conductor**, Level 3), keeping the cleaned output current without
    manually re-running Prep Builder each time the source CSV updates.
 
+## How It Actually Works
+
+Prep Builder's flow is a **directed pipeline of transformation nodes**,
+executed once at run time (interactively for the preview, and again in full
+at Output) rather than a set of live formulas re-evaluated forever — this
+execution model explains both the "fix casing before grouping" ordering and
+Section 6's whitespace-trim ordering question:
+
+1. Each node in the flow (Clean, Group, Aggregate, Pivot) runs as a
+   **discrete transformation pass over the full row set output by the
+   previous node** — conceptually equivalent to a sequence of `SELECT ...`
+   statements chained via CTEs, each one materializing (in the preview
+   grid) the exact rows the next step will see. This is why a Change Case
+   step must sit *before* a Group Values step in the flow: Group Values
+   operates on whatever string values are already present when it runs, so
+   feeding it un-normalized casing (`east`/`WEST`/`East`) means it has to
+   independently discover and merge three variants instead of the one
+   canonical `East` a prior Change Case step would have already produced.
+2. **Type conversion is a per-value parse operation**, not a bulk
+   reinterpretation — converting `Sales` from String to Number applies a
+   parse function per cell that strips currency symbols/commas as part of
+   the coercion, but a stray leading/trailing space (Exercise's `" 120 "`)
+   can make that parse fail or silently produce a null/error depending on
+   the connector, because whitespace isn't part of the currency-stripping
+   pattern the type-conversion step applies. Trimming whitespace with a
+   Clean step *before* the type conversion guarantees the converter only
+   ever sees a clean numeric-looking string (`"120"`), which is why the
+   canonical fix order is trim → then convert, not convert → then trim.
+3. **Aggregate and Pivot steps change the row count contract** for every
+   downstream node: an Aggregate step collapsing 8 Order rows to 3 Region
+   rows means any later step operating "per row" now operates on Region
+   granularity, not Order granularity — the same kind of grain-shift
+   Level 2 Module 1's LOD expressions handle inside Tableau Desktop, just
+   performed as a physical, materialized step inside Prep instead of a
+   virtual subquery inside VizQL.
+
 ## Cheat sheet
 
 | Task | Prep step |

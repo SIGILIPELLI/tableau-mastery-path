@@ -64,6 +64,42 @@ across) is a required setting for every table calc, and why adding or
 removing a dimension from the view can silently change a table calculation's
 result even though the underlying data didn't change.
 
+## How It Actually Works
+
+Section 5 already names the key distinction — table calcs run **after**
+the aggregate query returns. Here's the actual two-stage pipeline that
+produces that behavior, and why **Compute Using** (addressing) is what it
+configures:
+
+1. **Stage 1 (the query)**: VizQL issues `SELECT Month, SUM(Sales) FROM
+   Orders GROUP BY Month ORDER BY Month`, returning exactly four rows: (Jan,
+   1650), (Feb, 860), (Mar, 3270), (Apr, 1100) — the numbers from Section 1.
+   This result set, and *only* this result set, is what every table
+   calculation operates on. No table calc can ever "see" a row that isn't
+   already present in this returned grid.
+2. **Stage 2 (the table calc pass)**: Tableau walks the returned grid
+   according to the **Compute Using** direction and applies the requested
+   function. "Compute Using = Table (Across)" tells it: treat Month as the
+   **addressing** dimension (the axis it walks/recomputes along) — so
+   Running Total literally does `total = 0; for each Month in order: total
+   += SUM(Sales); emit total` → 1650, 2510, 5780, 6880, matching Section 2's
+   hand check exactly, because it's iterating over the same four numbers you
+   summed by hand.
+3. **Why adding a dimension can silently change the result** (Section 5's
+   warning, concretized): adding Category nested under Month changes Stage
+   1's query to `GROUP BY Month, Category`, so the returned grid now has up
+   to 4×3=12 rows instead of 4. If Compute Using is still "Table (Across)"
+   with its default addressing, Rank or Running Total now walks across
+   *all* Month-Category cells in table order rather than across the four
+   Month totals — producing a running total that resets or accumulates
+   across category boundaries in a way that no longer matches a simple
+   month-by-month narrative, purely because Stage 1's grid shape changed
+   underneath a Stage 2 calculation that didn't know to adapt.
+4. **Percent of Total** hand-check via the two-stage model: Stage 1 returns
+   the same four-row grid; Stage 2 sums all four (6880) as the "total"
+   denominator implied by Compute Using = Table, then divides each cell by
+   it — 1650/6880 ≈ 24.0%, matching Section 3.
+
 ## Cheat sheet
 
 | Table calc | Answers | Key setting |

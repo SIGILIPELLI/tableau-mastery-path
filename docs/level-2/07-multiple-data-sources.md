@@ -75,6 +75,38 @@ or related to `Orders`:
    3750/3500, 920/1000 arithmetic happens inside one query rather than
    being approximated across two independently-rendered sheets.
 
+## How It Actually Works
+
+The reason fields from two separate data sources can't share a shelf
+without explicit linking comes down to VizQL needing a **single connection
+context** to generate one coherent query:
+
+1. Each worksheet compiles to one query (or one query per axis in a
+   dual-axis view) issued against exactly one **primary** connection.
+   Dragging in a field from a second, unlinked source has nowhere valid to
+   go in that generated `SELECT`/`GROUP BY` — there's no shared `FROM`
+   clause connecting `Orders` and `Targets` unless they've been joined
+   (Section 3) into one physical connection, or blended (aggregate-level
+   combination computed after two independent queries return, per Level 2
+   Module 3 Section 4).
+2. A **cross-database join** (Section 3) is mechanically identical to a
+   same-database join (Level 2 Module 3) at the query-planning level —
+   Tableau's engine issues two separate native queries (one per source
+   system, since Excel and SQL Server don't share a query dialect), pulls
+   both result sets into its own in-memory/Hyper execution layer, and
+   performs the join *there* rather than pushing a single federated SQL
+   statement down to either source. This is exactly why cross-database
+   joins tend to be slower than a same-database join: the join computation
+   itself runs inside Tableau's engine, not inside whichever database is
+   faster at joins.
+3. **Filter actions across unlinked sources silently no-op** (Section 6.1)
+   because an action's mechanism is literally "add a WHERE clause built
+   from the source sheet's field values" — if the target sheet's data
+   source has no field with a compatible name/role to bind that value to,
+   Tableau has no clause to construct, so the action fires with an empty
+   effective filter rather than an error, which is precisely why the
+   verification habit (click and observe, rather than assume) matters here.
+
 ## Cheat sheet
 
 | Situation | Approach |

@@ -119,6 +119,42 @@ There are three forms:
 3. `DATEDIFF('day', [Order Date], TODAY())` — a running age-of-order field,
    useful for a "days since ordered" KPI on an operations dashboard.
 
+## How It Actually Works
+
+LOD expressions are the clearest place to see VizQL compile a calculation
+into a genuinely **separate SQL subquery**, joined back to the main query —
+not a formula evaluated inline like a row-level `IF`:
+
+1. `{FIXED [Region] : SUM([Sales])}` compiles conceptually to a subquery
+   `SELECT Region, SUM(Sales) AS RegionTotal FROM Orders GROUP BY Region`,
+   computed once, independent of the view. The *outer* query — driven by
+   whatever's on the shelves (Region, Product) — then **left-joins** that
+   subquery's result back on Region. This is mechanically why every East
+   row shows the same 2210: they're all joining against the same single
+   subquery row for Region='East', regardless of which Product row they
+   started from.
+2. `{INCLUDE [Order ID] : SUM([Sales])}` compiles differently: the subquery
+   is computed at the view's dimensions *plus* Order ID — `SELECT Category,
+   Order ID, SUM(Sales) FROM Orders GROUP BY Category, Order ID` — finer
+   than the outer view (which only groups by Category), so the outer query
+   must re-aggregate (here, AVG) over multiple subquery rows per Category.
+   This two-level re-aggregation is exactly why Section 4 needs a *second*
+   calculated field (`AVG(...)`) wrapped around the INCLUDE — the INCLUDE
+   subquery alone still returns one row per order, not per category.
+3. `{EXCLUDE [Region] : SUM([Sales])}` runs its subquery at the view's
+   detail minus Region — `SELECT Category, SUM(Sales) FROM Orders GROUP BY
+   Category` — computed once per Category regardless of Region, then joined
+   back to every (Region, Category) row in the outer view, which is
+   mechanically why every Region's Furniture row shows the same global 4050.
+4. **Evaluation order matters**: LOD subqueries are resolved before
+   row-level `IF` logic and before table calculations (Level 1 Module 8) —
+   this ordering (dimension filters → context filters → FIXED LOD →
+   non-FIXED LOD/measure filters → table calcs) is why a FIXED LOD ignores
+   an ordinary dimension filter unless that filter is a *context* filter:
+   a context filter physically narrows the rows the FIXED subquery ever
+   sees, while a plain filter is applied to the outer query only, after the
+   FIXED subquery has already run against the unfiltered table.
+
 ## Cheat sheet
 
 | Form | Behavior |

@@ -75,6 +75,37 @@ Confirm each of the following against the dashboard you built:
 4. Deselecting (clicking the East bar again) returns all three linked
    sheets to their unfiltered totals from Steps 1 and Section above.
 
+## How It Actually Works
+
+This capstone dashboard is a good place to see the full query pipeline from
+earlier modules working together on one canvas: each of the four
+worksheets still issues its own independent `GROUP BY` query (Module 1's
+lesson), the global Region filter (Module 7) prepends a shared `WHERE`
+clause to all of them from one connection, and the filter/highlight actions
+(Module 5) inject or remove additional per-click `WHERE` clauses and
+opacity states on top of that:
+
+1. When the global Region filter is set to all regions, "Sales by Region"
+   runs `SELECT Region, SUM(Sales) FROM Orders GROUP BY Region`, returning
+   East 2210, West 3750, Central 920 (800+120) — matching Step 1's
+   hand-computed totals and confirming West is tallest.
+2. Clicking the East bar adds a *second*, action-driven `WHERE Region =
+   'East'` on top of whatever the global filter already allows, re-running
+   "Sales Over Time"'s query as `SELECT Month, SUM(Sales) FROM Orders WHERE
+   Region='East' GROUP BY Month` — only orders 1001 (Jan, 1200), 1003 (Feb,
+   60), 1006 (Mar, 950) qualify, so the three-point line in Step 2 is a
+   direct consequence of that added clause, not a separate hidden query.
+3. The State map's hover-highlight (Step 3) never adds a `WHERE` clause at
+   all — it's the cheap, no-requery highlight mechanism from Module 5,
+   which is why hovering California can visually tie back to the West bar
+   instantly, with no re-aggregation of Sales figures underneath it.
+4. Deselecting East (Step 4) removes the action's injected clause, and every
+   affected sheet's query reverts to its unfiltered form — this "removing a
+   WHERE clause and re-running" model is also exactly why the filtered
+   totals in Step 2 can be independently verified by hand against `Orders`:
+   they're not a Tableau-only artifact, they're the same arithmetic a raw
+   SQL query with that WHERE clause would produce.
+
 ## Cheat sheet — project checklist
 
 | Requirement | Verified by |

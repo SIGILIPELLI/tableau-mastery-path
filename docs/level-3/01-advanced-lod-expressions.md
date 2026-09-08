@@ -66,6 +66,41 @@ Electronics 2650, Office Supplies 180. Grand total: 6880.
 | Needs to work identically before any dimension is dropped on shelf | LOD |
 | Running total, rank, moving average | Table calc |
 
+## How It Actually Works
+
+Nested LODs compile to genuinely **nested subqueries**, evaluated inside
+out — and the filter-ordering pitfall in Section 4 is a direct consequence
+of exactly *when* in VizQL's pipeline a FIXED subquery gets to run:
+
+1. `{FIXED [Category] : AVG({FIXED [Region],[Category] : SUM([Sales])})}`
+   compiles to something like: inner subquery `SELECT Region, Category,
+   SUM(Sales) AS cell FROM Orders GROUP BY Region, Category` runs first,
+   producing the 6 region×category cells from Section 2.2; the outer FIXED
+   then runs a *second* aggregation over that inner result — `SELECT
+   Category, AVG(cell) FROM (<inner>) GROUP BY Category` — which is exactly
+   why Furniture's answer (1350) is the average of three already-summed
+   cells (2150, 1100, 800), not a re-scan of the original 8 rows with a
+   different grouping.
+2. **Pipeline ordering explains the filter pitfall precisely**: Tableau's
+   documented evaluation order is roughly (1) extract/data-source filters,
+   (2) context filters, (3) FIXED LOD expressions, (4) ordinary
+   dimension/measure filters and non-FIXED (INCLUDE/EXCLUDE) LODs, (5)
+   table calculations. A plain Region filter sits at stage 4 — *after*
+   FIXED has already run at stage 3 — so by the time the filter would
+   remove non-East rows, the FIXED subquery's result (4050/2650/180) has
+   already been computed from the *unfiltered* table and is just being
+   joined back to the (now filtered) outer view. Promoting the filter to a
+   context filter moves it to stage 2, ahead of FIXED, so the inner
+   subquery itself only ever sees the East-only rows.
+3. This staged model is also why INCLUDE/EXCLUDE (stage 4) behave
+   differently from FIXED (stage 3) with respect to filters: an EXCLUDE
+   LOD, sitting at the same stage as an ordinary filter, generally *does*
+   respect non-context dimension filters, since its subquery is evaluated
+   from whatever rows survive up to that point in the pipeline — the
+   FIXED-specific "ignores filters" behavior in Section 4 doesn't
+   automatically generalize to every LOD keyword, a distinction worth
+   testing explicitly with hand arithmetic rather than assuming.
+
 ## Cheat sheet
 
 | Expression | Result for this dataset |

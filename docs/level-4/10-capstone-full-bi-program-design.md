@@ -76,6 +76,47 @@ every Level 4 module and hand-verifying every number the design assumes.
 | Security | RLS baked into certified source | Alice 2210, Bob 3750, Carol 920, admin 6880 |
 | Cost | Role-mix license tiering from day one | Module 8's cost-unit comparison |
 
+## How It Actually Works
+
+1. Every design decision in this capstone traces to a specific mechanism
+   covered earlier in the course, and the checklist (Section 6) is really
+   a map of which stored artifact each decision lives in: the architecture
+   choice is a Server topology/site configuration; certification is a
+   metadata flag on the datasource content record (Level 3 Module 8);
+   RLS is a join plus a `USERNAME()`-driven filter on the certified
+   source's own definition (Level 3 Module 3); licensing is a per-user
+   role attribute checked at the session-authorization layer (Level 4
+   Module 8) — none of these are abstract policies, each is a concrete
+   object Tableau stores and enforces mechanically.
+2. Because RLS is attached to the certified source's connection (not to
+   any individual dashboard), adding North to `RegionAccess` propagates to
+   every workbook built against that source automatically on next query —
+   this is the same connection-reference mechanism from Level 4 Module 6:
+   a self-service author's dashboard references the source's content ID,
+   so the source's own filter logic (including the newly added North row)
+   applies without the author republishing anything.
+3. The capstone's two-update answer (re-certify the source, update
+   `RegionAccess`) is forced by query-evaluation order (Level 3 Module 10):
+   if only `RegionAccess` is updated but the certified source's underlying
+   extract isn't refreshed/re-certified to include orders 1009/1010, the
+   new North rows don't exist in the queried table at all — RLS can only
+   filter *existing* rows, it can't conjure rows a stale extract never
+   pulled. Conversely, if only the extract is refreshed but no North
+   manager is added to `RegionAccess`, the North rows exist in the source
+   but every RLS-scoped query (`WHERE Username = USERNAME()`) returns zero
+   matching rows for anyone querying as a manager without a North mapping
+   — updating just one of the two layers leaves the system in a broken
+   intermediate state, which is exactly why both updates are required
+   together, not sequentially with either one skipped.
+4. Backgrounder sizing for 300 nightly refreshes (Section 2) and license
+   role-mix (Section 5) both scale from the same underlying capacity
+   model established in Level 4 Modules 1 and 8 — refresh cost is driven
+   by job count × per-job duration regardless of headcount, while license
+   cost is driven by role mix × headcount regardless of refresh volume;
+   designing both "from day one" (rather than retrofitting) avoids the
+   exact overrun and over-licensing failure modes those modules' worked
+   examples diagnose after the fact.
+
 ## Exercise (final capstone check)
 
 Northwind adds a 4th region, North, with 2 new orders: Order 1009 (North,

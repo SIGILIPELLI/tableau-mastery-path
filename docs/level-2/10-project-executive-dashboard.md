@@ -77,6 +77,49 @@ Attainment computed as Sales/Target: 2210/2000=1.105, 3750/3500=1.0714,
    used a stale or mis-joined data source and should be re-published
    after fixing the join.
 
+## How It Actually Works
+
+This capstone's headline numbers depend on several mechanisms from earlier
+Level 2 modules composing correctly — verifying it end-to-end means
+checking each mechanism did what it should, not just that the final numbers
+look plausible:
+
+1. The **cross-database join** (Section 2.1) means Attainment is computed
+   inside a *single* VizQL query against the joined result — `SELECT
+   Region, SUM(Sales)/SUM(Target) FROM (Orders JOIN Targets ON Region)
+   GROUP BY Region` conceptually — rather than two independently-rendered
+   sheets whose numbers are only visually adjacent (Level 2 Module 7,
+   Section 4). This is exactly why 2210/2000=1.105 can be trusted as a
+   single computed field rather than something a viewer has to mentally
+   divide across two charts.
+2. **Extract aggregation** (Section 2.3) intentionally splits into *two*
+   physical extracts here because the Region/Category sheets and the
+   row-level Discount Tier table need different grains — an aggregated
+   extract collapsing to Region/Category totals cannot serve the
+   Discount Tier detail table's per-Order `IF` logic (Level 2 Module 1),
+   since that row-level information no longer exists in an aggregated
+   `.hyper` file. Verifying both extracts independently report `SUM(Sales)
+   = 6880` (Section 2.3) confirms the aggregation step didn't silently drop
+   or double-count rows during that collapse.
+3. **Overall Attainment's two computation paths** (this module's Exercise)
+   are a direct test of aggregation order: `SUM(Sales)/SUM(Target)` computes
+   one ratio from two grand totals (6880/6500 = 1.0585), while the
+   Sales-weighted average of per-region ratios (`Σ(Sales_i × Attainment_i) /
+   ΣSales_i`) mathematically reduces to the exact same expression once
+   expanded — `Σ(Sales_i × Sales_i/Target_i)` isn't generally equal to
+   `ΣSales_i × ΣSales_i/ΣTarget_i`, so the fact that this dataset's numbers
+   come out matching (~105.8% either way) is a coincidence of this specific
+   data, not a general algebraic identity — worth flagging explicitly, since
+   students who assume the two methods are *always* equivalent for any
+   dataset will get burned on a differently-shaped one.
+4. **The Show/Hide detail table and the filter action share the same
+   underlying data**, so clicking "East" on the Region chart and separately
+   expanding the Discount Tier table should show mutually consistent
+   detail — Furniture+Office Supplies (2150+60=2210) on one sheet and
+   exactly the East-region Order IDs (1001, 1003, 1006) on the other — any
+   divergence between them indicates the filter action's field binding or
+   the extract's grain doesn't match across the two sheets.
+
 ## Cheat sheet — capstone checklist
 
 | Layer | Delivered |

@@ -72,6 +72,44 @@ governance using the published data source from Level 2 Module 9/10.
    approving — exactly the kind of hand-verification this course has used
    throughout, applied as an actual governance gate.
 
+## How It Actually Works
+
+1. Certification is stored as metadata on the published data source's
+   content record on Server/Cloud — technically a flag plus an optional
+   certification note, set via the content management page or the REST
+   API's `certification`/`certificationNote` fields on a datasource
+   resource. Setting it does not touch the `.hyper` file or trigger any
+   recompute — it only changes what the Server's search index and catalog
+   surface to viewers (badge, ranked higher in "recommended" results), so
+   two data sources with the same name but different Sales totals (6880 vs
+   6700) remain equally queryable by connection string; certification
+   changes discovery, not access.
+2. A data quality warning is a separate metadata object attached to the
+   content item, with a type (warning, deprecated, stale data, etc.) and
+   free-text message; Tableau resolves and displays it at *view render
+   time* by checking every data source feeding the workbook being opened,
+   which is why the warning banner appears on any dashboard downstream of
+   a flagged source — including ones the flagging admin never directly
+   touched.
+3. Lineage and impact analysis are built from Tableau's **Metadata API**
+   (a GraphQL endpoint over the Data Catalog): every published workbook,
+   data source, field, and database table is a node, and every "this field
+   is used in this worksheet" or "this data source feeds this workbook"
+   relationship is a stored edge. A lineage query for the `Sales` field
+   walks these edges outward (upstream to the source column, downstream to
+   every consuming sheet); impact analysis before deprecating Analyst B's
+   6700-total source is the same graph traversal run in reverse — "which
+   workbook nodes have an edge into this data source node" — computed from
+   the graph, not by re-scanning every workbook's XML on demand.
+4. Certification, warnings, and lineage all read from metadata the
+   certifier or Server admin must explicitly set or that Tableau infers
+   from publish-time parsing — none of them re-validate the *data itself*
+   against ground truth. That's exactly why Section 5's workflow puts a
+   human hand-recomputation step (independently re-deriving 6880 from the
+   8 raw rows) before applying the badge: the certification mechanism has
+   no way to know 6700 is wrong on its own, it can only advertise which
+   source a human has vouched for.
+
 ## Cheat sheet
 
 | Concept | What it does | What it does NOT do |

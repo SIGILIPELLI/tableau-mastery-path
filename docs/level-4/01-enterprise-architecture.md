@@ -77,6 +77,49 @@ in the `Northwind Retail` data used throughout the course.
 | Custom node topology (Section 2) | Full control | Managed, less topology control |
 | Scaling speed | Manual node provisioning | Elastic, managed by vendor |
 
+## How It Actually Works
+
+1. Sites are a hard tenancy boundary implemented at the metadata layer:
+   every content object (workbook, data source, project) in the
+   Repository (Postgres) carries a `site_id` foreign key, and every query
+   Server executes is scoped by the caller's site membership — a Sales
+   site user's session simply cannot resolve a Finance site's content ID,
+   because the query never includes rows outside that `site_id`. A
+   single-site deployment with project permissions instead uses a
+   `project_id`/permission-grant model within the same site — a much
+   finer-grained but *not* hard-isolated boundary, since a site admin (and
+   anyone Tableau's permission model grants cross-project visibility to)
+   can still see across projects, which is the concrete mechanism behind
+   "multi-site avoids cross-team leakage risk" in Section 1.
+2. Node roles are literal Linux processes/services configured via `tsm
+   topology` — Gateway (a reverse proxy routing incoming requests),
+   VizQL Server (compiles and runs queries, renders views), Backgrounder
+   (pulls extract-refresh and subscription jobs from a queue), and
+   Repository (Postgres, holding all metadata). Assigning a node to
+   "Backgrounder only" is a `tsm` configuration change that starts only
+   that process on that machine; this is why Section 2's sizing advice —
+   scale Backgrounder capacity independently of Gateway/VizQL — is
+   directly actionable: you can add a Backgrounder-only node without
+   touching viewer-facing capacity at all.
+3. HA and DR use different underlying mechanisms even though both are
+   "redundancy": HA relies on running duplicate processes of the same
+   role behind a load balancer within one deployment, so a live failover
+   is automatic and near-instant (the load balancer stops routing to the
+   failed node); DR relies on `tsm maintenance backup` producing a
+   point-in-time snapshot of the Repository plus file store, shipped to a
+   separate deployment — recovery requires restoring that backup and
+   promoting the DR site, which is why DR's recovery point is bounded by
+   backup frequency (last night's backup) rather than being continuous
+   like HA.
+4. Capacity planning inputs are additive but not interchangeable in the
+   underlying resource model: concurrent viewers and workbook complexity
+   both consume VizQL Server CPU/memory at query time, while extract
+   volume/frequency consumes Backgrounder CPU/memory on a schedule — since
+   these are different processes (Section 2), a deployment can be
+   correctly sized for one and badly undersized for the other
+   simultaneously, which is exactly the scenario Section 4's common
+   mistake and the Exercise both test.
+
 ## Cheat sheet
 
 | Concern | Key architecture decision |

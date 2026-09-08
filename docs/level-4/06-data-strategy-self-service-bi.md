@@ -69,6 +69,49 @@ using the certified `Orders` source and CoE structure from Modules 2–3.
 | Discrepancy reports per month (Level 4 Module 2 metric) | Whether governance is holding up as self-service scales |
 | Time from data need to published dashboard | The actual speed benefit self-service is meant to deliver |
 
+## How It Actually Works
+
+1. "Inheriting correctness by construction" (Section 2) is a real
+   connection-metadata mechanism, not just a policy statement: when an
+   author connects to the certified `Orders` source rather than a raw
+   table, Tableau records a reference to that published data source's
+   content ID inside the new workbook's `.twb`, the same reference
+   mechanism used in Level 3 Module 10's capstone. Every calculation the
+   author writes (e.g. their own `Profit by Category` view) executes
+   against whatever rows and row-level security the certified source
+   currently defines — RLS included, since it's attached to the source's
+   connection, not to each individual workbook — so an author never has
+   to re-implement `RegionAccess` filtering themselves; it rides along
+   with the connection.
+2. Publish-time validation (Section 4.2) is implementable as a scheduled
+   job using the same REST/Metadata API surfaces the CoE metrics use
+   (Level 4 Module 2): query each newly published workbook's underlying
+   view data (via the REST API's "query view data" endpoint, or a
+   scripted comparison against the certified source's own total),
+   re-derive its grand total, and flag any workbook whose total falls
+   outside an expected tolerance of the certified 6880 — this is
+   mechanically the same hand-verification habit from Level 3 Module 8,
+   just automated as a diff check rather than performed by a person per
+   workbook.
+3. The Exercise's 12-dashboard risk is concrete because a raw-table
+   connection has no certification metadata attached at all — Tableau has
+   no way to distinguish "this raw copy happens to currently match 6880"
+   from "this raw copy is stale/filtered" at connection time; the
+   discrepancy only becomes visible when someone (or an automated
+   publish-time check) actually re-sums its rows, exactly as in Level 3
+   Module 8's original three-analyst scenario, just at 12x the blast
+   radius since each of the 12 workbooks independently re-queries the
+   same unvetted raw table rather than sharing one governed reference.
+4. Migration remediation (Level 4 Module 3's deprecation workflow) is the
+   same connection-metadata swap as any republish: repointing each
+   workbook's data source reference from the raw table to the certified
+   source's content ID, then re-running the same total/region check
+   (6880, 2210/3750/920) as a regression test — if any of the 12 fails to
+   match post-migration, the mismatch identifies exactly which workbook's
+   old raw-table logic (a stray filter, a different join) diverged from
+   the certified definition, which is information the migration step
+   itself surfaces almost for free.
+
 ## Exercise
 
 An organization has 40 self-service-built dashboards; an audit finds 12

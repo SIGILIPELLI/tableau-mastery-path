@@ -104,6 +104,43 @@ When you connect Tableau to a data source, you choose between:
 This choice is made the moment you connect to data — covered in full in
 Module 2.
 
+## How It Actually Works
+
+Every drag onto a shelf is, under the hood, building an abstract query
+Tableau's **VizQL** engine will translate into a real query against whatever
+you're connected to (SQL for a database/extract, MDX for an OLAP cube). You
+never see this query directly in Level 1, but knowing it exists explains a
+lot of later behavior:
+
+1. Dragging **Region** to Rows and **SUM(Sales)** to Columns produces
+   roughly the query pattern `SELECT Region, SUM(Sales) FROM Orders GROUP BY
+   Region ORDER BY Region` — every dimension on a shelf becomes a `GROUP BY`
+   term, every measure becomes an aggregate in the `SELECT` list. This is
+   why adding a second dimension (say, Category) doesn't just add a column —
+   it changes the `GROUP BY` to `Region, Category`, which subdivides every
+   existing group into smaller ones (Furniture-East, Electronics-East, etc.)
+   rather than adding new independent rows.
+2. **Live vs. Extract** (Section 4) changes *where* this generated SQL runs,
+   not *whether* it exists. On Live, that `SELECT ... GROUP BY` is sent to
+   your actual database every time you touch a shelf. On Extract, the same
+   query runs against Tableau's own embedded **Hyper** engine — a columnar
+   analytical database bundled into the `.hyper` file — which is why extracts
+   are often faster: Hyper stores each column contiguously and compressed,
+   so `SUM(Sales)` only has to scan the Sales column, not full rows.
+3. This is also the mechanical reason dimensions and measures behave
+   differently: a dimension is, by construction, something VizQL can put in
+   a `GROUP BY`/axis-header list, while a measure is something it can only
+   put inside an aggregate function. Manually switching a field to
+   Discrete/Continuous (Section 2) is really telling VizQL whether to treat
+   its values as `GROUP BY` buckets (discrete, headers) or as a numeric axis
+   domain (continuous, a line/scale) — the same underlying column, two
+   different query shapes.
+4. Hand-verification tie-in: when Module 3 has you check that the East bar
+   reads 2210, what you're really confirming is that VizQL's generated
+   `GROUP BY Region` query summed the right three rows (1200 + 60 + 950)
+   from the `Orders` table above — the same arithmetic a `SUM(Sales) WHERE
+   Region = 'East'` SQL query would perform against a real database.
+
 ## Cheat sheet
 
 | Term | Meaning |

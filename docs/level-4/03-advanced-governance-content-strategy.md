@@ -75,6 +75,46 @@ running example.
 | Calculation reuse | Formula copy-pasted and drifted across workbooks | Shared/certified calculated fields, single source of truth |
 | Deprecation discipline | Old sources silently left online indefinitely | Time-boxed migration + impact analysis before archive |
 
+## How It Actually Works
+
+1. Lifecycle stage isn't a free-text label — it's implemented as a
+   combination of the `certification` metadata field (Level 3 Module 8)
+   plus a project/tag convention (e.g. a `Deprecated` project or tag that
+   governance tooling and search filters both key off). Moving a source
+   through Draft → Published → Certified → Deprecated → Archived is
+   literally a sequence of REST API / UI calls updating those same
+   metadata fields — there's no separate "lifecycle engine"; the stages
+   are a policy layered on top of certification and tagging primitives
+   already covered in Level 3 Module 8.
+2. Tags and naming are matched by Server's search index at query time —
+   `domain:sales` is a first-class tag object attached to the content
+   item, indexed so a search or Metadata API filter can retrieve "every
+   datasource tagged domain:sales" in one query. Grain-suffix naming
+   ("— Order Line" vs. "— Region Summary") is *not* machine-enforced by
+   Tableau itself; it's a convention that only prevents confusion because
+   humans read it before joining — which is why Section 2's example
+   pairs a naming convention with an actual grain check: a summary
+   source's 3 rows and a detail source's 8 rows are mechanically
+   different result sets even if both happen to answer "what's the Sales
+   total," and no tag stops someone joining them incorrectly.
+3. Deprecation's correctness check (Section 3.2) works because migrating
+   from the old `OrderFacts`/`RegionDim` split to a new single joined
+   source changes *how* the query is generated (Level 3 Module 6's
+   join-pushdown mechanics) but must not change the query's *logical*
+   result — re-deriving 2210/3750/920/6880 post-migration is a regression
+   test against the join semantics themselves, catching the concrete
+   failure mode where a migration accidentally changes an inner join to a
+   left join (or vice versa) and silently drops or double-counts rows.
+4. A "certified/shared calculation" is stored once, on the published data
+   source's own definition (or a Tableau Metrics/defined-metric object),
+   and every workbook connecting to that source inherits the same
+   formula reference rather than a locally re-typed one — this is the
+   structural fix for Section 4's drift failure: `Pct of Region` defined
+   centrally as `SUM([Sales]) / {FIXED [Region]: SUM([Sales])}` cannot
+   independently drift into `SUM([Sales])/6880` in a second workbook,
+   because that workbook references the same calculation object rather
+   than owning its own copy of the formula text.
+
 ## Exercise
 
 Two workbooks report different totals for "East Region Share of Sales":

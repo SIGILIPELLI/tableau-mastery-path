@@ -77,6 +77,33 @@ them.
    (Section 3–4) are for the richer "clicking a mark drives another chart"
    interactivity that a simple filter control can't express.
 
+## How It Actually Works
+
+A dashboard doesn't merge its sheets into one query — each tile keeps
+issuing its own independent VizQL query, and an **action** works by
+capturing a click/hover event and injecting an implicit filter clause into
+the *other* sheets' next query run:
+
+1. A filter action from "Sales by Region" to "Sales Over Time" means: when
+   you click the East bar, Tableau appends `WHERE Region = 'East'` to the
+   query that "Sales Over Time" would otherwise run, then re-executes it.
+   That's why the line chart's re-drawn totals must equal a hand-filter of
+   `Orders` to East rows only (1001, 1003, 1006) — it's the same underlying
+   `GROUP BY Month` query, just with an added `WHERE` clause supplied by the
+   action, not a different chart.
+2. **Highlight actions** are cheaper than filter actions mechanically: they
+   don't add a `WHERE` clause or re-run the query at all — they only change
+   which already-rendered marks get dimmed vs. full-opacity client-side,
+   which is why hovering to highlight is instantaneous even against a live,
+   slow data source, while a filter action re-triggers a real query round
+   trip.
+3. **"Apply to Worksheets > All Using This Data Source"** (Section 5) is
+   different from both: it doesn't operate as a click-triggered action at
+   all, but as a shared filter clause baked into every sheet's query from
+   the same connection, evaluated before the sheet even renders — which is
+   why it needs no "clicking a mark" step and instead behaves like a
+   dashboard-wide global `WHERE` a viewer's dropdown directly controls.
+
 ## Cheat sheet
 
 | Task | Where |

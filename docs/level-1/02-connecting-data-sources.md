@@ -78,6 +78,36 @@ exactly as described in Section 2. This is covered in depth in Level 2
 Module 3, once you've built enough single-table visualizations to appreciate
 why splitting data across tables matters.
 
+## How It Actually Works
+
+"Connecting" to data doesn't hand Tableau a static copy — it registers a
+**metadata description** (column names, inferred types, and, for
+Extract, a materialized copy) that VizQL's query generator reads before it
+can build anything:
+
+1. On a **Live** connection, the Data Source page's schema (field names,
+   types) is used purely to build correct SQL — every worksheet action still
+   round-trips to the real source. Changing `Sales` from Text to Number here
+   (as in the Exercise) doesn't change a single byte in the source database;
+   it changes the `CAST`/type-coercion Tableau applies to that column when
+   it writes the generated query, so `SUM([Sales])` becomes a valid numeric
+   aggregate instead of a string-concatenation error.
+2. On an **Extract**, connecting triggers Tableau to run one pass over the
+   source, apply any type coercions and initial filters from the Data
+   Source page, and write the result into a `.hyper` file — a columnar,
+   compressed on-disk format. From that point forward, every worksheet query
+   is compiled and executed against Hyper locally, not the original source,
+   which is why an extract's numbers can drift from a live database until
+   you explicitly refresh (Data menu → Extract → Refresh) — you're
+   re-running that same import pass, not re-pointing a live pipe.
+3. Joining a second table (mentioned at the end of this module, expanded in
+   Level 2 Module 3) changes the `FROM`/`JOIN` clause VizQL generates for
+   *every* subsequent query, even ones that only reference fields from the
+   original table — this is the mechanical reason a badly-chosen join type
+   (e.g. an inner join that silently drops unmatched Order IDs) can make
+   totals computed later in the course come out lower than a hand
+   calculation against `Orders` alone expects.
+
 ## Cheat sheet
 
 | Concept | Where / How |

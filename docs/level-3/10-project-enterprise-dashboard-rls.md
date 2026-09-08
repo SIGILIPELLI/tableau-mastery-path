@@ -80,6 +80,45 @@ against `Orders`.
    an embedded/local copy, so future viewers see the trust badge and any
    data quality warnings that source carries.
 
+## How It Actually Works
+
+1. VizQL builds this dashboard's query in a strict evaluation order:
+   (1) data source filters, (2) context filters — including the RLS `Region
+   Is Visible` filter once marked as context, (3) FIXED LOD expressions,
+   (4) dimension/measure filters, (5) table calculations. This ordering is
+   why "mark RLS as a context filter" is not a performance tweak here but a
+   correctness requirement — a FIXED LOD is computed directly against
+   whatever rows survive step (2); if RLS sits at step (4) instead (an
+   ordinary filter), the FIXED expression in step (3) already ran against
+   the *entire unfiltered* table before RLS ever applied, which is
+   mechanically why Alice's `Region Total` shows 6880 instead of 2210 when
+   RLS is left as a plain filter.
+2. `USERNAME()` is resolved server-side at session start from the
+   authenticated Server/Cloud identity — it is not a data value stored
+   anywhere in `Orders` or `RegionAccess`; VizQL substitutes it as a
+   literal string into the generated query's `WHERE` clause (effectively
+   `WHERE RegionAccess.Username = 'alice@co.com'`) before the query is
+   sent to the source, so the join to `RegionAccess` plus this substitution
+   is what turns a shared certified data source into a per-viewer-scoped
+   result set without maintaining separate copies of `Orders` per manager.
+3. The `RANK(SUM([Sales]))` table calc's "top category per Region" filter
+   works in two passes for the same reason table calcs are pricier than
+   aggregates (Module 5, Section 3): VizQL first computes SUM(Sales) for
+   every Region×Category combination as an aggregate query, then a second
+   local pass ranks rows within each Region partition (per the addressing
+   set to Category, partitioning set to Region) before the Rank=1 filter
+   discards non-top rows — this is why the filter must be a **table calc
+   filter**, applied after aggregation, rather than a data source filter,
+   which would have no ranking to filter on yet.
+4. Publishing with the dependency pointed at the certified source (not an
+   embedded extract) means the workbook's `.twb` stores a reference
+   (connection metadata) to the published data source's Server-side
+   content ID rather than embedding its own copy of the rows — so a future
+   refresh or correction to the certified `Orders` source propagates to
+   this dashboard automatically on next load, whereas an embedded/local
+   copy would freeze this dashboard's numbers at publish time regardless of
+   what happens to the certified source afterward.
+
 ## Cheat sheet — full verification table
 
 | Check | Expected value |

@@ -68,6 +68,41 @@ extension, against the familiar `Orders` table.
 | Custom UI controls beyond parameters/filters | Limited | Yes |
 | Must work with zero admin config | Yes | No — requires enabling extensions |
 
+## How It Actually Works
+
+The summary-vs-underlying distinction in Section 2 is really exposing the
+Stage-1/Stage-2 query model from Level 1-2 directly through the Extensions
+API — an extension can choose *which* stage of VizQL's own pipeline to read
+from:
+
+1. `getSummaryDataAsync()` returns exactly the rows Stage 1's `GROUP BY`
+   query produced for that worksheet — for the Region bar chart, this is
+   literally the same 3-row result set (`SELECT Region, SUM(Sales) GROUP BY
+   Region`) that the rendered bars are drawn from, which is why it's
+   guaranteed to match the visible chart pixel-for-pixel in aggregate terms.
+2. `getUnderlyingDataAsync()` bypasses that Stage-1 aggregation and returns
+   the pre-`GROUP BY` row set VizQL would have aggregated — up to all 8
+   `Orders` rows for a sheet with no filters — which is why an extension
+   naively summing this without re-aggregating by Region would produce a
+   correct grand total (6880) but be unable to reproduce the 3-bar
+   breakdown without re-implementing the `GROUP BY` logic itself. This
+   distinction is the exact reason the module flags it as a common
+   duplicate-counting bug source: an extension author who expects
+   "underlying data" to already be per-Region will silently get row-level
+   granularity instead.
+3. `applyFilterAsync()` and `clearFilterAsync()` don't manipulate the
+   rendered view directly — they inject/remove the same kind of `WHERE`
+   clause a native filter shelf action would (Level 1 Module 7), which
+   VizQL Server then uses to regenerate and re-run that worksheet's Stage-1
+   query, exactly like clicking a filter card would; the extension is a
+   programmatic trigger for the identical pipeline, not a separate data
+   path. This is why the reset-button test (Section 4.3) is a genuine
+   pipeline correctness check: if any worksheet's `clearFilterAsync` call
+   is missed, that one sheet keeps querying with its old `WHERE` clause
+   while the others regenerate without it, producing exactly the kind of
+   inconsistent intermediate total (3160) the module calls out as a bug
+   signature.
+
 ## Cheat sheet
 
 | API call | Returns |

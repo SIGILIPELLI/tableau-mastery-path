@@ -89,6 +89,42 @@ edge cases — all against `Orders` sorted by `Order Date`.
    if it does, the filter was applied before the table calc rather than
    after, and needs to move to context or use the table calc filter.
 
+## How It Actually Works
+
+Building on Level 1 Module 8's two-stage model (query, then table-calc
+pass), addressing and partitioning are literally the two axes of the array
+that stage 2 walks — understanding that array shape resolves every "why did
+my table calc reset there" question:
+
+1. The Stage-1 query for Section 3 (`Region`, `Order Date` on Rows, no
+   filters) returns an 8-row grid, one row per Order Date within Region,
+   sorted first by Region then Order Date — conceptually `SELECT Region,
+   OrderDate, SUM(Sales) FROM Orders GROUP BY Region, OrderDate ORDER BY
+   Region, OrderDate`. **Partitioning by Region** tells Stage 2 to treat
+   this flat 8-row grid as *three separate sub-arrays*, one per Region
+   value, and reset the running-sum accumulator to 0 at the start of each
+   sub-array — which is mechanically why East's running total (1200, 1260,
+   2210) never carries into West's first value (450), even though both
+   live in the same query result set.
+2. **Addressing** determines the *order* Stage 2 walks within each
+   partition — here, by Order Date ascending — which is why the moving
+   average and percent-difference calcs in Sections 4-5 (no partition, full
+   8-row addressing) walk straight through all 8 rows in date order:
+   changing the addressing field to, say, Order ID wouldn't change results
+   here since both are already co-sorted, but on a real dataset where sort
+   order diverges, addressing on the wrong field silently reorders which
+   value counts as "previous."
+3. **Section 7's filter-ordering trap**, restated in pipeline terms: a
+   normal filter's `WHERE`/`HAVING` clause executes during Stage 1, so
+   Central's rows are simply absent from the array Stage 2 ever sees,
+   producing a running total computed only over the remaining 5 rows — not
+   what "hide Central after computing the full total" means. Moving the
+   Region filter to **context**, or using the table-calc-specific "filter
+   is computed using" option, defers the exclusion to after Stage 2 has
+   already walked the full 8-row array, so the running totals it produced
+   (East 2210, West 3750, both already final) are preserved and only the
+   Central rows are hidden from the rendered output afterward.
+
 ## Cheat sheet
 
 | Table calc | Formula concept | Verified value (example) |

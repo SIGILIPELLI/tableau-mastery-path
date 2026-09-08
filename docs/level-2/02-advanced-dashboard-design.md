@@ -86,6 +86,42 @@ still reconcile to.
    clicked aggregate) is the standard way to confirm a filter action wired
    correctly, without needing Tableau itself running.
 
+## How It Actually Works
+
+Every interactivity feature in this module maps to a specific point in the
+client-side rendering / query pipeline, not a uniform "dashboard magic":
+
+1. **Filter vs. Highlight, at the query level**: a filter action always
+   triggers a fresh query with an added `WHERE` clause against the target
+   sheet's data source — clicking "East" re-runs the Category sheet's query
+   as `SELECT Category, SUM(Sales) FROM Orders WHERE Region='East' GROUP BY
+   Category`, returning exactly Furniture (2150) and Office Supplies (60),
+   summing to 2210. A highlight action never touches the query layer at
+   all — it operates purely on the already-rendered mark list client-side,
+   toggling an opacity/color property per mark based on whether that mark's
+   underlying dimension values match the selection, which is why it's
+   effectively instantaneous even against a slow live source.
+2. **On Select vs. On Hover** (Section 3.4) controls which browser/app
+   event triggers the action's re-evaluation — On Hover binds to a
+   `mousemove`-equivalent, re-firing (and re-querying, for filter actions)
+   on every pixel of mouse movement across a mark, which is precisely why
+   it's discouraged for filter actions: a filter action fires a real query,
+   and firing one per mouse-move is needlessly expensive compared to firing
+   once per deliberate click.
+3. **Show/Hide containers** (Section 4) don't destroy or rebuild the hidden
+   sheet's query — the underlying worksheet's query has typically already
+   run (or runs lazily on first reveal, depending on the "Run all sheets"
+   setting), and the toggle only changes a CSS-like visibility flag on that
+   container. This is why revealing a hidden detail table is usually
+   instant, not a fresh multi-second query — the cost was paid at dashboard
+   load, not at toggle time.
+4. **Device layouts** (Section 5) never change what's queried — the same
+   worksheet's `GROUP BY` and totals (Sales 2210/3750/920) are identical
+   across desktop and phone layouts. What changes is purely the rendering
+   layout tree the browser/app lays those same mark results into, selected
+   by matching the viewing device's reported width against the layouts
+   defined in the workbook.
+
 ## Cheat sheet
 
 | Feature | Where |

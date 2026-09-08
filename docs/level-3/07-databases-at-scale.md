@@ -92,6 +92,44 @@ For this module, `Orders` is normalized into two tables:
    for high-concurrency published dashboards over many simultaneous live
    connections hitting the same OLTP database.
 
+## How It Actually Works
+
+1. When you drag `OrderFacts` and `RegionDim` together in the Data pane,
+   Tableau does not materialize a merged table client-side for a live
+   connection — it rewrites your view's query to include a `JOIN` clause
+   directly in the SQL it sends: `SELECT d.[Region Name], SUM(f.Sales) FROM
+   OrderFacts f JOIN RegionDim d ON f.[Region Code]=d.[Region Code] GROUP
+   BY d.[Region Name]`. The join only becomes "physical" (rows actually
+   combined into one table) when you extract, at which point `.hyper`
+   stores the join's *result*, not the two source tables plus a join
+   instruction.
+2. Custom SQL is different at the query-planning level: Tableau wraps your
+   SQL string in a subquery — `SELECT * FROM (<your custom SQL>) AS
+   custom_sql_query` — and every subsequent VizQL query (a filter, a new
+   pill) becomes an outer query against that subquery. Because the
+   database query optimizer can't always see through the outer wrapper to
+   push a `WHERE` down into your custom SQL's internals, filters that
+   would be nearly free against a native join (an index seek on `Region
+   Code`) can force the database to fully materialize the custom SQL
+   result first — this, not "custom SQL is slow" in the abstract, is the
+   real cause of the filter-pushdown penalty in Section 2.
+3. A cross-database join is executed by Tableau's own query engine because
+   no single database connection spans both sources: Tableau issues one
+   query per connection (a `SELECT` against SQL Server for `OrderFacts`,
+   another against the Excel driver for `RegionDim`), pulls both result
+   sets into local memory, and performs the join itself — mechanically
+   equivalent to what an extract does, which is why cross-database joins
+   are effectively always extract-backed for anything beyond trivial
+   volume: Tableau has no way to lazily stream a cross-source join.
+4. Join type changes the row count *before* aggregation happens, not
+   after — an inner join drops OrderFacts row 1009 (`R-S`) from the query
+   result entirely, so `SUM(Sales)` by Region Name never sees the 300; a
+   left join keeps the row with `Region Name = NULL`, and Tableau's
+   default handling groups that row under a "Null" member in the Region
+   Name dimension, which is why the grand total (7180) and the sum of the
+   three named regions (6880) only reconcile once the Null bucket is
+   included.
+
 ## Cheat sheet
 
 | Pattern | Where the join runs | Best for |

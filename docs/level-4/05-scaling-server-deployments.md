@@ -65,6 +65,47 @@ concrete (if tiny) reference point for the reasoning.
    (Postgres) health, since it's a single point of failure for metadata
    even in an otherwise horizontally-scaled deployment.
 
+## How It Actually Works
+
+1. Admin Views are built from Tableau Server's own instrumented
+   `historical_events`/`background_jobs` tables in the Repository
+   (Postgres) — every VizQL render, extract refresh, and metadata
+   operation logs a row with process, node, start/end time, and status,
+   which is what the Admin Views dashboards query and aggregate. This is
+   why "look at Admin Views before scaling" is not just good practice but
+   the only reliable way to identify the bottleneck: the alternative
+   (guessing which process is saturated from symptoms alone) is exactly
+   the mistake Module 1's exercise warns against — sizing for viewer count
+   while a Backgrounder queue silently backs up.
+2. Horizontal scaling works because VizQL Server and Backgrounder are both
+   stateless per-request processes coordinated through the shared
+   Repository and a load balancer/dispatcher — adding a second VizQL node
+   means the load balancer round-robins (or least-connections) incoming
+   view requests across both nodes, each capable of independently
+   compiling and running a query, so throughput scales roughly linearly
+   until the shared Repository or the data source itself becomes the new
+   bottleneck. Backgrounder scales the same way, except jobs are pulled
+   from a shared queue rather than load-balanced per request.
+3. p95/p99 latency, not average, is the right monitoring signal because
+   Admin Views' render-time data is heavily right-skewed: many simple
+   worksheets render in well under a second, while a small number of
+   LOD/table-calc-heavy dashboards (Level 3 Module 5) dominate the tail.
+   Averaging masks this — 99 renders at 0.3s and 1 render at 8s averages
+   to ~0.38s, hiding the exact outlier that's generating complaints, which
+   is the concrete mechanism behind the Exercise: 30% average utilization
+   with an 8s p99 on one dashboard is a workbook-level calc cost problem,
+   not aggregate capacity, because *most* requests aren't touching that
+   dashboard's expensive calc chain at all.
+4. Refresh staggering (Section 4) works at the Backgrounder queue level:
+   jobs are pulled from the queue up to the configured number of
+   concurrent background processes, so if 300 refreshes are all scheduled
+   for the same instant, they queue and process serially/in limited
+   parallel regardless — spreading start times across a window doesn't
+   reduce total work, it reduces the *peak* queue depth at any one moment,
+   which is what actually prevents the overrun scenario, since a queue
+   that never exceeds available Backgrounder capacity drains continuously
+   instead of falling further behind each cycle.
+
 ## Cheat sheet
 
 | Symptom | Likely bottleneck | Scaling response |

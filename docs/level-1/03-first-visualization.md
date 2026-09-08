@@ -81,6 +81,34 @@ calculation from Module 1's exercise.
 3. Switch back to **Sum** before moving on, since Module 4 assumes SUM(Sales)
    as the baseline.
 
+## How It Actually Works
+
+Right-clicking SUM(Sales) → **Measure** → **Average** doesn't relabel the
+existing bar — it rewrites the aggregate function inside VizQL's generated
+query from `SUM(Sales)` to `AVG(Sales)` and re-runs it, which is why the
+whole chart, including its axis scale, redraws rather than just its label:
+
+1. For the East bar: `SUM(Sales)` over the three East rows (1200, 60, 950)
+   is 2210 — the query pattern is `SELECT Region, SUM(Sales) FROM Orders
+   WHERE Region='East' GROUP BY Region`. Switching to `AVG(Sales)` changes
+   the generated aggregate to `SELECT Region, AVG(Sales) FROM Orders WHERE
+   Region='East' GROUP BY Region`, which evaluates to 2210 / 3 = 736.67 — a
+   different SQL function over the *same* underlying rows, not a
+   post-processing division applied to the displayed bar.
+2. This distinguishes a **regular aggregation switch** (this module) from a
+   **table calculation** (Module 8): AVG here is computed by the query
+   engine itself, from the raw rows, in one pass — it isn't dependent on
+   what else is in the view. A table calc, by contrast, runs *after* the
+   aggregate query returns, operating only on the numbers already visible —
+   which is why Module 8 needs "Compute Using" and this module doesn't.
+3. Dragging **Category** onto Color (Exercise) adds `Category` to the
+   `GROUP BY` clause without moving it to a shelf that produces new
+   header rows — Color is VizQL's way of saying "subdivide each existing
+   mark by this dimension, encoded visually, not as a new axis position."
+   The underlying query becomes `GROUP BY Region, Category`, producing one
+   mark per (Region, Category) pair, each colored distinctly, stacked or
+   placed within its Region's bar depending on the mark type.
+
 ## Cheat sheet
 
 | Action | How |

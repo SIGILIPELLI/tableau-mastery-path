@@ -87,6 +87,39 @@ module.
    920/1000=0.92 — these become the `Sales / [Rep Quota]` calculated
    field, verified against the manual division.
 
+## How It Actually Works
+
+The fan-out bug in Section 2.4 and the reason relationships avoid it both
+come down to **when aggregation happens relative to the row combination**:
+
+1. A **physical join** happens at the row level, before any `GROUP BY` — a
+   join produces one combined intermediate row set first (e.g. `Orders JOIN
+   Reps ON Region`), and *then* VizQL's `SUM(Sales)` aggregates over
+   *however many rows that join produced*. With a second East rep (Dana),
+   the join produces 4 East rows instead of 3 for the combined result (each
+   of East's three Orders rows duplicated once per matching Reps row: 3
+   Orders × 2 Reps rows = 6 combined East rows total, each carrying its
+   original Sales value), so `SUM(Sales)` for East sums 1200+1200+60+60
+   +950+950 = 4420 — double-counting each Orders row once per matching Reps
+   row, not "duplicating the sum" as a separate step but literally
+   re-summing physically duplicated rows.
+2. A **relationship** avoids this because its generated query never
+   physically joins raw rows across granularities — Tableau computes
+   `SUM(Sales)` within `Orders` at `Orders`' own native grain first (a
+   `GROUP BY Region` subquery returning one row per Region, still 2210 for
+   East), and only *then* performs a row-preserving lookup against `Reps`
+   for the Rep Name/Quota columns — conceptually a `LEFT JOIN` of two
+   already-aggregated result sets rather than a join of raw fact rows, so
+   there's no intermediate row list a duplicate `Reps` key can inflate.
+3. **Blending** (Section 4) works at a third, coarser stage still: the
+   secondary source's own query runs completely independently and is
+   pre-aggregated to the *primary* sheet's exact dimensions before any
+   combination — so a duplicate Rep row in a blended secondary source can't
+   even affect the primary's Sales total, because the primary's aggregate
+   query never references the secondary source's rows at all; only the
+   final displayed numbers are combined, client-side, after both queries
+   have independently returned.
+
 ## Cheat sheet
 
 | Concept | Key trait |

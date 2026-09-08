@@ -70,6 +70,37 @@ the running example.
    Show/Hide toggle (Level 2 Module 2) rather than competing for the same
    visual weight as the headline chart.
 
+## How It Actually Works
+
+Formatting and color are almost entirely a **rendering-layer** concern
+applied after VizQL's query has already returned its numbers — but two
+mechanisms in this module do interact with the query/calc engine directly:
+
+1. **Number formatting never changes underlying values** — it's a display
+   transform applied to the same returned aggregate. East's Sales stays the
+   exact integer 2210 in the query result regardless of whether it's
+   rendered as `2210`, `$2,210`, or `$2.2K`; verify this distinction
+   matters by noting a *calculated field* referencing `[Sales]` in a
+   formula always sees the raw 2210, never a rounded or abbreviated
+   version, even if every visible label on the sheet is abbreviated.
+2. **Diverging color's midpoint is a genuine value comparison**, not purely
+   visual: Tableau's diverging palette assigns each mark's color by
+   comparing its numeric value against a computed or user-set center
+   (default: the field's midpoint, or 0 if the field can meaningfully cross
+   zero) — the Bookcase order's Profit (-40) is colored differently only
+   because -40 < 0 is evaluated per-mark before rendering; the color
+   assignment is itself a small per-mark classification computed from the
+   same aggregate the axis already shows, not a separate stored field.
+3. **Story Points don't create new queries** — each story point is a
+   captured *reference* to an existing sheet/dashboard's current filter and
+   parameter state (a saved "bookmark" of shelf/filter configuration), so
+   navigating between points re-applies whichever filter/parameter state
+   was captured, potentially re-triggering that sheet's query if the state
+   differs from what's currently cached, but building no new calculation
+   logic of its own — this is why a story point can "break" if the
+   underlying sheet's fields are later renamed or removed: the story only
+   holds a reference, not an independent copy.
+
 ## Cheat sheet
 
 | Element | Rule of thumb |

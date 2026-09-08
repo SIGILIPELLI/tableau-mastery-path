@@ -70,6 +70,43 @@ known numbers.
    before/after total check — performance work that silently changes your
    numbers is a correctness bug, not a speed win.
 
+## How It Actually Works
+
+Every technique in this module targets a specific stage of the query
+pipeline built up across Level 1–2 — naming the stage each one hits is what
+turns "try this, it's usually faster" into a predictable diagnosis:
+
+1. **Extract filters** (Section 3.1) act at the earliest possible point —
+   before the `.hyper` file is even written — so they shrink the data every
+   *later* stage (Stage 1's `GROUP BY` query, any LOD subquery, any table
+   calc's Stage 2 array) has to process. Filtering to `Order Date >=
+   2024-02-01` removes rows 1001/1002 permanently from that extract, so
+   `SUM(Sales)` recomputed from the remaining 6 rows (60+800+2200+950+120
+   +1100) correctly comes out to 5230 — a smaller number *because* fewer
+   rows exist to sum, not because of any display-side rounding.
+2. **Context filters** (Section 3.2) act at Stage 1 but late in it: they
+   force their `WHERE`/subquery clause to materialize as an intermediate
+   temp table before every other filter and every LOD `{FIXED}` subquery
+   runs — which is why they both fix table-calc ordering bugs (Level 2
+   Module 4, Section 7) and speed things up: Tableau can cache that one
+   materialized intermediate result and reuse it across multiple other
+   filter changes instead of re-scanning the full extract each time.
+3. **Extract aggregation** (Section 2.2) changes what's physically stored
+   in the `.hyper` file itself — instead of storing all 8 raw rows, it
+   pre-computes and stores only the Region/Category-level `GROUP BY` result
+   (3 or 4 rows), so every subsequent Stage-1 query at that same or coarser
+   grain reads a table that's already the size of its own answer — but it
+   also means an LOD expression needing finer detail (like Level 2 Module
+   1's Order-ID-level INCLUDE) can no longer be computed correctly from
+   that extract, since the row-level data it needs no longer exists.
+4. **Marks count and LOD nesting** (Section 4) both affect Stage-1/Stage-2
+   compute cost directly: more marks means a larger Stage-1 result set for
+   Stage 2 (table calcs) and the renderer to walk; a `{FIXED}` LOD's
+   subquery (Level 2 Module 1) re-scans the underlying table at its
+   specified grain every time it's invalidated, so nesting several
+   fine-grained LODs on a large fact table multiplies the number of full
+   subquery scans a single sheet triggers.
+
 ## Cheat sheet
 
 | Technique | Effect |

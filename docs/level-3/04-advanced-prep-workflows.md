@@ -81,6 +81,41 @@ symbol:
    picked up by an incremental refresh keyed this way, which is the
    trade-off for the speed gain.
 
+## How It Actually Works
+
+Building on Level 2 Module 6's node-pipeline model, this flow's Pivot and
+Incremental Refresh steps expose two mechanisms worth tracing precisely:
+
+1. **Pivot (rows to columns) as a physical regrouping**: the step doesn't
+   compute anything new arithmetically — it takes the already-aggregated
+   Region×Category×Sales rows from Section 3 and re-projects the Category
+   dimension's distinct values into column headers, placing each existing
+   Sales value into the cell matching its (Region, Category) pair, with a
+   blank/0 wherever no matching row existed (East has no Electronics
+   orders, so that cell is blank, not a computed zero from missing data).
+   This is why every row's non-blank cells sum back exactly to that row's
+   pre-pivot Region total (2150+60=2210 for East) — the pivot step
+   redistributes existing summed values into a wider row shape, it never
+   re-aggregates or drops values in the process.
+2. **Incremental refresh keyed on Order ID**: mechanically, this changes
+   the Input node's extraction query from "read all rows" to "read only
+   rows whose key exceeds the highest key value processed on the last run"
+   — a `WHERE OrderID > <last_max_id>`-style predicate, conceptually
+   identical to an extract filter (Level 2 Module 8) but computed
+   automatically per run rather than hand-specified. This is exactly why
+   an edited *historical* row (Order ID already below the last-processed
+   watermark) is invisible to this refresh mode: the generated predicate
+   structurally excludes any row whose key isn't newly above the
+   watermark, regardless of whether its other columns changed.
+3. **Why Clean steps must run before Aggregate, and Aggregate before
+   Pivot, in this flow specifically**: each node consumes the *exact* row
+   set the previous node emits (Level 2 Module 6's chained-CTE model) — an
+   Aggregate step run before the Clean/case-fix step would group `Furniture`
+   and `furniture` as two separate keys, producing a 6-row (not 3-row)
+   aggregate that a downstream Pivot step would then also incorrectly
+   spread across 6 columns instead of 3, propagating the uncleaned
+   granularity all the way to the final wide-table output.
+
 ## Cheat sheet
 
 | Step | Purpose | Verified output |

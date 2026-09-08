@@ -82,6 +82,43 @@ threshold-adjustable view of the `Orders` table.
   reference line), which a plain filter can't do since a filter's job is
   narrowly "include or exclude."
 
+## How It Actually Works
+
+Filters and parameters sit at different points in VizQL's query pipeline,
+which is the real reason they behave so differently:
+
+1. A **dimension filter** (Region) becomes a `WHERE Region IN ('East',
+   'West')`-style clause added to the generated query before aggregation —
+   it physically removes rows from what the database or Hyper engine ever
+   sums, which is why an excluded region's Sales can't leak into any total
+   on that sheet.
+2. A **measure filter** (Sales, Sum, 500–2500) is applied *after*
+   aggregation for a per-row measure filter on a non-aggregated field, but
+   here — filtering on `SUM(Sales)` — Tableau generates something like
+   `HAVING SUM(Sales) BETWEEN 500 AND 2500` when a `GROUP BY` is present, or
+   filters the raw column pre-aggregation when there's no grouping context;
+   Section 2's note about table calculations matters precisely because a
+   table calc-based filter runs in a *third*, later stage (after the query
+   returns), so it can only ever filter marks already computed — it can
+   never reduce what a `SUM` upstream saw.
+3. **Context filters** (Section 3) map to query pipeline **ordering**: a
+   context filter's `WHERE`/subquery clause is materialized first, and every
+   other filter's clause is then applied against that already-narrowed
+   result set — mechanically equivalent to nesting a nested subquery: `SELECT
+   ... FROM (SELECT ... WHERE <context filter>) WHERE <other filters>`. This
+   is why a context filter can change a Top-N filter's result: the Top-N
+   is now computed only over rows the context filter already let through.
+4. A **parameter** never appears in a `WHERE`/`GROUP BY` clause directly —
+   it's a stored scalar value substituted as a literal into whatever formula
+   references it at query-generation time. `Above Threshold` compiles
+   (conceptually) to `SUM(Sales) > 950` with 950 substituted in from the
+   parameter's current value; change the parameter and Tableau regenerates
+   every dependent query with the new literal, re-running them — never
+   touching stored data, since parameters are pure client-side query inputs.
+   Hand-check at exactly 950: Order 1006 (Sales 950) evaluates `950 > 950 =
+   FALSE`, so it reads `FALSE`, not `TRUE` — the boundary is strict
+   greater-than, not greater-or-equal, unless the formula explicitly uses `>=`.
+
 ## Cheat sheet
 
 | Action | How |

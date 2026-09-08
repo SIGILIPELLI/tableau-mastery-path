@@ -75,6 +75,44 @@ capabilities built across this course.
    process, on real conflicting sources) than from writing ten more LOD
    expressions.
 
+## How It Actually Works
+
+1. Each stage transition maps onto a concrete change in which Server/Cloud
+   capabilities and content a person actually touches, not just a title
+   change: an Analyst's footprint in the audit log (Section 3 of Level 4
+   Module 8) is almost entirely "view"/"publish own workbook" events; a
+   Senior/Developer's log adds "edit RLS entitlement table"
+   (`RegionAccess`) and "run Performance Recording" events; a BI Lead's log
+   shows "set certification flag" and "run impact analysis" events (Level
+   3 Module 8) against *other people's* content, not their own — the audit
+   trail is a literal, queryable record of the Section 2 transitions, the
+   same `historical_events` data that powers CoE and cost metrics
+   elsewhere in Level 4.
+2. The Analyst→Senior shift is measurable against a specific artifact:
+   whether someone's calculated fields correctly separate row-level,
+   aggregate, LOD, and table-calc logic (Level 3 Module 1/5) rather than
+   reaching for a table calc where a FIXED LOD would be both cheaper and
+   more correct — reviewing a candidate's actual `.twbx` files for this
+   pattern is a concrete, checkable growth signal, not a subjective
+   impression.
+3. The Senior→Lead shift is observable in *whose* numbers someone is
+   responsible for verifying: a Senior/Developer hand-checks their own
+   dashboard's totals (2210/3750/920/6880) before publishing; a BI Lead
+   is the person who, per Level 3 Module 8 Section 5, re-derives another
+   analyst's submitted source's totals before applying the Certified flag
+   — the skill (re-deriving totals from raw rows) doesn't change, but
+   whose output it's applied to does, which is exactly why Section 5's
+   growth plan targets "lead one real certification review" as the
+   closing experience rather than "write more calculations."
+4. The Lead→Leader shift changes the unit of measurement entirely: a BI
+   Lead is judged by whether a specific dashboard's numbers are correct;
+   a BI Leader is judged by organization-wide metrics computed the same
+   way Level 4 Module 2 computes CoE health (% certified, duplicate source
+   count, cost-unit totals from Module 8) — the same underlying Metadata
+   API and audit-log queries, aggregated across the whole Server instead
+   of one workbook, which is why the role reads as "organizational" rather
+   than "technical" even though it's built on the identical data.
+
 ## Exercise
 
 An analyst has strong Level 1–2 skills and has recently learned LOD

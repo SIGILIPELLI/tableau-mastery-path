@@ -73,6 +73,43 @@ require Server/Cloud instead.
    download the underlying 8-row table if that was intentionally
    restricted.
 
+## How It Actually Works
+
+Publishing changes *where* the query pipeline built up across this course
+actually executes and *who* can trigger it — not what that pipeline
+computes:
+
+1. Publishing an **embedded** data source bundles a snapshot of the
+   extract (or the live-connection credentials/definition) inside the
+   `.twbx`/server workbook object — every viewer's browser or Tableau
+   Server process re-runs the same VizQL-generated queries against that
+   bundled copy independently. Publishing the data source **separately**
+   instead means multiple workbooks share one server-side copy of the
+   already-cleaned `Orders` data and its one refresh schedule, so a
+   Category-focused second workbook (Section 3.2) issues its own VizQL
+   queries against the *same* underlying `.hyper` file rather than a second,
+   independently-drifting copy.
+2. A **refresh schedule** (Section 4) is mechanically just Tableau Server
+   re-running the same Extract-creation pass described in Level 1 Module 2
+   — pulling fresh rows from the source, re-applying any extract filters
+   and aggregation settings (Level 2 Module 8), and replacing the
+   `.hyper` file's contents — every published workbook referencing that
+   data source then queries the new file on its very next VizQL query,
+   with no workbook-side republish needed.
+3. **Data-Driven Alerts** (Section 5) work by Server periodically
+   re-running the alert's underlying query (the same aggregate query the
+   view itself would generate, e.g. `SUM(Sales)` per Region) on its own
+   schedule, independent of anyone viewing the dashboard, and comparing the
+   returned value against the stored threshold — this is why an alert can
+   fire even when no human ever opens the dashboard: it's driven by a
+   background scheduled query execution, not by a rendered view.
+4. **Permissions** (Section 3.3) are checked before query execution is
+   even allowed to reach the data layer — a viewer denied "Download Full
+   Data" can still trigger the aggregate queries a dashboard needs
+   (Region totals 2210/3750/920), but the row-level export path (which
+   would otherwise return the raw 8-row `Orders` table verbatim) is blocked
+   at the permission-check stage, before any row-level query is issued.
+
 ## Cheat sheet
 
 | Task | Where |

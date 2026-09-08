@@ -76,6 +76,40 @@ For this module, assume the `Orders` table (Module 1) has one more column,
    without a finer geographic field (county, ZIP) actually present in the
    data.
 
+## How It Actually Works
+
+A Tableau map is not a special rendering surface — it's the same
+`GROUP BY`-and-aggregate query as any other chart, plus a **geocoding
+lookup table** (bundled with Tableau, mapping recognized place names to
+latitude/longitude polygons) that VizQL joins in behind the scenes:
+
+1. Double-clicking **State** generates a query like `SELECT State,
+   SUM(Sales) FROM Orders GROUP BY State`, exactly like a bar chart would —
+   but because State carries a Geographic Role, Tableau also performs an
+   implicit join against its internal geocoding table on the State value,
+   attaching a polygon boundary (for a filled/shaded map) or a
+   latitude/longitude point (for a symbol map) to each returned row. An
+   "unmatched values" indicator (Section 2.3) is literally a failed join —
+   a State value with no matching row in the geocoding table.
+2. A **filled map**'s shading is still just SUM(Sales) per state from that
+   same `GROUP BY` — verify: California = 450 + 2200 = 2650, New York = 1200
+   + 60 = 1260, Texas = 800 + 120 = 920, Massachusetts = 950, Washington =
+   1100. California, at 2650, should render as the darkest polygon — the
+   color encoding is a post-query rendering step (a color scale mapped over
+   the aggregate value), not a different query.
+3. A **dual-axis layered map** (Section 4) runs as **two separate queries**
+   sharing the same geographic axis — one per axis/mark layer — which is
+   exactly analogous to any other dual-axis combo chart (a bar-and-line
+   combo, say): each layer keeps its own Marks card, aggregation, and
+   Compute Using if it has table calcs, synchronized only by matching
+   physical position on the shared latitude/longitude axis.
+4. This also explains Section 5's custom-territory limitation: without a
+   recognized geographic role, there's no key to join against the internal
+   geocoding table at all — a custom import (Map menu → Geocoding → Import
+   Custom Geocoding) works by adding new rows to that lookup table so the
+   same join mechanism can succeed for territory names Tableau doesn't
+   ship with by default.
+
 ## Cheat sheet
 
 | Task | How |

@@ -71,6 +71,48 @@ statistics — is the focus.
    for input validation only — see Section 3.1") so a future maintainer
    can hand-verify it the same way this module did.
 
+## How It Actually Works
+
+1. TabPy runs as a standalone HTTP service (default port 9004) exposing a
+   REST endpoint (`/evaluate`); when VizQL hits a `SCRIPT_REAL` calc, it
+   serializes the bound `_argN` arrays as JSON, POSTs them to that
+   endpoint along with the script body, and blocks the query pipeline
+   until TabPy returns its JSON result — this is a real network round trip
+   per query (not a cached local function call), which is exactly why
+   Level 3 Module 5's live-vs-extract cost reasoning applies doubly to
+   `SCRIPT_*` calcs: every recompute pays TabPy's request latency on top
+   of any source query latency.
+2. Argument binding is positional, not labeled, because TabPy's protocol
+   has no concept of Tableau field names — it only receives arrays of
+   values in the order `_arg1, _arg2, ...` were declared in the calc, each
+   array aligned to the same partition ordering VizQL used internally for
+   that pass. This is the exact mechanism behind the Exercise's bug:
+   Tableau's partition order for Category ([Furniture, Electronics, Office
+   Supplies] vs. some other order) is an internal implementation detail of
+   how the query engine grouped rows, and nothing in the `SCRIPT_REAL`
+   protocol carries category *labels* alongside the values — the script
+   receives raw positions and must trust they line up with whatever order
+   it assumes, which is inherently fragile.
+3. Because `SCRIPT_*` functions are compiled as table calculations, they
+   inherit table calc's two-pass execution (Level 3 Module 5, Section 3):
+   VizQL first runs the aggregate query to produce the per-partition
+   `SUM([Sales])` values, then the script call is the local "second pass"
+   step, executed once per partition as currently laid out on the view.
+   Add or remove a dimension from the view (e.g. break Region down further
+   by Category) and the partition boundaries change, so `_arg1` receives a
+   differently-shaped array on the very next render — the script's logic
+   doesn't change, but its *inputs* silently do, which is why a governance
+   note documenting "expected shape of `_arg1`" (Section 5) has to be
+   re-verified whenever the view's field layout changes, not just when the
+   script text changes.
+4. Rserve's protocol differs mechanically (a binary R serialization
+   protocol (QAP1) over a TCP socket rather than TabPy's JSON-over-HTTP),
+   but the surrounding contract is identical: Tableau blocks on a
+   synchronous round trip per script evaluation, arguments arrive
+   positionally, and the returned vector must match the partition's row
+   count exactly or Tableau raises a calculation error rather than
+   silently padding/truncating.
+
 ## Cheat sheet
 
 | Function | Returns |

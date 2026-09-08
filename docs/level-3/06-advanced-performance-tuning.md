@@ -85,6 +85,43 @@ each fix removes using row/calculation counts you can verify by hand.
    total changes after a tuning change, that's a correctness regression,
    not a performance win.
 
+## How It Actually Works
+
+1. The Performance Recording workbook is itself a Tableau data source: each
+   event (Executing Query, Computing Layout, Compiling Query, Blending
+   Data, ...) is a row with a start time and duration, drawn as a Gantt
+   bar. "Executing Query" duration is measured from the moment Tableau
+   dispatches SQL to the connector until the result set fully returns —
+   it includes network round-trip time, not just database CPU time, which
+   is why the same query can look fast locally and slow over a VPN.
+2. For a live connection, VizQL compiles one query per distinct
+   query-context change: switching the view from Region to Category isn't
+   a filter on cached data, it's a brand-new `GROUP BY Category` query
+   sent to the source. An extract instead loads the `.hyper` file's
+   columnar store into memory (or memory-maps it) once per session, so a
+   Region→Category re-group is answered from local columnar data — no
+   round trip, which is the actual mechanism behind "extracts are faster,"
+   not a vague performance multiplier.
+3. Table calculations execute in a second pass after the query returns:
+   the source query produces the aggregated rows (e.g. 3 rows for `Orders`
+   grouped by Region — East 2210, West 3750, Central 920), then Tableau's
+   local table-calc engine walks that already-returned result set applying
+   the addressing/partitioning rule (Level 2 Module 4) to compute things
+   like running sum. This is why a table calc never triggers a second
+   database query — its cost is CPU time over an in-memory grid, but that
+   grid must hold the *entire* partition at once, which is what makes it
+   pricier than a plain aggregate as partition size grows.
+4. Filter order is enforced by VizQL's query-construction phase, not by
+   drag order in the UI: data source filters become `WHERE` clauses baked
+   into the generated SQL itself (so the source engine never returns the
+   excluded rows at all — for `Category != "Office Supplies"`, the
+   generated query never touches rows 1003/1007), context filters are
+   materialized as a temp result set the engine treats as the new "table"
+   for everything downstream, and dimension/measure filters are applied
+   client-side or as a final `WHERE`/`HAVING` against whatever the context
+   step produced — which is exactly why only context-filter changes force
+   a FIXED LOD to recompute, per Module 1 Section 4.
+
 ## Cheat sheet
 
 | Lever | Effect | Cost order (cheapest → priciest per row) |

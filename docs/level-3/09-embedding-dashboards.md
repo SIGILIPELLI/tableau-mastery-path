@@ -72,6 +72,47 @@ filter pass-through — verified against the `Orders` dashboard.
    licensing, a governance point that connects to Module 8's cost topics
    (Level 4 Module 8 covers license management at scale).
 
+## How It Actually Works
+
+1. `<tableau-viz>` is a native Web Component (a custom element registered
+   by the Embedding API v3 script) — the browser instantiates it like any
+   built-in tag, and internally it creates a sandboxed iframe pointed at
+   the view URL. All JS API calls (`activeSheet`, `applyFilterAsync`)
+   don't manipulate the DOM directly; they post structured messages across
+   the iframe boundary to the actual Tableau rendering runtime running
+   inside it, which is why calling a method before the iframe's content
+   has loaded (before `firstinteractive` fires) silently no-ops or throws
+   rather than queuing — there's no listener on the other side yet.
+2. Connected apps authentication works by JWT exchange rather than a
+   shared ticket: the host application, holding a registered connected
+   app's secret, signs a short-lived JWT asserting the visitor's username
+   and (optionally) group membership, and passes it to the embed. Tableau
+   Server/Cloud validates the signature against the connected app's public
+   key, then treats the request exactly as if that user had logged in
+   directly — the same session, same group memberships, same everything —
+   which is precisely why RLS (Level 3 Module 3) still evaluates against
+   `RegionAccess` for that resolved username inside the embed; the embed
+   never bypasses the permission-resolution pipeline, it just supplies the
+   identity differently.
+3. `applyFilterAsync` sends a filter-change message into the iframe that
+   VizQL treats identically to a click on a filter card in the Server UI —
+   it triggers the same query-recompilation path from Module 6, including
+   re-running any live query or re-scanning the extract with the new
+   `WHERE Region='West'` predicate. It does **not** bypass RLS's own
+   predicate, because RLS is injected into the query at the data-source
+   level (as its own always-on filter), so the effective query becomes the
+   AND of both: the RLS predicate and the host-applied filter — which is
+   exactly why Carol (Central-only) requesting `Region='East'` produces an
+   empty result set rather than an error: `WHERE Region='Central' AND
+   Region='East'` is satisfiable by zero rows, and VizQL renders that as a
+   normal empty view, not a failure.
+4. Every rendered embed still opens a real Tableau session server-side
+   (visible in Server's Admin views the same as a direct browser session),
+   which is the mechanism behind Section 5's licensing point — the license
+   consumption check happens at session creation on the server, completely
+   independent of whether the browser reaching that session is Tableau's
+   own UI or a third-party host page.
+
 ## Cheat sheet
 
 | Task | API call/mechanism |

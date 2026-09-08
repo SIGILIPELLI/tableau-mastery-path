@@ -70,6 +70,49 @@ representative user base.
    (growing faster than user count growth is a signal worth
    investigating, per Module 4's capacity discussion).
 
+## How It Actually Works
+
+1. License tier is enforced at the session-authorization layer, not the
+   content layer: every action a user attempts (opening a workbook,
+   creating a new connection, publishing) checks the caller's assigned
+   role against a fixed capability table on the Server/Cloud identity
+   record — a Viewer's session literally cannot issue a "create data
+   source" request; the client UI doesn't even expose the option, and the
+   server would reject it as unauthorized even if it did. This is why
+   right-sizing (Section 2) is safe: downgrading a Creator who never
+   creates connections to Explorer removes a capability check they were
+   never exercising, not a capability they were silently relying on.
+2. Admin Views' per-user activity history (Section 3) is built from the
+   same `historical_events` audit table referenced in Level 4 Module 4 —
+   each publish, view, or connection-creation action logs an event row
+   with user, action type, and timestamp; "zero publish-new-data-source
+   events in 90 days" is a straightforward `WHERE user=X AND
+   action_type='publish_datasource' AND event_time > now()-90d` style
+   query, aggregated per user. This is the same audit-log mechanism that
+   supports Level 4 Module 2's CoE metrics and Module 3's deprecation
+   impact analysis — cost governance, content governance, and CoE
+   reporting all ultimately read the same underlying event history rather
+   than three separate systems.
+3. Extract storage cost is measurable directly from the `.hyper` file size
+   on disk (visible per data source in Admin Views' content storage
+   report) multiplied by refresh frequency's compute cost (Backgrounder
+   job duration × frequency, from Level 4 Module 1/4's sizing) — three
+   near-duplicate `Orders` copies each refreshing nightly cost
+   approximately 3x the Backgrounder minutes and 3x the storage of one
+   consolidated certified copy, which is why Section 4 frames deduplication
+   (Level 4 Module 3's deprecation workflow) as a cost lever with the exact
+   same mechanism as the correctness argument in Level 3 Module 8 — it's
+   the same redundant `.hyper` files causing both problems simultaneously.
+4. The cost-unit arithmetic in Section 2 and the Exercise models a real
+   billing structure (per-tier seat pricing multiplied by headcount at
+   each tier) — the mechanism worth internalizing is that this total is
+   linear in headcount per tier, so the entire savings in both examples
+   comes from moving people *between* tiers (changing the multiplier
+   applied to their seat), not from reducing headcount or reducing what
+   anyone is able to do; a downgraded Explorer retains full access to
+   every certified source they build from, just without the publish-new-
+   connection capability check passing.
+
 ## Cheat sheet
 
 | Lever | Mechanism | Where covered |

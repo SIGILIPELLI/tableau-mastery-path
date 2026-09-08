@@ -63,6 +63,45 @@ lives on. Concepts are illustrated using the `Orders` workbook and
    licensing; large, unpredictable-usage deployments often use core-based.
 2. Preview in depth in Level 4 Module 7 (Cost & License Management).
 
+## How It Actually Works
+
+Understanding which process handles which stage of a request explains why
+certain failures show up where they do, and why the `Orders` dashboard's
+totals sometimes lag rather than error out:
+
+1. When a browser opens the `Orders` dashboard, **Gateway** routes the
+   HTTP request to an available **VizQL Server** process, which loads the
+   workbook definition, generates the same style of `GROUP BY` query this
+   course has built up (Level 1 Module 1), and — for a published data
+   source rather than an embedded one — routes that query through **Data
+   Server**, which manages connection pooling and caching for shared
+   sources like the cross-database `Orders`+`Targets` join (Level 2 Module
+   10). None of these processes touch the extract's *contents* directly;
+   they only run queries against whatever `.hyper` file currently exists
+   on disk.
+2. **Backgrounder** is the only process that actually rewrites that
+   `.hyper` file — a scheduled refresh job is a Backgrounder task that
+   re-runs the same extract-creation pass from Level 1 Module 2 (pull rows,
+   apply extract filters/aggregation from Level 2 Module 8, write a new
+   `.hyper`). This is mechanically why a failed Backgrounder job leaves
+   Region totals frozen at 2210/3750/920: VizQL Server keeps querying the
+   old, still-valid `.hyper` file it has no reason to know is stale — no
+   process actively "pushes" fresh data to VizQL Server, it only pulls
+   whatever the extract currently contains.
+3. **Site and Project isolation** are enforced at the metadata layer
+   (**Repository**, the Postgres store) before a query ever reaches VizQL
+   Server: a request for a workbook in a Site the requesting user's
+   session isn't authorized for is rejected by permission checks against
+   Repository records, never by VizQL Server discovering it can't run the
+   query — this is why permission and licensing errors surface as
+   access-denied pages, not as query failures.
+4. **Named-user vs. core licensing** (Section 5) changes what Gateway
+   checks at login/session-creation time, not what VizQL Server computes —
+   a named-user deployment checks the logging-in identity against a
+   consumed-license table in Repository, while core licensing has no such
+   per-user check at all, only a total concurrent-load ceiling enforced
+   across all the server's processes.
+
 ## Cheat sheet
 
 | Concept | Role |
