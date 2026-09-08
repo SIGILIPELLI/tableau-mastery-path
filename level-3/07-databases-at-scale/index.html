@@ -1693,6 +1693,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2465,6 +2487,44 @@ number hand-checkable.</p>
    extracts (refreshed on a schedule, e.g. nightly) are typically preferred
    for high-concurrency published dashboards over many simultaneous live
    connections hitting the same OLTP database.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li>When you drag <code>OrderFacts</code> and <code>RegionDim</code> together in the Data pane,
+   Tableau does not materialize a merged table client-side for a live
+   connection — it rewrites your view's query to include a <code>JOIN</code> clause
+   directly in the SQL it sends: <code>SELECT d.[Region Name], SUM(f.Sales) FROM
+   OrderFacts f JOIN RegionDim d ON f.[Region Code]=d.[Region Code] GROUP
+   BY d.[Region Name]</code>. The join only becomes "physical" (rows actually
+   combined into one table) when you extract, at which point <code>.hyper</code>
+   stores the join's <em>result</em>, not the two source tables plus a join
+   instruction.</li>
+<li>Custom SQL is different at the query-planning level: Tableau wraps your
+   SQL string in a subquery — <code>SELECT * FROM (&lt;your custom SQL&gt;) AS
+   custom_sql_query</code> — and every subsequent VizQL query (a filter, a new
+   pill) becomes an outer query against that subquery. Because the
+   database query optimizer can't always see through the outer wrapper to
+   push a <code>WHERE</code> down into your custom SQL's internals, filters that
+   would be nearly free against a native join (an index seek on <code>Region
+   Code</code>) can force the database to fully materialize the custom SQL
+   result first — this, not "custom SQL is slow" in the abstract, is the
+   real cause of the filter-pushdown penalty in Section 2.</li>
+<li>A cross-database join is executed by Tableau's own query engine because
+   no single database connection spans both sources: Tableau issues one
+   query per connection (a <code>SELECT</code> against SQL Server for <code>OrderFacts</code>,
+   another against the Excel driver for <code>RegionDim</code>), pulls both result
+   sets into local memory, and performs the join itself — mechanically
+   equivalent to what an extract does, which is why cross-database joins
+   are effectively always extract-backed for anything beyond trivial
+   volume: Tableau has no way to lazily stream a cross-source join.</li>
+<li>Join type changes the row count <em>before</em> aggregation happens, not
+   after — an inner join drops OrderFacts row 1009 (<code>R-S</code>) from the query
+   result entirely, so <code>SUM(Sales)</code> by Region Name never sees the 300; a
+   left join keeps the row with <code>Region Name = NULL</code>, and Tableau's
+   default handling groups that row under a "Null" member in the Region
+   Name dimension, which is why the grand total (7180) and the sum of the
+   three named regions (6880) only reconcile once the Null bucket is
+   included.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

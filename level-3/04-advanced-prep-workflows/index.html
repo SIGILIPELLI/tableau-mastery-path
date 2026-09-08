@@ -1609,6 +1609,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2476,6 +2498,40 @@ symbol:</p>
    after creation) — editing a historical row's Sales value would not be
    picked up by an incremental refresh keyed this way, which is the
    trade-off for the speed gain.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Building on Level 2 Module 6's node-pipeline model, this flow's Pivot and
+Incremental Refresh steps expose two mechanisms worth tracing precisely:</p>
+<ol>
+<li><strong>Pivot (rows to columns) as a physical regrouping</strong>: the step doesn't
+   compute anything new arithmetically — it takes the already-aggregated
+   Region×Category×Sales rows from Section 3 and re-projects the Category
+   dimension's distinct values into column headers, placing each existing
+   Sales value into the cell matching its (Region, Category) pair, with a
+   blank/0 wherever no matching row existed (East has no Electronics
+   orders, so that cell is blank, not a computed zero from missing data).
+   This is why every row's non-blank cells sum back exactly to that row's
+   pre-pivot Region total (2150+60=2210 for East) — the pivot step
+   redistributes existing summed values into a wider row shape, it never
+   re-aggregates or drops values in the process.</li>
+<li><strong>Incremental refresh keyed on Order ID</strong>: mechanically, this changes
+   the Input node's extraction query from "read all rows" to "read only
+   rows whose key exceeds the highest key value processed on the last run"
+   — a <code>WHERE OrderID &gt; &lt;last_max_id&gt;</code>-style predicate, conceptually
+   identical to an extract filter (Level 2 Module 8) but computed
+   automatically per run rather than hand-specified. This is exactly why
+   an edited <em>historical</em> row (Order ID already below the last-processed
+   watermark) is invisible to this refresh mode: the generated predicate
+   structurally excludes any row whose key isn't newly above the
+   watermark, regardless of whether its other columns changed.</li>
+<li><strong>Why Clean steps must run before Aggregate, and Aggregate before
+   Pivot, in this flow specifically</strong>: each node consumes the <em>exact</em> row
+   set the previous node emits (Level 2 Module 6's chained-CTE model) — an
+   Aggregate step run before the Clean/case-fix step would group <code>Furniture</code>
+   and <code>furniture</code> as two separate keys, producing a 6-row (not 3-row)
+   aggregate that a downstream Pivot step would then also incorrectly
+   spread across 6 columns instead of 3, propagating the uncleaned
+   granularity all the way to the final wide-table output.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

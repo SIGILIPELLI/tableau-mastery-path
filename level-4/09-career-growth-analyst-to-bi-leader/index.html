@@ -2125,6 +2125,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2261,6 +2272,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2383,6 +2405,44 @@ capabilities built across this course.</p>
    running one real certification review end-to-end (Level 3 Module 8's
    process, on real conflicting sources) than from writing ten more LOD
    expressions.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Each stage transition maps onto a concrete change in which Server/Cloud
+   capabilities and content a person actually touches, not just a title
+   change: an Analyst's footprint in the audit log (Section 3 of Level 4
+   Module 8) is almost entirely "view"/"publish own workbook" events; a
+   Senior/Developer's log adds "edit RLS entitlement table"
+   (<code>RegionAccess</code>) and "run Performance Recording" events; a BI Lead's log
+   shows "set certification flag" and "run impact analysis" events (Level
+   3 Module 8) against <em>other people's</em> content, not their own — the audit
+   trail is a literal, queryable record of the Section 2 transitions, the
+   same <code>historical_events</code> data that powers CoE and cost metrics
+   elsewhere in Level 4.</li>
+<li>The Analyst→Senior shift is measurable against a specific artifact:
+   whether someone's calculated fields correctly separate row-level,
+   aggregate, LOD, and table-calc logic (Level 3 Module 1/5) rather than
+   reaching for a table calc where a FIXED LOD would be both cheaper and
+   more correct — reviewing a candidate's actual <code>.twbx</code> files for this
+   pattern is a concrete, checkable growth signal, not a subjective
+   impression.</li>
+<li>The Senior→Lead shift is observable in <em>whose</em> numbers someone is
+   responsible for verifying: a Senior/Developer hand-checks their own
+   dashboard's totals (2210/3750/920/6880) before publishing; a BI Lead
+   is the person who, per Level 3 Module 8 Section 5, re-derives another
+   analyst's submitted source's totals before applying the Certified flag
+   — the skill (re-deriving totals from raw rows) doesn't change, but
+   whose output it's applied to does, which is exactly why Section 5's
+   growth plan targets "lead one real certification review" as the
+   closing experience rather than "write more calculations."</li>
+<li>The Lead→Leader shift changes the unit of measurement entirely: a BI
+   Lead is judged by whether a specific dashboard's numbers are correct;
+   a BI Leader is judged by organization-wide metrics computed the same
+   way Level 4 Module 2 computes CoE health (% certified, duplicate source
+   count, cost-unit totals from Module 8) — the same underlying Metadata
+   API and audit-log queries, aggregated across the whole Server instead
+   of one workbook, which is why the role reads as "organizational" rather
+   than "technical" even though it's built on the identical data.</li>
 </ol>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>An analyst has strong Level 1–2 skills and has recently learned LOD

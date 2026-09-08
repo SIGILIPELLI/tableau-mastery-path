@@ -1300,6 +1300,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2437,6 +2459,41 @@ than a real date type.</p>
 <li>Flows can be scheduled to re-run automatically on Tableau Server (via
    <strong>Prep Conductor</strong>, Level 3), keeping the cleaned output current without
    manually re-running Prep Builder each time the source CSV updates.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Prep Builder's flow is a <strong>directed pipeline of transformation nodes</strong>,
+executed once at run time (interactively for the preview, and again in full
+at Output) rather than a set of live formulas re-evaluated forever — this
+execution model explains both the "fix casing before grouping" ordering and
+Section 6's whitespace-trim ordering question:</p>
+<ol>
+<li>Each node in the flow (Clean, Group, Aggregate, Pivot) runs as a
+   <strong>discrete transformation pass over the full row set output by the
+   previous node</strong> — conceptually equivalent to a sequence of <code>SELECT ...</code>
+   statements chained via CTEs, each one materializing (in the preview
+   grid) the exact rows the next step will see. This is why a Change Case
+   step must sit <em>before</em> a Group Values step in the flow: Group Values
+   operates on whatever string values are already present when it runs, so
+   feeding it un-normalized casing (<code>east</code>/<code>WEST</code>/<code>East</code>) means it has to
+   independently discover and merge three variants instead of the one
+   canonical <code>East</code> a prior Change Case step would have already produced.</li>
+<li><strong>Type conversion is a per-value parse operation</strong>, not a bulk
+   reinterpretation — converting <code>Sales</code> from String to Number applies a
+   parse function per cell that strips currency symbols/commas as part of
+   the coercion, but a stray leading/trailing space (Exercise's <code>" 120 "</code>)
+   can make that parse fail or silently produce a null/error depending on
+   the connector, because whitespace isn't part of the currency-stripping
+   pattern the type-conversion step applies. Trimming whitespace with a
+   Clean step <em>before</em> the type conversion guarantees the converter only
+   ever sees a clean numeric-looking string (<code>"120"</code>), which is why the
+   canonical fix order is trim → then convert, not convert → then trim.</li>
+<li><strong>Aggregate and Pivot steps change the row count contract</strong> for every
+   downstream node: an Aggregate step collapsing 8 Order rows to 3 Region
+   rows means any later step operating "per row" now operates on Region
+   granularity, not Order granularity — the same kind of grain-shift
+   Level 2 Module 1's LOD expressions handle inside Tableau Desktop, just
+   performed as a physical, materialized step inside Prep instead of a
+   virtual subquery inside VizQL.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

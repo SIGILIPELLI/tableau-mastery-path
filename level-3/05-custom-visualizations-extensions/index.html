@@ -1637,6 +1637,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2408,6 +2430,40 @@ extension, against the familiar <code>Orders</code> table.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The summary-vs-underlying distinction in Section 2 is really exposing the
+Stage-1/Stage-2 query model from Level 1-2 directly through the Extensions
+API — an extension can choose <em>which</em> stage of VizQL's own pipeline to read
+from:</p>
+<ol>
+<li><code>getSummaryDataAsync()</code> returns exactly the rows Stage 1's <code>GROUP BY</code>
+   query produced for that worksheet — for the Region bar chart, this is
+   literally the same 3-row result set (<code>SELECT Region, SUM(Sales) GROUP BY
+   Region</code>) that the rendered bars are drawn from, which is why it's
+   guaranteed to match the visible chart pixel-for-pixel in aggregate terms.</li>
+<li><code>getUnderlyingDataAsync()</code> bypasses that Stage-1 aggregation and returns
+   the pre-<code>GROUP BY</code> row set VizQL would have aggregated — up to all 8
+   <code>Orders</code> rows for a sheet with no filters — which is why an extension
+   naively summing this without re-aggregating by Region would produce a
+   correct grand total (6880) but be unable to reproduce the 3-bar
+   breakdown without re-implementing the <code>GROUP BY</code> logic itself. This
+   distinction is the exact reason the module flags it as a common
+   duplicate-counting bug source: an extension author who expects
+   "underlying data" to already be per-Region will silently get row-level
+   granularity instead.</li>
+<li><code>applyFilterAsync()</code> and <code>clearFilterAsync()</code> don't manipulate the
+   rendered view directly — they inject/remove the same kind of <code>WHERE</code>
+   clause a native filter shelf action would (Level 1 Module 7), which
+   VizQL Server then uses to regenerate and re-run that worksheet's Stage-1
+   query, exactly like clicking a filter card would; the extension is a
+   programmatic trigger for the identical pipeline, not a separate data
+   path. This is why the reset-button test (Section 4.3) is a genuine
+   pipeline correctness check: if any worksheet's <code>clearFilterAsync</code> call
+   is missed, that one sheet keeps querying with its old <code>WHERE</code> clause
+   while the others regenerate without it, producing exactly the kind of
+   inconsistent intermediate total (3160) the module calls out as a bug
+   signature.</li>
+</ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

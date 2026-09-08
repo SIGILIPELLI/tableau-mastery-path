@@ -1171,6 +1171,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2316,6 +2327,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2478,6 +2500,41 @@ independent of</em> the view.</p>
    Q1 in a standard calendar).</li>
 <li><code>DATEDIFF('day', [Order Date], TODAY())</code> — a running age-of-order field,
    useful for a "days since ordered" KPI on an operations dashboard.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>LOD expressions are the clearest place to see VizQL compile a calculation
+into a genuinely <strong>separate SQL subquery</strong>, joined back to the main query —
+not a formula evaluated inline like a row-level <code>IF</code>:</p>
+<ol>
+<li><code>{FIXED [Region] : SUM([Sales])}</code> compiles conceptually to a subquery
+   <code>SELECT Region, SUM(Sales) AS RegionTotal FROM Orders GROUP BY Region</code>,
+   computed once, independent of the view. The <em>outer</em> query — driven by
+   whatever's on the shelves (Region, Product) — then <strong>left-joins</strong> that
+   subquery's result back on Region. This is mechanically why every East
+   row shows the same 2210: they're all joining against the same single
+   subquery row for Region='East', regardless of which Product row they
+   started from.</li>
+<li><code>{INCLUDE [Order ID] : SUM([Sales])}</code> compiles differently: the subquery
+   is computed at the view's dimensions <em>plus</em> Order ID — <code>SELECT Category,
+   Order ID, SUM(Sales) FROM Orders GROUP BY Category, Order ID</code> — finer
+   than the outer view (which only groups by Category), so the outer query
+   must re-aggregate (here, AVG) over multiple subquery rows per Category.
+   This two-level re-aggregation is exactly why Section 4 needs a <em>second</em>
+   calculated field (<code>AVG(...)</code>) wrapped around the INCLUDE — the INCLUDE
+   subquery alone still returns one row per order, not per category.</li>
+<li><code>{EXCLUDE [Region] : SUM([Sales])}</code> runs its subquery at the view's
+   detail minus Region — <code>SELECT Category, SUM(Sales) FROM Orders GROUP BY
+   Category</code> — computed once per Category regardless of Region, then joined
+   back to every (Region, Category) row in the outer view, which is
+   mechanically why every Region's Furniture row shows the same global 4050.</li>
+<li><strong>Evaluation order matters</strong>: LOD subqueries are resolved before
+   row-level <code>IF</code> logic and before table calculations (Level 1 Module 8) —
+   this ordering (dimension filters → context filters → FIXED LOD →
+   non-FIXED LOD/measure filters → table calcs) is why a FIXED LOD ignores
+   an ordinary dimension filter unless that filter is a <em>context</em> filter:
+   a context filter physically narrows the rows the FIXED subquery ever
+   sees, while a plain filter is applied to the outer query only, after the
+   FIXED subquery has already run against the unfiltered table.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

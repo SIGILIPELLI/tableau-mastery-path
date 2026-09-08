@@ -1749,6 +1749,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2386,6 +2408,47 @@ filter pass-through — verified against the <code>Orders</code> dashboard.</p>
    scale) — embedding is a <em>delivery mechanism</em>, not a way to avoid
    licensing, a governance point that connects to Module 8's cost topics
    (Level 4 Module 8 covers license management at scale).</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li><code>&lt;tableau-viz&gt;</code> is a native Web Component (a custom element registered
+   by the Embedding API v3 script) — the browser instantiates it like any
+   built-in tag, and internally it creates a sandboxed iframe pointed at
+   the view URL. All JS API calls (<code>activeSheet</code>, <code>applyFilterAsync</code>)
+   don't manipulate the DOM directly; they post structured messages across
+   the iframe boundary to the actual Tableau rendering runtime running
+   inside it, which is why calling a method before the iframe's content
+   has loaded (before <code>firstinteractive</code> fires) silently no-ops or throws
+   rather than queuing — there's no listener on the other side yet.</li>
+<li>Connected apps authentication works by JWT exchange rather than a
+   shared ticket: the host application, holding a registered connected
+   app's secret, signs a short-lived JWT asserting the visitor's username
+   and (optionally) group membership, and passes it to the embed. Tableau
+   Server/Cloud validates the signature against the connected app's public
+   key, then treats the request exactly as if that user had logged in
+   directly — the same session, same group memberships, same everything —
+   which is precisely why RLS (Level 3 Module 3) still evaluates against
+   <code>RegionAccess</code> for that resolved username inside the embed; the embed
+   never bypasses the permission-resolution pipeline, it just supplies the
+   identity differently.</li>
+<li><code>applyFilterAsync</code> sends a filter-change message into the iframe that
+   VizQL treats identically to a click on a filter card in the Server UI —
+   it triggers the same query-recompilation path from Module 6, including
+   re-running any live query or re-scanning the extract with the new
+   <code>WHERE Region='West'</code> predicate. It does <strong>not</strong> bypass RLS's own
+   predicate, because RLS is injected into the query at the data-source
+   level (as its own always-on filter), so the effective query becomes the
+   AND of both: the RLS predicate and the host-applied filter — which is
+   exactly why Carol (Central-only) requesting <code>Region='East'</code> produces an
+   empty result set rather than an error: <code>WHERE Region='Central' AND
+   Region='East'</code> is satisfiable by zero rows, and VizQL renders that as a
+   normal empty view, not a failure.</li>
+<li>Every rendered embed still opens a real Tableau session server-side
+   (visible in Server's Admin views the same as a direct browser session),
+   which is the mechanism behind Section 5's licensing point — the license
+   consumption check happens at session creation on the server, completely
+   independent of whether the browser reaching that session is Tableau's
+   own UI or a third-party host page.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

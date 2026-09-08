@@ -941,6 +941,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2396,6 +2418,42 @@ threshold-adjustable view of the <code>Orders</code> table.</p>
   reference line), which a plain filter can't do since a filter's job is
   narrowly "include or exclude."</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Filters and parameters sit at different points in VizQL's query pipeline,
+which is the real reason they behave so differently:</p>
+<ol>
+<li>A <strong>dimension filter</strong> (Region) becomes a <code>WHERE Region IN ('East',
+   'West')</code>-style clause added to the generated query before aggregation —
+   it physically removes rows from what the database or Hyper engine ever
+   sums, which is why an excluded region's Sales can't leak into any total
+   on that sheet.</li>
+<li>A <strong>measure filter</strong> (Sales, Sum, 500–2500) is applied <em>after</em>
+   aggregation for a per-row measure filter on a non-aggregated field, but
+   here — filtering on <code>SUM(Sales)</code> — Tableau generates something like
+   <code>HAVING SUM(Sales) BETWEEN 500 AND 2500</code> when a <code>GROUP BY</code> is present, or
+   filters the raw column pre-aggregation when there's no grouping context;
+   Section 2's note about table calculations matters precisely because a
+   table calc-based filter runs in a <em>third</em>, later stage (after the query
+   returns), so it can only ever filter marks already computed — it can
+   never reduce what a <code>SUM</code> upstream saw.</li>
+<li><strong>Context filters</strong> (Section 3) map to query pipeline <strong>ordering</strong>: a
+   context filter's <code>WHERE</code>/subquery clause is materialized first, and every
+   other filter's clause is then applied against that already-narrowed
+   result set — mechanically equivalent to nesting a nested subquery: <code>SELECT
+   ... FROM (SELECT ... WHERE &lt;context filter&gt;) WHERE &lt;other filters&gt;</code>. This
+   is why a context filter can change a Top-N filter's result: the Top-N
+   is now computed only over rows the context filter already let through.</li>
+<li>A <strong>parameter</strong> never appears in a <code>WHERE</code>/<code>GROUP BY</code> clause directly —
+   it's a stored scalar value substituted as a literal into whatever formula
+   references it at query-generation time. <code>Above Threshold</code> compiles
+   (conceptually) to <code>SUM(Sales) &gt; 950</code> with 950 substituted in from the
+   parameter's current value; change the parameter and Tableau regenerates
+   every dependent query with the new literal, re-running them — never
+   touching stored data, since parameters are pure client-side query inputs.
+   Hand-check at exactly 950: Order 1006 (Sales 950) evaluates <code>950 &gt; 950 =
+   FALSE</code>, so it reads <code>FALSE</code>, not <code>TRUE</code> — the boundary is strict
+   greater-than, not greater-or-equal, unless the formula explicitly uses <code>&gt;=</code>.</li>
+</ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

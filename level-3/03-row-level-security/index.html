@@ -1581,6 +1581,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2416,6 +2438,49 @@ should see everything.</p>
    fact table benefits from being marked as a <strong>context filter</strong> so it's
    computed once and cached, rather than re-evaluated per user interaction
    (Level 2 Module 8).</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>RLS is not a separate security layer bolted onto Tableau's query engine —
+it's the <em>same</em> join-then-filter mechanism from Level 2 Module 3, driven by
+a function (<code>USERNAME()</code>/<code>ISMEMBEROF()</code>) whose return value depends on the
+requesting session's identity:</p>
+<ol>
+<li><code>USERNAME()</code> is evaluated by VizQL Server <strong>per query, per session</strong> —
+   it isn't a stored column or a value baked into the extract; it's
+   resolved at query-generation time from whichever authenticated user's
+   session issued the request. This is precisely why the same published
+   workbook produces a different effective query for Alice than for Bob:
+   Alice's session compiles <code>Region Is Visible</code> to <code>[Username] =
+   'alice@co.com'</code>, Bob's compiles the identical calculated field
+   definition to <code>[Username] = 'bob@co.com'</code> — one calculation, one stored
+   formula, but a session-dependent literal substituted in at evaluation
+   time, much like a parameter (Level 1 Module 7) but sourced from
+   authentication state instead of a UI control.</li>
+<li>The <code>RegionAccess</code> join (Section 2) means the filter's truth value
+   depends on whether the join between <code>Orders</code> and <code>RegionAccess</code> produces
+   <em>any</em> matching row for the current username and that row's Region —
+   mechanically identical to Level 2 Module 3's join mechanics, with the
+   fan-out risk inverted into a <em>feature</em>: Admin's three <code>RegionAccess</code> rows
+   (one per Region) deliberately fan out the join so all three Regions
+   satisfy <code>[Username] = USERNAME()</code>, which is why Admin's total correctly
+   comes out to the full 6880 rather than being capped at one Region.</li>
+<li><strong>Why the zero-row test matters mechanically</strong> (Section 4.1): a user
+   absent from <code>RegionAccess</code> produces zero matching join rows for <em>every</em>
+   <code>Orders</code> row, so <code>Region Is Visible</code> evaluates to <code>FALSE</code> universally —
+   the filter (set to True) then excludes all 8 rows. This is a
+   fail-<strong>closed</strong> design purely because of how the join and filter compose
+   (no match → false → excluded); a fail-<strong>open</strong> bug would require an
+   <code>OR</code> clause or a missing filter that lets unmatched rows default to
+   visible, which is exactly the kind of formula mistake this test is
+   designed to catch.</li>
+<li><strong>Context-filter promotion for RLS</strong> (Section 5) matters for the same
+   pipeline-ordering reason as Level 3 Module 1: without it, the RLS filter
+   sits at the same late pipeline stage as any other dimension filter, so a
+   FIXED LOD elsewhere in the workbook could evaluate against the
+   <em>unfiltered</em> full 8-row table, potentially leaking cross-region totals
+   into a FIXED calculation even though the visible marks are correctly
+   restricted — promoting the RLS filter to context forces it to run before
+   any FIXED subquery, closing that leak.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

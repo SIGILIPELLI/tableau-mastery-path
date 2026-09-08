@@ -1188,6 +1188,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2503,6 +2525,41 @@ still reconcile to.</p>
    height. This arithmetic check (row-level detail sums back to the
    clicked aggregate) is the standard way to confirm a filter action wired
    correctly, without needing Tableau itself running.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Every interactivity feature in this module maps to a specific point in the
+client-side rendering / query pipeline, not a uniform "dashboard magic":</p>
+<ol>
+<li><strong>Filter vs. Highlight, at the query level</strong>: a filter action always
+   triggers a fresh query with an added <code>WHERE</code> clause against the target
+   sheet's data source — clicking "East" re-runs the Category sheet's query
+   as <code>SELECT Category, SUM(Sales) FROM Orders WHERE Region='East' GROUP BY
+   Category</code>, returning exactly Furniture (2150) and Office Supplies (60),
+   summing to 2210. A highlight action never touches the query layer at
+   all — it operates purely on the already-rendered mark list client-side,
+   toggling an opacity/color property per mark based on whether that mark's
+   underlying dimension values match the selection, which is why it's
+   effectively instantaneous even against a slow live source.</li>
+<li><strong>On Select vs. On Hover</strong> (Section 3.4) controls which browser/app
+   event triggers the action's re-evaluation — On Hover binds to a
+   <code>mousemove</code>-equivalent, re-firing (and re-querying, for filter actions)
+   on every pixel of mouse movement across a mark, which is precisely why
+   it's discouraged for filter actions: a filter action fires a real query,
+   and firing one per mouse-move is needlessly expensive compared to firing
+   once per deliberate click.</li>
+<li><strong>Show/Hide containers</strong> (Section 4) don't destroy or rebuild the hidden
+   sheet's query — the underlying worksheet's query has typically already
+   run (or runs lazily on first reveal, depending on the "Run all sheets"
+   setting), and the toggle only changes a CSS-like visibility flag on that
+   container. This is why revealing a hidden detail table is usually
+   instant, not a fresh multi-second query — the cost was paid at dashboard
+   load, not at toggle time.</li>
+<li><strong>Device layouts</strong> (Section 5) never change what's queried — the same
+   worksheet's <code>GROUP BY</code> and totals (Sales 2210/3750/920) are identical
+   across desktop and phone layouts. What changes is purely the rendering
+   layout tree the browser/app lays those same mark results into, selected
+   by matching the viewing device's reported width against the layouts
+   defined in the workbook.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

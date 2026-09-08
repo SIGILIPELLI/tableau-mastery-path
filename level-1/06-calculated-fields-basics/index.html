@@ -913,6 +913,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2404,6 +2426,35 @@ fields against the <code>Orders</code> table (Module 1).</p>
 <li>Group related calculated fields into a Data pane <strong>folder</strong>: select
    several fields (⌘/Ctrl-click), right-click → <strong>Group by Folder</strong> — a
    pure organization aid with no effect on the calculations themselves.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Whether a calculated field is computed <strong>row-by-row before aggregation</strong> or
+<strong>as part of the aggregate query itself</strong> depends entirely on where the
+aggregation function sits inside its formula — and that distinction is the
+real mechanism behind Section 2's warning about ratios:</p>
+<ol>
+<li><code>Profit Ratio</code> (<code>SUM([Profit]) / SUM([Sales])</code>) is an <strong>aggregate
+   calculation</strong>: VizQL folds it directly into the generated <code>SELECT</code>
+   clause as <code>SUM(Profit) / SUM(Sales)</code>, computed once per <code>GROUP BY</code> group
+   <em>after</em> every row in that group has been summed. For East: SUM(Profit) =
+   180 + 18 + (-40) = 158, SUM(Sales) = 1200 + 60 + 950 = 2210, so the query
+   returns 158/2210 ≈ 7.15% in one step — matching Section 2's hand check.</li>
+<li><code>Order Size</code> (the IF/ELSEIF formula with no aggregation function inside)
+   is a <strong>row-level calculation</strong>: Tableau evaluates it once per underlying
+   row, <em>before</em> any <code>GROUP BY</code> — effectively as a computed column added to
+   the query's <code>SELECT</code> list ahead of grouping, e.g. conceptually <code>CASE WHEN
+   Sales &gt;= 1000 THEN 'Large' ... END AS OrderSize</code>. This is exactly why it
+   comes back as a dimension (blue) rather than a measure: its result is one
+   value per row, groupable, not an aggregate needing further summarization.</li>
+<li>The mechanical reason a naive "average of each row's ratio" is wrong
+   (Section 2.3): computing <code>Profit/Sales</code> per row <em>then</em> averaging would
+   require the row-level pattern (like Order Size), producing <code>AVG(Profit /
+   Sales)</code> — a completely different query shape from <code>SUM(Profit) /
+   SUM(Sales)</code>, and one that weights a $60 order's ratio equally with a
+   $2200 order's ratio instead of by dollar volume. Hand-check: East's
+   naive average would be (180/1200 + 18/60 + -40/950)/3 ≈ (0.15 + 0.30 +
+   -0.042)/3 ≈ 13.6% — nowhere near the correct 7.15%, because it lets a
+   small, high-margin order dominate the average.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

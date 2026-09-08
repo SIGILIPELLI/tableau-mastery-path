@@ -1985,6 +1985,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2401,6 +2423,48 @@ statistics — is the focus.</p>
    model, inputs, and expected output range (e.g. "returns Sales doubled,
    for input validation only — see Section 3.1") so a future maintainer
    can hand-verify it the same way this module did.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li>TabPy runs as a standalone HTTP service (default port 9004) exposing a
+   REST endpoint (<code>/evaluate</code>); when VizQL hits a <code>SCRIPT_REAL</code> calc, it
+   serializes the bound <code>_argN</code> arrays as JSON, POSTs them to that
+   endpoint along with the script body, and blocks the query pipeline
+   until TabPy returns its JSON result — this is a real network round trip
+   per query (not a cached local function call), which is exactly why
+   Level 3 Module 5's live-vs-extract cost reasoning applies doubly to
+   <code>SCRIPT_*</code> calcs: every recompute pays TabPy's request latency on top
+   of any source query latency.</li>
+<li>Argument binding is positional, not labeled, because TabPy's protocol
+   has no concept of Tableau field names — it only receives arrays of
+   values in the order <code>_arg1, _arg2, ...</code> were declared in the calc, each
+   array aligned to the same partition ordering VizQL used internally for
+   that pass. This is the exact mechanism behind the Exercise's bug:
+   Tableau's partition order for Category ([Furniture, Electronics, Office
+   Supplies] vs. some other order) is an internal implementation detail of
+   how the query engine grouped rows, and nothing in the <code>SCRIPT_REAL</code>
+   protocol carries category <em>labels</em> alongside the values — the script
+   receives raw positions and must trust they line up with whatever order
+   it assumes, which is inherently fragile.</li>
+<li>Because <code>SCRIPT_*</code> functions are compiled as table calculations, they
+   inherit table calc's two-pass execution (Level 3 Module 5, Section 3):
+   VizQL first runs the aggregate query to produce the per-partition
+   <code>SUM([Sales])</code> values, then the script call is the local "second pass"
+   step, executed once per partition as currently laid out on the view.
+   Add or remove a dimension from the view (e.g. break Region down further
+   by Category) and the partition boundaries change, so <code>_arg1</code> receives a
+   differently-shaped array on the very next render — the script's logic
+   doesn't change, but its <em>inputs</em> silently do, which is why a governance
+   note documenting "expected shape of <code>_arg1</code>" (Section 5) has to be
+   re-verified whenever the view's field layout changes, not just when the
+   script text changes.</li>
+<li>Rserve's protocol differs mechanically (a binary R serialization
+   protocol (QAP1) over a TCP socket rather than TabPy's JSON-over-HTTP),
+   but the surrounding contract is identical: Tableau blocks on a
+   synchronous round trip per script evaluation, arguments arrive
+   positionally, and the returned vector must match the partition's row
+   count exactly or Tableau raises a calculation error rather than
+   silently padding/truncating.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

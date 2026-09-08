@@ -969,6 +969,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2375,6 +2397,41 @@ is why <strong>Compute Using</strong> (literally: which direction/dimension to c
 across) is a required setting for every table calc, and why adding or
 removing a dimension from the view can silently change a table calculation's
 result even though the underlying data didn't change.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Section 5 already names the key distinction — table calcs run <strong>after</strong>
+the aggregate query returns. Here's the actual two-stage pipeline that
+produces that behavior, and why <strong>Compute Using</strong> (addressing) is what it
+configures:</p>
+<ol>
+<li><strong>Stage 1 (the query)</strong>: VizQL issues <code>SELECT Month, SUM(Sales) FROM
+   Orders GROUP BY Month ORDER BY Month</code>, returning exactly four rows: (Jan,
+   1650), (Feb, 860), (Mar, 3270), (Apr, 1100) — the numbers from Section 1.
+   This result set, and <em>only</em> this result set, is what every table
+   calculation operates on. No table calc can ever "see" a row that isn't
+   already present in this returned grid.</li>
+<li><strong>Stage 2 (the table calc pass)</strong>: Tableau walks the returned grid
+   according to the <strong>Compute Using</strong> direction and applies the requested
+   function. "Compute Using = Table (Across)" tells it: treat Month as the
+   <strong>addressing</strong> dimension (the axis it walks/recomputes along) — so
+   Running Total literally does <code>total = 0; for each Month in order: total
+   += SUM(Sales); emit total</code> → 1650, 2510, 5780, 6880, matching Section 2's
+   hand check exactly, because it's iterating over the same four numbers you
+   summed by hand.</li>
+<li><strong>Why adding a dimension can silently change the result</strong> (Section 5's
+   warning, concretized): adding Category nested under Month changes Stage
+   1's query to <code>GROUP BY Month, Category</code>, so the returned grid now has up
+   to 4×3=12 rows instead of 4. If Compute Using is still "Table (Across)"
+   with its default addressing, Rank or Running Total now walks across
+   <em>all</em> Month-Category cells in table order rather than across the four
+   Month totals — producing a running total that resets or accumulates
+   across category boundaries in a way that no longer matches a simple
+   month-by-month narrative, purely because Stage 1's grid shape changed
+   underneath a Stage 2 calculation that didn't know to adapt.</li>
+<li><strong>Percent of Total</strong> hand-check via the two-stage model: Stage 1 returns
+   the same four-row grid; Stage 2 sums all four (6880) as the "total"
+   denominator implied by Compute Using = Table, then divides each cell by
+   it — 1650/6880 ≈ 24.0%, matching Section 3.</li>
+</ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

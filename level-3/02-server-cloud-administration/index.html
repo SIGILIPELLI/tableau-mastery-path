@@ -1553,6 +1553,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2375,6 +2397,44 @@ lives on. Concepts are illustrated using the <code>Orders</code> workbook and
    regardless of user count) — small deployments typically use named-user
    licensing; large, unpredictable-usage deployments often use core-based.</li>
 <li>Preview in depth in Level 4 Module 7 (Cost &amp; License Management).</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Understanding which process handles which stage of a request explains why
+certain failures show up where they do, and why the <code>Orders</code> dashboard's
+totals sometimes lag rather than error out:</p>
+<ol>
+<li>When a browser opens the <code>Orders</code> dashboard, <strong>Gateway</strong> routes the
+   HTTP request to an available <strong>VizQL Server</strong> process, which loads the
+   workbook definition, generates the same style of <code>GROUP BY</code> query this
+   course has built up (Level 1 Module 1), and — for a published data
+   source rather than an embedded one — routes that query through <strong>Data
+   Server</strong>, which manages connection pooling and caching for shared
+   sources like the cross-database <code>Orders</code>+<code>Targets</code> join (Level 2 Module
+   10). None of these processes touch the extract's <em>contents</em> directly;
+   they only run queries against whatever <code>.hyper</code> file currently exists
+   on disk.</li>
+<li><strong>Backgrounder</strong> is the only process that actually rewrites that
+   <code>.hyper</code> file — a scheduled refresh job is a Backgrounder task that
+   re-runs the same extract-creation pass from Level 1 Module 2 (pull rows,
+   apply extract filters/aggregation from Level 2 Module 8, write a new
+   <code>.hyper</code>). This is mechanically why a failed Backgrounder job leaves
+   Region totals frozen at 2210/3750/920: VizQL Server keeps querying the
+   old, still-valid <code>.hyper</code> file it has no reason to know is stale — no
+   process actively "pushes" fresh data to VizQL Server, it only pulls
+   whatever the extract currently contains.</li>
+<li><strong>Site and Project isolation</strong> are enforced at the metadata layer
+   (<strong>Repository</strong>, the Postgres store) before a query ever reaches VizQL
+   Server: a request for a workbook in a Site the requesting user's
+   session isn't authorized for is rejected by permission checks against
+   Repository records, never by VizQL Server discovering it can't run the
+   query — this is why permission and licensing errors surface as
+   access-denied pages, not as query failures.</li>
+<li><strong>Named-user vs. core licensing</strong> (Section 5) changes what Gateway
+   checks at login/session-creation time, not what VizQL Server computes —
+   a named-user deployment checks the logging-in identity against a
+   consumed-license table in Repository, while core licensing has no such
+   per-user check at all, only a total concurrent-load ceiling enforced
+   across all the server's processes.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

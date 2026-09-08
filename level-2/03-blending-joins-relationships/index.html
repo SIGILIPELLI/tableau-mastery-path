@@ -1216,6 +1216,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2456,6 +2478,38 @@ module.</p>
    Compute attainment by hand: 2210/2000=1.10, 3750/3000=1.25,
    920/1000=0.92 — these become the <code>Sales / [Rep Quota]</code> calculated
    field, verified against the manual division.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>The fan-out bug in Section 2.4 and the reason relationships avoid it both
+come down to <strong>when aggregation happens relative to the row combination</strong>:</p>
+<ol>
+<li>A <strong>physical join</strong> happens at the row level, before any <code>GROUP BY</code> — a
+   join produces one combined intermediate row set first (e.g. <code>Orders JOIN
+   Reps ON Region</code>), and <em>then</em> VizQL's <code>SUM(Sales)</code> aggregates over
+   <em>however many rows that join produced</em>. With a second East rep (Dana),
+   the join produces 4 East rows instead of 3 for the combined result (each
+   of East's three Orders rows duplicated once per matching Reps row: 3
+   Orders × 2 Reps rows = 6 combined East rows total, each carrying its
+   original Sales value), so <code>SUM(Sales)</code> for East sums 1200+1200+60+60
+   +950+950 = 4420 — double-counting each Orders row once per matching Reps
+   row, not "duplicating the sum" as a separate step but literally
+   re-summing physically duplicated rows.</li>
+<li>A <strong>relationship</strong> avoids this because its generated query never
+   physically joins raw rows across granularities — Tableau computes
+   <code>SUM(Sales)</code> within <code>Orders</code> at <code>Orders</code>' own native grain first (a
+   <code>GROUP BY Region</code> subquery returning one row per Region, still 2210 for
+   East), and only <em>then</em> performs a row-preserving lookup against <code>Reps</code>
+   for the Rep Name/Quota columns — conceptually a <code>LEFT JOIN</code> of two
+   already-aggregated result sets rather than a join of raw fact rows, so
+   there's no intermediate row list a duplicate <code>Reps</code> key can inflate.</li>
+<li><strong>Blending</strong> (Section 4) works at a third, coarser stage still: the
+   secondary source's own query runs completely independently and is
+   pre-aggregated to the <em>primary</em> sheet's exact dimensions before any
+   combination — so a duplicate Rep row in a blended secondary source can't
+   even affect the primary's Sales total, because the primary's aggregate
+   query never references the secondary source's rows at all; only the
+   final displayed numbers are combined, client-side, after both queries
+   have independently returned.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

@@ -1929,6 +1929,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2403,6 +2425,43 @@ CoE does and how to measure whether it's working.</p>
    small central team to certify, rather than training domain teams to
    self-certify against clear standards — doesn't scale past a handful of
    data sources.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li>The CoE metrics in Section 4 aren't manually tallied — they're pulled
+   from the same Metadata API graph that powers lineage (Level 3 Module 8):
+   "% certified" is <code>COUNT(datasources WHERE certificationNote IS NOT
+   NULL) / COUNT(all published datasources)</code>, run as a GraphQL query
+   against the catalog, and "duplicate source count" is a fuzzy match over
+   published data source names/schemas (e.g. clustering the 12 "Orders"/
+   "Sales Data" sources in the exercise by shared column names like
+   <code>Region</code>, <code>Sales</code>, <code>Profit</code>) — the CoE tooling surfaces candidates, but
+   the actual dedup call (which of the 12 is correct) still requires the
+   row-level re-derivation habit from Level 3 Module 8, Section 5, since
+   two sources can share a schema and still disagree on totals.</li>
+<li>Time-to-certify is measured off two timestamps on the content item's
+   REST API record: the datasource's <code>createdAt</code>/publish event and the
+   <code>certification</code> field's set time (captured in Server's audit/usage
+   tables, <code>historical_events</code> in the Postgres repository) — subtracted
+   per source and aggregated (median, not mean, since a few multi-week
+   stragglers otherwise dominate the average and mask a healthy typical
+   turnaround).</li>
+<li>Maturity-model movement (Section 3) is observable, not just descriptive:
+   an "Ad hoc" org's Metadata API graph shows many datasource nodes with
+   near-identical schemas and no certification edges; a "Governed" org's
+   graph shows most workbook nodes' data-source edges terminating at a
+   small number of certified nodes — so a CoE can literally query "what
+   fraction of workbook→datasource edges point at an uncertified node" as
+   a maturity proxy, the graph-level version of the duplicate-count metric
+   in Section 4.</li>
+<li>The support-ticket metric closes the loop mechanically: a reported
+   discrepancy ("I see 6700, not 6880") is resolved the same way Level 3
+   Module 8's exercise resolves it — pull both sources' raw rows, re-sum by
+   Region, and locate exactly which row(s) differ — then, if the
+   discrepancy traces to a specific known-uncertified duplicate, the fix
+   is recorded against that node in the catalog (deprecation warning or
+   archival) so the <em>next</em> viewer who searches "Orders" doesn't rediscover
+   the same 6700 total independently.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

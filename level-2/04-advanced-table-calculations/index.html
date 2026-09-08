@@ -1255,6 +1255,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2316,6 +2327,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2484,6 +2506,41 @@ edge cases — all against <code>Orders</code> sorted by <code>Order Date</code>
    a full running total should NOT change the East/West running values —
    if it does, the filter was applied before the table calc rather than
    after, and needs to move to context or use the table calc filter.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Building on Level 1 Module 8's two-stage model (query, then table-calc
+pass), addressing and partitioning are literally the two axes of the array
+that stage 2 walks — understanding that array shape resolves every "why did
+my table calc reset there" question:</p>
+<ol>
+<li>The Stage-1 query for Section 3 (<code>Region</code>, <code>Order Date</code> on Rows, no
+   filters) returns an 8-row grid, one row per Order Date within Region,
+   sorted first by Region then Order Date — conceptually <code>SELECT Region,
+   OrderDate, SUM(Sales) FROM Orders GROUP BY Region, OrderDate ORDER BY
+   Region, OrderDate</code>. <strong>Partitioning by Region</strong> tells Stage 2 to treat
+   this flat 8-row grid as <em>three separate sub-arrays</em>, one per Region
+   value, and reset the running-sum accumulator to 0 at the start of each
+   sub-array — which is mechanically why East's running total (1200, 1260,
+   2210) never carries into West's first value (450), even though both
+   live in the same query result set.</li>
+<li><strong>Addressing</strong> determines the <em>order</em> Stage 2 walks within each
+   partition — here, by Order Date ascending — which is why the moving
+   average and percent-difference calcs in Sections 4-5 (no partition, full
+   8-row addressing) walk straight through all 8 rows in date order:
+   changing the addressing field to, say, Order ID wouldn't change results
+   here since both are already co-sorted, but on a real dataset where sort
+   order diverges, addressing on the wrong field silently reorders which
+   value counts as "previous."</li>
+<li><strong>Section 7's filter-ordering trap</strong>, restated in pipeline terms: a
+   normal filter's <code>WHERE</code>/<code>HAVING</code> clause executes during Stage 1, so
+   Central's rows are simply absent from the array Stage 2 ever sees,
+   producing a running total computed only over the remaining 5 rows — not
+   what "hide Central after computing the full total" means. Moving the
+   Region filter to <strong>context</strong>, or using the table-calc-specific "filter
+   is computed using" option, defers the exclusion to after Stage 2 has
+   already walked the full 8-row array, so the running totals it produced
+   (East 2210, West 3750, both already final) are preserved and only the
+   Central rows are hidden from the rendered output afterward.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>

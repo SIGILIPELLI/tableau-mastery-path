@@ -1788,6 +1788,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet-full-verification-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2294,6 +2305,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet-full-verification-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2444,6 +2466,45 @@ against <code>Orders</code>.</p>
    dependency as the certified <code>Orders</code> source from Module 8 rather than
    an embedded/local copy, so future viewers see the trust badge and any
    data quality warnings that source carries.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<ol>
+<li>VizQL builds this dashboard's query in a strict evaluation order:
+   (1) data source filters, (2) context filters — including the RLS <code>Region
+   Is Visible</code> filter once marked as context, (3) FIXED LOD expressions,
+   (4) dimension/measure filters, (5) table calculations. This ordering is
+   why "mark RLS as a context filter" is not a performance tweak here but a
+   correctness requirement — a FIXED LOD is computed directly against
+   whatever rows survive step (2); if RLS sits at step (4) instead (an
+   ordinary filter), the FIXED expression in step (3) already ran against
+   the <em>entire unfiltered</em> table before RLS ever applied, which is
+   mechanically why Alice's <code>Region Total</code> shows 6880 instead of 2210 when
+   RLS is left as a plain filter.</li>
+<li><code>USERNAME()</code> is resolved server-side at session start from the
+   authenticated Server/Cloud identity — it is not a data value stored
+   anywhere in <code>Orders</code> or <code>RegionAccess</code>; VizQL substitutes it as a
+   literal string into the generated query's <code>WHERE</code> clause (effectively
+   <code>WHERE RegionAccess.Username = 'alice@co.com'</code>) before the query is
+   sent to the source, so the join to <code>RegionAccess</code> plus this substitution
+   is what turns a shared certified data source into a per-viewer-scoped
+   result set without maintaining separate copies of <code>Orders</code> per manager.</li>
+<li>The <code>RANK(SUM([Sales]))</code> table calc's "top category per Region" filter
+   works in two passes for the same reason table calcs are pricier than
+   aggregates (Module 5, Section 3): VizQL first computes SUM(Sales) for
+   every Region×Category combination as an aggregate query, then a second
+   local pass ranks rows within each Region partition (per the addressing
+   set to Category, partitioning set to Region) before the Rank=1 filter
+   discards non-top rows — this is why the filter must be a <strong>table calc
+   filter</strong>, applied after aggregation, rather than a data source filter,
+   which would have no ranking to filter on yet.</li>
+<li>Publishing with the dependency pointed at the certified source (not an
+   embedded extract) means the workbook's <code>.twb</code> stores a reference
+   (connection metadata) to the published data source's Server-side
+   content ID rather than embedding its own copy of the rows — so a future
+   refresh or correction to the certified <code>Orders</code> source propagates to
+   this dashboard automatically on next load, whereas an embedded/local
+   copy would freeze this dashboard's numbers at publish time regardless of
+   what happens to the certified source afterward.</li>
 </ol>
 <h2 id="cheat-sheet-full-verification-table">Cheat sheet — full verification table<a class="headerlink" href="#cheat-sheet-full-verification-table" title="Permanent link">&para;</a></h2>
 <table>

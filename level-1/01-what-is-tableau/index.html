@@ -762,6 +762,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2250,6 +2261,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2471,6 +2493,42 @@ for the East region is 2210", you can verify it (1200 + 60 + 950 = 2210).</p>
 </ul>
 <p>This choice is made the moment you connect to data — covered in full in
 Module 2.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Every drag onto a shelf is, under the hood, building an abstract query
+Tableau's <strong>VizQL</strong> engine will translate into a real query against whatever
+you're connected to (SQL for a database/extract, MDX for an OLAP cube). You
+never see this query directly in Level 1, but knowing it exists explains a
+lot of later behavior:</p>
+<ol>
+<li>Dragging <strong>Region</strong> to Rows and <strong>SUM(Sales)</strong> to Columns produces
+   roughly the query pattern <code>SELECT Region, SUM(Sales) FROM Orders GROUP BY
+   Region ORDER BY Region</code> — every dimension on a shelf becomes a <code>GROUP BY</code>
+   term, every measure becomes an aggregate in the <code>SELECT</code> list. This is
+   why adding a second dimension (say, Category) doesn't just add a column —
+   it changes the <code>GROUP BY</code> to <code>Region, Category</code>, which subdivides every
+   existing group into smaller ones (Furniture-East, Electronics-East, etc.)
+   rather than adding new independent rows.</li>
+<li><strong>Live vs. Extract</strong> (Section 4) changes <em>where</em> this generated SQL runs,
+   not <em>whether</em> it exists. On Live, that <code>SELECT ... GROUP BY</code> is sent to
+   your actual database every time you touch a shelf. On Extract, the same
+   query runs against Tableau's own embedded <strong>Hyper</strong> engine — a columnar
+   analytical database bundled into the <code>.hyper</code> file — which is why extracts
+   are often faster: Hyper stores each column contiguously and compressed,
+   so <code>SUM(Sales)</code> only has to scan the Sales column, not full rows.</li>
+<li>This is also the mechanical reason dimensions and measures behave
+   differently: a dimension is, by construction, something VizQL can put in
+   a <code>GROUP BY</code>/axis-header list, while a measure is something it can only
+   put inside an aggregate function. Manually switching a field to
+   Discrete/Continuous (Section 2) is really telling VizQL whether to treat
+   its values as <code>GROUP BY</code> buckets (discrete, headers) or as a numeric axis
+   domain (continuous, a line/scale) — the same underlying column, two
+   different query shapes.</li>
+<li>Hand-verification tie-in: when Module 3 has you check that the East bar
+   reads 2210, what you're really confirming is that VizQL's generated
+   <code>GROUP BY Region</code> query summed the right three rows (1200 + 60 + 950)
+   from the <code>Orders</code> table above — the same arithmetic a <code>SUM(Sales) WHERE
+   Region = 'East'</code> SQL query would perform against a real database.</li>
+</ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

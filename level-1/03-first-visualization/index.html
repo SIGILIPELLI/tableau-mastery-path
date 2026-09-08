@@ -829,6 +829,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2272,6 +2283,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cheat-sheet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2393,6 +2415,33 @@ calculation from Module 1's exercise.</p>
    check when a number on a real dashboard looks surprising.</li>
 <li>Switch back to <strong>Sum</strong> before moving on, since Module 4 assumes SUM(Sales)
    as the baseline.</li>
+</ol>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p>Right-clicking SUM(Sales) → <strong>Measure</strong> → <strong>Average</strong> doesn't relabel the
+existing bar — it rewrites the aggregate function inside VizQL's generated
+query from <code>SUM(Sales)</code> to <code>AVG(Sales)</code> and re-runs it, which is why the
+whole chart, including its axis scale, redraws rather than just its label:</p>
+<ol>
+<li>For the East bar: <code>SUM(Sales)</code> over the three East rows (1200, 60, 950)
+   is 2210 — the query pattern is <code>SELECT Region, SUM(Sales) FROM Orders
+   WHERE Region='East' GROUP BY Region</code>. Switching to <code>AVG(Sales)</code> changes
+   the generated aggregate to <code>SELECT Region, AVG(Sales) FROM Orders WHERE
+   Region='East' GROUP BY Region</code>, which evaluates to 2210 / 3 = 736.67 — a
+   different SQL function over the <em>same</em> underlying rows, not a
+   post-processing division applied to the displayed bar.</li>
+<li>This distinguishes a <strong>regular aggregation switch</strong> (this module) from a
+   <strong>table calculation</strong> (Module 8): AVG here is computed by the query
+   engine itself, from the raw rows, in one pass — it isn't dependent on
+   what else is in the view. A table calc, by contrast, runs <em>after</em> the
+   aggregate query returns, operating only on the numbers already visible —
+   which is why Module 8 needs "Compute Using" and this module doesn't.</li>
+<li>Dragging <strong>Category</strong> onto Color (Exercise) adds <code>Category</code> to the
+   <code>GROUP BY</code> clause without moving it to a shelf that produces new
+   header rows — Color is VizQL's way of saying "subdivide each existing
+   mark by this dimension, encoded visually, not as a new axis position."
+   The underlying query becomes <code>GROUP BY Region, Category</code>, producing one
+   mark per (Region, Category) pair, each colored distinctly, stacked or
+   placed within its Region's bar depending on the mark type.</li>
 </ol>
 <h2 id="cheat-sheet">Cheat sheet<a class="headerlink" href="#cheat-sheet" title="Permanent link">&para;</a></h2>
 <table>
