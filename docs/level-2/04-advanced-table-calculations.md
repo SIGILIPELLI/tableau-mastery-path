@@ -1,3 +1,7 @@
+---
+description: "Advanced Table Calculations — Level 1 Module 8 covered running totals and simple ranks. This module goes deeper: addressing/partitioning, moving averages…"
+---
+
 # 04 · Advanced Table Calculations
 
 Level 1 Module 8 covered running totals and simple ranks. This module goes

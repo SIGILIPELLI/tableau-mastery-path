@@ -1,3 +1,7 @@
+---
+description: "Capstone — Full BI Program Design — Final capstone: design a complete BI program for 'Northwind Retail' (the company behind this course's running dataset)…"
+---
+
 # 09 · Capstone — Full BI Program Design
 
 Final capstone: design a complete BI program for "Northwind Retail"

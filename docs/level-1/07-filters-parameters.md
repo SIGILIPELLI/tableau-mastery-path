@@ -1,3 +1,7 @@
+---
+description: "Filters & Parameters — Filters remove data from a view; parameters are user-adjustable values a calculated field can react to. This module covers both…"
+---
+
 # 07 · Filters & Parameters
 
 Filters remove data from a view; parameters are user-adjustable values a

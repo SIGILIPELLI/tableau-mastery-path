@@ -1,3 +1,7 @@
+---
+description: "Chart Types & When to Use Them — Tableau can build dozens of chart types, but most real analysis needs only a handful used well. This module covers bar…"
+---
+
 # 04 · Chart Types & When to Use Them
 
 Tableau can build dozens of chart types, but most real analysis needs only a

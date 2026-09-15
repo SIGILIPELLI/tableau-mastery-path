@@ -1,3 +1,7 @@
+---
+description: "Project — Build a Sales Performance Dashboard — This capstone combines every Level 1 module into one deliverable: a multi-sheet, interactive Sales…"
+---
+
 # 10 · Project — Build a Sales Performance Dashboard
 
 This capstone combines every Level 1 module into one deliverable: a

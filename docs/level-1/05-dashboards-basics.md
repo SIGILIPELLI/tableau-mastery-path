@@ -1,3 +1,7 @@
+---
+description: "Building Dashboards Basics — A dashboard combines multiple worksheets into one interactive view, with actions letting one chart filter or highlight…"
+---
+
 # 05 · Building Dashboards Basics
 
 A **dashboard** combines multiple worksheets into one interactive view, with

@@ -1,3 +1,7 @@
+---
+description: "Governance & Data Source Certification — Once multiple teams publish workbooks against Orders-like data, governance answers: which data source is the…"
+---
+
 # 07 · Governance & Data Source Certification
 
 Once multiple teams publish workbooks against `Orders`-like data, governance

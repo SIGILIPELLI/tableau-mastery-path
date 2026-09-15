@@ -1,3 +1,7 @@
+---
+description: "Building a BI Center of Excellence — A BI Center of Excellence (CoE) is the organizational structure that turns scattered Tableau usage (like the ad-hoc…"
+---
+
 # 01 · Building a BI Center of Excellence
 
 A **BI Center of Excellence (CoE)** is the organizational structure that

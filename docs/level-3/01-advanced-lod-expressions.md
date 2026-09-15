@@ -1,3 +1,7 @@
+---
+description: "Advanced LOD Expressions — Level 2 Module 1 introduced FIXED/INCLUDE/EXCLUDE individually. This module covers nested LOD expressions and common pitfalls…"
+---
+
 # 01 · Advanced LOD Expressions
 
 Level 2 Module 1 introduced FIXED/INCLUDE/EXCLUDE individually. This

@@ -1,3 +1,7 @@
+---
+description: "Maps & Geographic Data — Tableau recognizes common geographic fields automatically and can plot them on a built-in map with no extra setup. This module…"
+---
+
 # 09 · Maps & Geographic Data
 
 Tableau recognizes common geographic fields automatically and can plot them

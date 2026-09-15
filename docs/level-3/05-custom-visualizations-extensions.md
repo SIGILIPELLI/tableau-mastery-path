@@ -1,3 +1,7 @@
+---
+description: "Custom Visualizations & Extensions Overview — Tableau's built-in chart types cover most needs, but some requirements (a custom control, a third-party JS…"
+---
+
 # 04 · Custom Visualizations & Extensions Overview
 
 Tableau's built-in chart types cover most needs, but some requirements

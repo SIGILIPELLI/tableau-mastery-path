@@ -1,3 +1,7 @@
+---
+description: "Tableau Server/Cloud Administration Basics — This module shifts from building content to administering the platform it lives on. Concepts are illustrated…"
+---
+
 # 02 · Tableau Server/Cloud Administration Basics
 
 This module shifts from building content to administering the platform it

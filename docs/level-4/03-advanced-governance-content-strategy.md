@@ -1,3 +1,7 @@
+---
+description: "Advanced Governance & Content Strategy — Building on Level 3 Module 8's certification and Level 4 Module 2's CoE, this module covers content strategy at…"
+---
+
 # 02 · Advanced Governance & Content Strategy
 
 Building on Level 3 Module 8's certification and Level 4 Module 2's CoE,

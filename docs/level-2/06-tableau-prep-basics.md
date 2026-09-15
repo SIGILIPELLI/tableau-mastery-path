@@ -1,3 +1,7 @@
+---
+description: "Tableau Prep Basics — Tableau Prep Builder is a separate application for cleaning and reshaping data before it reaches Tableau Desktop. This module walks…"
+---
+
 # 06 · Tableau Prep Basics
 
 Tableau Prep Builder is a separate application for cleaning and reshaping

@@ -1,3 +1,7 @@
+---
+description: "Advanced Dashboard Design & Interactivity — Level 1 Module 5 built a single static dashboard. This module adds interactivity — actions, containers, and…"
+---
+
 # 02 · Advanced Dashboard Design & Interactivity
 
 Level 1 Module 5 built a single static dashboard. This module adds

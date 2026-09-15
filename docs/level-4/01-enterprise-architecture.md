@@ -1,3 +1,7 @@
+---
+description: "Enterprise Tableau Architecture — Level 4 shifts from building/administering one deployment to designing one across an organization. This module lays out…"
+---
+
 # 01 · Enterprise Tableau Architecture
 
 Level 4 shifts from building/administering one deployment to designing

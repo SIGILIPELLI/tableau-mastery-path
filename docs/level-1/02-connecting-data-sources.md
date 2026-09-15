@@ -1,3 +1,7 @@
+---
+description: "Connecting to Data Sources — Every Tableau workbook starts on the same screen: the Connect pane. This module covers the connection types you'll use most…"
+---
+
 # 02 · Connecting to Data Sources
 
 Every Tableau workbook starts on the same screen: the **Connect** pane. This

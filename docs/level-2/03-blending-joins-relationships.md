@@ -1,3 +1,7 @@
+---
+description: "Data Blending vs Joins vs Relationships — Level 1 used one flat Orders table. Real projects split data across tables — this module covers the three ways…"
+---
+
 # 03 · Data Blending vs Joins vs Relationships
 
 Level 1 used one flat `Orders` table. Real projects split data across

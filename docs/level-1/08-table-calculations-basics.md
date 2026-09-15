@@ -1,3 +1,7 @@
+---
+description: "Table Calculations Basics — A table calculation computes its result from the values already in the view — running totals, rank, percent of total — rather…"
+---
+
 # 08 · Table Calculations Basics
 
 A **table calculation** computes its result from the values already in the

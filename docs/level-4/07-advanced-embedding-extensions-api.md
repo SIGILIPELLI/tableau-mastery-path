@@ -1,3 +1,7 @@
+---
+description: "Advanced Embedding & Tableau Extensions API Overview — Building on Level 3 Modules 5 and 9, this module covers enterprise-scale embedding and extension…"
+---
+
 # 06 · Advanced Embedding & Tableau Extensions API Overview
 
 Building on Level 3 Modules 5 and 9, this module covers enterprise-scale

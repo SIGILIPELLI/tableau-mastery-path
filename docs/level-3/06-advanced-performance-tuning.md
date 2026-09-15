@@ -1,3 +1,7 @@
+---
+description: "Advanced Performance Tuning — Slow dashboards usually trace to one of a handful of causes. This module diagnoses each against the Orders workbook…"
+---
+
 # 05 · Advanced Performance Tuning
 
 Slow dashboards usually trace to one of a handful of causes. This module

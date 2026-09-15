@@ -1,3 +1,7 @@
+---
+description: "Formatting & Storytelling with Data — A technically correct chart can still fail to communicate. This module covers formatting discipline and Tableau's…"
+---
+
 # 05 · Formatting & Storytelling with Data
 
 A technically correct chart can still fail to communicate. This module

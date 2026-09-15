@@ -1,3 +1,7 @@
+---
+description: "Cost & License Management at Scale — Tableau licensing (Creator/Explorer/Viewer roles, Level 3 Module 2) has real cost implications at enterprise scale.…"
+---
+
 # 07 · Cost & License Management at Scale
 
 Tableau licensing (Creator/Explorer/Viewer roles, Level 3 Module 2) has

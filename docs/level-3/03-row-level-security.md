@@ -1,3 +1,7 @@
+---
+description: "Row-Level Security — Row-level security (RLS) restricts which rows of Orders a given viewer sees, rather than hiding whole dashboards. This module builds…"
+---
+
 # 03 · Row-Level Security
 
 Row-level security (RLS) restricts *which rows* of `Orders` a given viewer

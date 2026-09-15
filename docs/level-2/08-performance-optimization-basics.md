@@ -1,3 +1,7 @@
+---
+description: "Performance Optimization Basics — Orders has only 8 rows, so nothing here will actually feel slow — but the diagnostic habits taught in this module apply…"
+---
+
 # 08 · Performance Optimization Basics
 
 `Orders` has only 8 rows, so nothing here will actually feel slow — but the

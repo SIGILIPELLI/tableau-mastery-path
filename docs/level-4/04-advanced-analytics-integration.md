@@ -1,3 +1,7 @@
+---
+description: "Tableau + Advanced Analytics Integration (R/Python via Tableau) — Tableau can call out to R or Python for statistical/ML logic beyond its built-in…"
+---
+
 # 03 · Tableau + Advanced Analytics Integration (R/Python via Tableau)
 
 Tableau can call out to R or Python for statistical/ML logic beyond its

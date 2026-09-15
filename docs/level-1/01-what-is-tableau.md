@@ -1,3 +1,7 @@
+---
+description: "What Is Tableau? — Tableau is a business intelligence (BI) and data visualization platform: you connect it to data (spreadsheets, databases, cloud…"
+---
+
 # 01 · What Is Tableau?
 
 Tableau is a **business intelligence (BI) and data visualization platform**:

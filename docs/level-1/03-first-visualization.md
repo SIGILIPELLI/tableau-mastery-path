@@ -1,3 +1,7 @@
+---
+description: "Building Your First Visualization — With Orders connected (Module 2), it's time to build an actual worksheet. This module walks through the drag-and-drop…"
+---
+
 # 03 · Building Your First Visualization
 
 With `Orders` connected (Module 2), it's time to build an actual worksheet.

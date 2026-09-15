@@ -1,3 +1,7 @@
+---
+description: "Advanced Calculated Fields — Level 1 Module 6 covered aggregate ratios and row-level IF logic. This module goes further: LOD (Level of Detail)…"
+---
+
 # 01 · Advanced Calculated Fields
 
 Level 1 Module 6 covered aggregate ratios and row-level `IF` logic. This

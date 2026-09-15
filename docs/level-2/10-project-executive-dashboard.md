@@ -1,3 +1,7 @@
+---
+description: "Project — Multi-Source Executive Dashboard — This capstone combines every Level 2 module into one deliverable: a multi-source executive dashboard over…"
+---
+
 # 10 · Project — Multi-Source Executive Dashboard
 
 This capstone combines every Level 2 module into one deliverable: a

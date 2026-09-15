@@ -1,3 +1,7 @@
+---
+description: "Data Strategy & Self-Service BI Enablement — Self-service BI means giving analysts across an organization the ability to build their own dashboards on…"
+---
+
 # 05 · Data Strategy & Self-Service BI Enablement
 
 Self-service BI means giving analysts across an organization the ability

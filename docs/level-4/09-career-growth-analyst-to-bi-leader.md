@@ -1,3 +1,7 @@
+---
+description: "Career Growth: Analyst to BI Leader — This module maps the skill and responsibility progression from individual Tableau author to BI leadership, tying…"
+---
+
 # 08 · Career Growth: Analyst to BI Leader
 
 This module maps the skill and responsibility progression from individual

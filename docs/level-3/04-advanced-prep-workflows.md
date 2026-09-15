@@ -1,3 +1,7 @@
+---
+description: "Advanced Tableau Prep Workflows — Level 2 introduced Tableau Prep for basic cleaning. This module builds a multi-step Prep flow against an expanded…"
+---
+
 # 03 · Advanced Tableau Prep Workflows
 
 Level 2 introduced Tableau Prep for basic cleaning. This module builds a

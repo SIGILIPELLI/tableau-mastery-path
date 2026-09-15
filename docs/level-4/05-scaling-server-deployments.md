@@ -1,3 +1,7 @@
+---
+description: "Scaling Tableau Server Deployments — Building on Module 1's architecture, this module covers the operational side of scaling an existing deployment as…"
+---
+
 # 04 · Scaling Tableau Server Deployments
 
 Building on Module 1's architecture, this module covers the operational

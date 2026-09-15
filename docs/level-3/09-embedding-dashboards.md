@@ -1,3 +1,7 @@
+---
+description: "Embedding Tableau Dashboards — Embedding puts a Tableau view inside another web page or application. This module covers the Embedding API v3…"
+---
+
 # 08 · Embedding Tableau Dashboards
 
 Embedding puts a Tableau view inside another web page or application. This

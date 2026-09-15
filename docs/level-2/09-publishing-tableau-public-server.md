@@ -1,3 +1,7 @@
+---
+description: "Publishing to Tableau Public/Server — Building a workbook is half the job — this module covers getting the Orders dashboard (Level 1 Module 5, refined…"
+---
+
 # 09 · Publishing to Tableau Public/Server
 
 Building a workbook is half the job — this module covers getting the

@@ -1,3 +1,7 @@
+---
+description: "Project — Enterprise Dashboard with Row-Level Security — Capstone for Level 3: build one dashboard combining advanced LOD calculations (Module 1), a…"
+---
+
 # 09 · Project — Enterprise Dashboard with Row-Level Security
 
 Capstone for Level 3: build one dashboard combining advanced LOD

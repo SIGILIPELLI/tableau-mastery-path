@@ -1,3 +1,7 @@
+---
+description: "Calculated Fields Basics — 4. Click OK. The new field appears in the Data pane under Measures (green, since it's a numeric aggregation formula) — drag it…"
+---
+
 # 06 · Calculated Fields Basics
 
 **Calculated fields** let you create new fields from existing ones using

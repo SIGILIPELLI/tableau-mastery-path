@@ -1,3 +1,7 @@
+---
+description: "Integrating Tableau with Databases at Scale — This module covers connecting Tableau to production-scale database patterns — joins across large tables…"
+---
+
 # 06 · Integrating Tableau with Databases at Scale
 
 This module covers connecting Tableau to production-scale database

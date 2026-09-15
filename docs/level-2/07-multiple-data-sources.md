@@ -1,3 +1,7 @@
+---
+description: "Working with Multiple Data Sources — Beyond a single connection's tables (Module 3), a workbook can hold several independent data sources. This module…"
+---
+
 # 07 · Working with Multiple Data Sources
 
 Beyond a single connection's tables (Module 3), a workbook can hold several
