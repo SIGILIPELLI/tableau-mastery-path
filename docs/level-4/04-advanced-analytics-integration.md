@@ -127,6 +127,10 @@ statistics — is the focus.
 | `SCRIPT_INT` | Integer result |
 | `_argN` | Nth Tableau field/aggregation passed into the script |
 
+## 🔀 Related lessons on other tracks
+
+- [Excel — 06 · Excel + Python Integration (Overview)](https://sigilipelli.github.io/excel-mastery-path/level-4/06-excel-python-integration/)
+
 ## Exercise
 
 A `SCRIPT_REAL` calc computes `_arg1` as `SUM([Sales])` partitioned by

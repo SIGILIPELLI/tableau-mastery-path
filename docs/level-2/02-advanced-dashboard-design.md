@@ -137,6 +137,10 @@ client-side rendering / query pipeline, not a uniform "dashboard magic":
 | Show/Hide button | Layout pane → Add Show/Hide Button |
 | Phone layout | Dashboard → Device Layouts → Add Phone Layout |
 
+## 🔀 Related lessons on other tracks
+
+- [Excel — 08 · Advanced Dashboard Design Principles](https://sigilipelli.github.io/excel-mastery-path/level-3/08-advanced-dashboard-design-principles/)
+
 ## Exercise
 
 Using the `Orders` table, hand-verify what a Filter action clicking

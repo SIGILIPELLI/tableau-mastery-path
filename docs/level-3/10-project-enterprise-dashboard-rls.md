@@ -136,6 +136,10 @@ against `Orders`.
 | Central top category / share | Furniture / 87.0% |
 | RLS filter type | Context filter (so FIXED LODs respect it) |
 
+## 🔀 Related lessons on other tracks
+
+- [Cybersecurity — 10 · Capstone — Enterprise Security Program Design](https://sigilipelli.github.io/cybersecurity-mastery-path/level-4/10-capstone-enterprise-security-program/)
+
 ## Exercise
 
 A new manager, `frank@co.com`, is granted access to both East and West in

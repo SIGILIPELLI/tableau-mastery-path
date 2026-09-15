@@ -117,6 +117,10 @@ mechanisms in this module do interact with the query/calc engine directly:
 | Title | State the finding, not the field name |
 | Story point | One narrative beat per point; short caption |
 
+## 🔀 Related lessons on other tracks
+
+- [Data Science — 06 · Data Storytelling for Executives](https://sigilipelli.github.io/data-science-mastery-path/level-3/06-data-storytelling-executives/)
+
 ## Exercise
 
 Write three story-point titles (not generic chart titles) for a story built

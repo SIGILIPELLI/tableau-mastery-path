@@ -134,6 +134,10 @@ real mechanism behind Section 2's warning about ratios:
 | See what uses a calculated field | Right-click → Properties |
 | Format as percentage | Right-click pill → Format... → Numbers → Percentage |
 
+## 🔀 Related lessons on other tracks
+
+- [Workday — 05 · Advanced Calculated Fields](https://sigilipelli.github.io/workday-mastery-path/level-3/05-advanced-calculated-fields/)
+
 ## Exercise
 
 Create a calculated field `Is Loss` that returns `TRUE` if a row's Profit is

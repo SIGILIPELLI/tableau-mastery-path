@@ -120,6 +120,10 @@ opacity states on top of that:
 | Filter action: Region bar → Time + Ratio charts | Click East, verify Step 4.2 |
 | Highlight action: State map → Region bar (hover) | Hover California, verify Step 4.3 |
 
+## 🔀 Related lessons on other tracks
+
+- [Excel — 10 · Project — Interactive Sales Dashboard](https://sigilipelli.github.io/excel-mastery-path/level-2/10-project-interactive-sales-dashboard/)
+
 ## Exercise
 
 Extend the dashboard with a fifth worksheet: a text table listing Order ID,

@@ -119,6 +119,10 @@ running example.
    because that workbook references the same calculation object rather
    than owning its own copy of the formula text.
 
+## 🔀 Related lessons on other tracks
+
+- [AI Manager — 10 · Capstone — Full AI Strategy, Governance & Org Design](https://sigilipelli.github.io/ai-manager-mastery-path/level-4/10-capstone-ai-strategy-governance-org-design/)
+
 ## Exercise
 
 Two workbooks report different totals for "East Region Share of Sales":

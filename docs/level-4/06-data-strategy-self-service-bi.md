@@ -116,6 +116,11 @@ using the certified `Orders` source and CoE structure from Modules 2–3.
    the certified definition, which is information the migration step
    itself surfaces almost for free.
 
+## 🔀 Related lessons on other tracks
+
+- [Data Science — 06 · Data Science Strategy & Roadmapping](https://sigilipelli.github.io/data-science-mastery-path/level-4/06-strategy-roadmapping/)
+- [ETL & Data Lake — 03 · Partitioning Strategy for a Data Lake](https://sigilipelli.github.io/etl-datalake-mastery-path/level-2/03-partitioning-strategy/)
+
 ## Exercise
 
 An organization has 40 self-service-built dashboards; an audit finds 12

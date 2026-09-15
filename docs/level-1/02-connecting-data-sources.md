@@ -124,6 +124,11 @@ can build anything:
 | Refresh an extract | Data menu → Extract → Refresh |
 | Combine multiple tables | Drag a second table onto Data Source canvas |
 
+## 🔀 Related lessons on other tracks
+
+- [ETL & Data Lake — 02 · Data Sources & Ingestion Patterns](https://sigilipelli.github.io/etl-datalake-mastery-path/level-1/02-data-sources-ingestion-patterns/)
+- [Terraform — 05 · Resources & Data Sources](https://sigilipelli.github.io/terraform-mastery-path/level-1/05-resources-data-sources/)
+
 ## Exercise
 
 Imagine the `Orders` table (Module 1) was imported from a CSV where the

@@ -126,6 +126,12 @@ representative user base.
 | Extract consolidation | Fewer duplicate sources = less refresh/storage cost | Section 4, Level 4 Module 2/3 |
 | Quarterly review | Recurring cadence catches drift early | Section 5 |
 
+## 🔀 Related lessons on other tracks
+
+- [AWS — 09 · Cost Management & Billing](https://sigilipelli.github.io/aws-mastery-path/level-2/09-cost-management-billing/)
+- [Azure — 09 · Cost Management & Optimization](https://sigilipelli.github.io/azure-mastery-path/level-3/09-cost-management-optimization/)
+- [GCP — 09 · Cost Management & Billing](https://sigilipelli.github.io/gcp-mastery-path/level-2/09-cost-management-billing/)
+
 ## Exercise
 
 Using Section 2's cost-unit model, a 20-person team has 8 Creators, 2

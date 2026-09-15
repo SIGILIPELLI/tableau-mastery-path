@@ -133,6 +133,12 @@ in the `Northwind Retail` data used throughout the course.
 | Resilience | HA (node redundancy) vs. DR (separate site + backup) |
 | Sizing | Viewer count AND Backgrounder/refresh load, not just one |
 
+## 🔀 Related lessons on other tracks
+
+- [Data Engineering — 01 · Enterprise Data Platform Architecture](https://sigilipelli.github.io/data-engineering-mastery-path/level-4/01-enterprise-platform-architecture/)
+- [ETL & Data Lake — 10 · Capstone — Governed Enterprise Data Lake Architecture](https://sigilipelli.github.io/etl-datalake-mastery-path/level-4/10-capstone-enterprise-lake-architecture/)
+- [Excel — 01 · Enterprise Excel Architecture](https://sigilipelli.github.io/excel-mastery-path/level-4/01-enterprise-excel-architecture/)
+
 ## Exercise
 
 A company runs 300 nightly extract refreshes, each roughly the complexity

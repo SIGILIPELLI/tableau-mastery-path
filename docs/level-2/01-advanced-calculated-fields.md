@@ -171,6 +171,10 @@ not a formula evaluated inline like a row-level `IF`:
 | Month name | `DATENAME('month', [date])` |
 | Quarter number | `DATEPART('quarter', [date])` |
 
+## 🔀 Related lessons on other tracks
+
+- [Workday — 05 · Advanced Calculated Fields](https://sigilipelli.github.io/workday-mastery-path/level-3/05-advanced-calculated-fields/)
+
 ## Exercise
 
 Using `{FIXED [Category] : SUM([Profit])}`, compute by hand each category's

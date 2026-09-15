@@ -123,6 +123,12 @@ governance using the published data source from Level 2 Module 9/10.
 | Lineage | Shows source → field → downstream use | Doesn't prevent breaking changes alone |
 | Impact analysis | Shows what breaks before a change | Doesn't make the change safe automatically |
 
+## 🔀 Related lessons on other tracks
+
+- [AI Manager — 04 · Data Governance Basics](https://sigilipelli.github.io/ai-manager-mastery-path/level-2/04-data-governance-basics/)
+- [AI Tools — 07 · Data Governance for AI Tool Usage](https://sigilipelli.github.io/ai-tools-mastery-path/level-3/07-data-governance/)
+- [Data Engineering — 05 · Data Governance & Cataloging](https://sigilipelli.github.io/data-engineering-mastery-path/level-3/05-data-governance-cataloging/)
+
 ## Exercise
 
 A fourth analyst's data source shows a Sales grand total of 6940 — 60

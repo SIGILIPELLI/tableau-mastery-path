@@ -123,6 +123,12 @@ CoE does and how to measure whether it's working.
 | Platform | Level 4 Module 1 — architecture/capacity |
 | Support | Resolving discrepancies like the 6880 vs. 6700 case |
 
+## 🔀 Related lessons on other tracks
+
+- [Agile — 05 · Building an Internal Agile Center of Excellence](https://sigilipelli.github.io/agile-mastery-path/level-4/05-internal-agile-center-of-excellence/)
+- [AI Tools — 07 · Building an AI Center of Excellence](https://sigilipelli.github.io/ai-tools-mastery-path/level-4/07-building-ai-center-of-excellence/)
+- [Claude Training — 08 · Building an AI Usage Center of Excellence](https://sigilipelli.github.io/claude-training-mastery-path/level-4/08-ai-center-of-excellence/)
+
 ## Exercise
 
 A CoE inherits a Server with 12 data sources named some variant of
