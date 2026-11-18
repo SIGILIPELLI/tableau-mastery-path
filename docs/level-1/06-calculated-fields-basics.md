@@ -136,7 +136,7 @@ real mechanism behind Section 2's warning about ratios:
 
 ## 🔀 Related lessons on other tracks
 
-- [Workday — 05 · Advanced Calculated Fields](https://sigilipelli.github.io/workday-mastery-path/level-3/05-advanced-calculated-fields/)
+- [Workday — 05 · Advanced Calculated Fields](https://learnmasterypath.com/workday-mastery-path/level-3/05-advanced-calculated-fields/)
 
 ## Exercise
 

@@ -140,9 +140,9 @@ each fix removes using row/calculation counts you can verify by hand.
 
 ## 🔀 Related lessons on other tracks
 
-- [Data Engineering — 07 · Performance Tuning for Pipelines](https://sigilipelli.github.io/data-engineering-mastery-path/level-3/07-performance-tuning/)
-- [Freertos — Performance Tuning & Measurement](https://sigilipelli.github.io/freertos-mastery-path/level-3/08-performance-tuning/)
-- [Pyspark — 05 · Performance Tuning](https://sigilipelli.github.io/pyspark-mastery-path/level-3/05-performance-tuning/)
+- [Data Engineering — 07 · Performance Tuning for Pipelines](https://learnmasterypath.com/data-engineering-mastery-path/level-3/07-performance-tuning/)
+- [Freertos — Performance Tuning & Measurement](https://learnmasterypath.com/freertos-mastery-path/level-3/08-performance-tuning/)
+- [Pyspark — 05 · Performance Tuning](https://learnmasterypath.com/pyspark-mastery-path/level-3/05-performance-tuning/)
 
 ## Exercise
 

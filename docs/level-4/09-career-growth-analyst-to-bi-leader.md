@@ -119,9 +119,9 @@ capabilities built across this course.
 
 ## 🔀 Related lessons on other tracks
 
-- [Workday — 09 · Career Growth: Workday Analyst/Consultant Path](https://sigilipelli.github.io/workday-mastery-path/level-4/09-career-growth-analyst-consultant/)
-- [Agile — 09 · Career Growth: Scrum Master to Agile Coach/Director](https://sigilipelli.github.io/agile-mastery-path/level-4/09-career-growth-scrum-master-to-coach/)
-- [AI Manager — 09 · Career Growth: AI Manager to Chief AI Officer](https://sigilipelli.github.io/ai-manager-mastery-path/level-4/09-career-growth-ai-manager-to-caio/)
+- [Workday — 09 · Career Growth: Workday Analyst/Consultant Path](https://learnmasterypath.com/workday-mastery-path/level-4/09-career-growth-analyst-consultant/)
+- [Agile — 09 · Career Growth: Scrum Master to Agile Coach/Director](https://learnmasterypath.com/agile-mastery-path/level-4/09-career-growth-scrum-master-to-coach/)
+- [AI Manager — 09 · Career Growth: AI Manager to Chief AI Officer](https://learnmasterypath.com/ai-manager-mastery-path/level-4/09-career-growth-ai-manager-to-caio/)
 
 ## Exercise
 

@@ -123,8 +123,8 @@ every Level 4 module and hand-verifying every number the design assumes.
 
 ## 🔀 Related lessons on other tracks
 
-- [Cybersecurity — 10 · Capstone — Enterprise Security Program Design](https://sigilipelli.github.io/cybersecurity-mastery-path/level-4/10-capstone-enterprise-security-program/)
-- [Servant Leadership — 10 · Capstone — Design an Org-Wide Leadership Development Program](https://sigilipelli.github.io/servant-leadership-mastery-path/level-4/10-capstone-leadership-development-program/)
+- [Cybersecurity — 10 · Capstone — Enterprise Security Program Design](https://learnmasterypath.com/cybersecurity-mastery-path/level-4/10-capstone-enterprise-security-program/)
+- [Servant Leadership — 10 · Capstone — Design an Org-Wide Leadership Development Program](https://learnmasterypath.com/servant-leadership-mastery-path/level-4/10-capstone-leadership-development-program/)
 
 ## Exercise (final capstone check)
 

@@ -129,7 +129,7 @@ statistics — is the focus.
 
 ## 🔀 Related lessons on other tracks
 
-- [Excel — 06 · Excel + Python Integration (Overview)](https://sigilipelli.github.io/excel-mastery-path/level-4/06-excel-python-integration/)
+- [Excel — 06 · Excel + Python Integration (Overview)](https://learnmasterypath.com/excel-mastery-path/level-4/06-excel-python-integration/)
 
 ## Exercise
 

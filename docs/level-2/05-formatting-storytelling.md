@@ -119,7 +119,7 @@ mechanisms in this module do interact with the query/calc engine directly:
 
 ## 🔀 Related lessons on other tracks
 
-- [Data Science — 06 · Data Storytelling for Executives](https://sigilipelli.github.io/data-science-mastery-path/level-3/06-data-storytelling-executives/)
+- [Data Science — 06 · Data Storytelling for Executives](https://learnmasterypath.com/data-science-mastery-path/level-3/06-data-storytelling-executives/)
 
 ## Exercise
 

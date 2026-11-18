@@ -122,7 +122,7 @@ opacity states on top of that:
 
 ## 🔀 Related lessons on other tracks
 
-- [Excel — 10 · Project — Interactive Sales Dashboard](https://sigilipelli.github.io/excel-mastery-path/level-2/10-project-interactive-sales-dashboard/)
+- [Excel — 10 · Project — Interactive Sales Dashboard](https://learnmasterypath.com/excel-mastery-path/level-2/10-project-interactive-sales-dashboard/)
 
 ## Exercise
 

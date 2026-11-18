@@ -125,9 +125,9 @@ CoE does and how to measure whether it's working.
 
 ## 🔀 Related lessons on other tracks
 
-- [Agile — 05 · Building an Internal Agile Center of Excellence](https://sigilipelli.github.io/agile-mastery-path/level-4/05-internal-agile-center-of-excellence/)
-- [AI Tools — 07 · Building an AI Center of Excellence](https://sigilipelli.github.io/ai-tools-mastery-path/level-4/07-building-ai-center-of-excellence/)
-- [Claude Training — 08 · Building an AI Usage Center of Excellence](https://sigilipelli.github.io/claude-training-mastery-path/level-4/08-ai-center-of-excellence/)
+- [Agile — 05 · Building an Internal Agile Center of Excellence](https://learnmasterypath.com/agile-mastery-path/level-4/05-internal-agile-center-of-excellence/)
+- [AI Tools — 07 · Building an AI Center of Excellence](https://learnmasterypath.com/ai-tools-mastery-path/level-4/07-building-ai-center-of-excellence/)
+- [Claude Training — 08 · Building an AI Usage Center of Excellence](https://learnmasterypath.com/claude-training-mastery-path/level-4/08-ai-center-of-excellence/)
 
 ## Exercise
 

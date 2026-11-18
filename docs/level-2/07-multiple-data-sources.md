@@ -123,9 +123,9 @@ context** to generate one coherent query:
 
 ## 🔀 Related lessons on other tracks
 
-- [ETL & Data Lake — 02 · Data Sources & Ingestion Patterns](https://sigilipelli.github.io/etl-datalake-mastery-path/level-1/02-data-sources-ingestion-patterns/)
-- [Terraform — 05 · Resources & Data Sources](https://sigilipelli.github.io/terraform-mastery-path/level-1/05-resources-data-sources/)
-- [Data Engineering — 08 · Working with Cloud Data Warehouses](https://sigilipelli.github.io/data-engineering-mastery-path/level-3/08-cloud-data-warehouses/)
+- [ETL & Data Lake — 02 · Data Sources & Ingestion Patterns](https://learnmasterypath.com/etl-datalake-mastery-path/level-1/02-data-sources-ingestion-patterns/)
+- [Terraform — 05 · Resources & Data Sources](https://learnmasterypath.com/terraform-mastery-path/level-1/05-resources-data-sources/)
+- [Data Engineering — 08 · Working with Cloud Data Warehouses](https://learnmasterypath.com/data-engineering-mastery-path/level-3/08-cloud-data-warehouses/)
 
 ## Exercise
 

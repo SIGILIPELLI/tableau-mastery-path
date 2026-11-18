@@ -138,7 +138,7 @@ against `Orders`.
 
 ## 🔀 Related lessons on other tracks
 
-- [Cybersecurity — 10 · Capstone — Enterprise Security Program Design](https://sigilipelli.github.io/cybersecurity-mastery-path/level-4/10-capstone-enterprise-security-program/)
+- [Cybersecurity — 10 · Capstone — Enterprise Security Program Design](https://learnmasterypath.com/cybersecurity-mastery-path/level-4/10-capstone-enterprise-security-program/)
 
 ## Exercise
 

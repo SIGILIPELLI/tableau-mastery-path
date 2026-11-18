@@ -118,8 +118,8 @@ using the certified `Orders` source and CoE structure from Modules 2–3.
 
 ## 🔀 Related lessons on other tracks
 
-- [Data Science — 06 · Data Science Strategy & Roadmapping](https://sigilipelli.github.io/data-science-mastery-path/level-4/06-strategy-roadmapping/)
-- [ETL & Data Lake — 03 · Partitioning Strategy for a Data Lake](https://sigilipelli.github.io/etl-datalake-mastery-path/level-2/03-partitioning-strategy/)
+- [Data Science — 06 · Data Science Strategy & Roadmapping](https://learnmasterypath.com/data-science-mastery-path/level-4/06-strategy-roadmapping/)
+- [ETL & Data Lake — 03 · Partitioning Strategy for a Data Lake](https://learnmasterypath.com/etl-datalake-mastery-path/level-2/03-partitioning-strategy/)
 
 ## Exercise
 

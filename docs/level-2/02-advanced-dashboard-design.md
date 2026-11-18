@@ -139,7 +139,7 @@ client-side rendering / query pipeline, not a uniform "dashboard magic":
 
 ## 🔀 Related lessons on other tracks
 
-- [Excel — 08 · Advanced Dashboard Design Principles](https://sigilipelli.github.io/excel-mastery-path/level-3/08-advanced-dashboard-design-principles/)
+- [Excel — 08 · Advanced Dashboard Design Principles](https://learnmasterypath.com/excel-mastery-path/level-3/08-advanced-dashboard-design-principles/)
 
 ## Exercise
 

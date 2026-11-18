@@ -173,7 +173,7 @@ not a formula evaluated inline like a row-level `IF`:
 
 ## 🔀 Related lessons on other tracks
 
-- [Workday — 05 · Advanced Calculated Fields](https://sigilipelli.github.io/workday-mastery-path/level-3/05-advanced-calculated-fields/)
+- [Workday — 05 · Advanced Calculated Fields](https://learnmasterypath.com/workday-mastery-path/level-3/05-advanced-calculated-fields/)
 
 ## Exercise
 
