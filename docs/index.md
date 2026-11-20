@@ -1,6 +1,6 @@
 ---
 title: "Learn Tableau Free: Beginner to Master Course"
-description: "Free Tableau course covering visualizations, dashboards, calculated fields, LOD expressions, and enterprise BI strategy, beginner to advanced. Part of a 41-course free learning library."
+description: "Free Tableau course covering visualizations, dashboards, calculated fields, LOD expressions, and enterprise BI strategy, beginner to advanced. Part of a 100+ course free learning library."
 ---
 
 # Tableau Mastery Path

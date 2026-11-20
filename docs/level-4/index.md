@@ -1,3 +1,7 @@
+---
+description: "Level 4 (Master) of the free Tableau Mastery Path: Enterprise Tableau Architecture, Building a BI Center of Excellence, Advanced Governance & Content…"
+---
+
 # Level 4 · Master
 
 ## Modules

@@ -1,3 +1,7 @@
+---
+description: "Level 1 (Entry) of the free Tableau Mastery Path. Understand what Tableau is and how its products fit together, connect to your first data sources, build…"
+---
+
 # Level 1 · Entry <span class="level-badge">Foundations</span>
 
 Goal: understand what Tableau is and how its products fit together, connect

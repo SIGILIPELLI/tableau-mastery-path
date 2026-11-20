@@ -1,3 +1,7 @@
+---
+description: "Level 3 (Advanced) of the free Tableau Mastery Path: Advanced LOD Expressions, Tableau Server/Cloud Administration Basics, Row-Level Security, Advanced…"
+---
+
 # Level 3 · Advanced
 
 ## Modules

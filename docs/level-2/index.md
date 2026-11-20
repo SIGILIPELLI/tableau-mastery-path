@@ -1,3 +1,7 @@
+---
+description: "Level 2 (Intermediate) of the free Tableau Mastery Path: Advanced Calculated Fields, Advanced Dashboard Design & Interactivity, Data Blending vs Joins vs…"
+---
+
 # Level 2 · Intermediate
 
 ## Modules
