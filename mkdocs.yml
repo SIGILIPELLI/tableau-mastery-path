@@ -53,9 +53,11 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
   - stylesheets/progress-tracker.css
+  - stylesheets/final-quiz.css
 
 extra_javascript:
   - javascripts/progress-tracker.js
+  - javascripts/final-quiz.js
 
 
 
@@ -127,3 +129,5 @@ nav:
       - "08 · Cost & License Management at Scale": level-4/08-cost-license-management.md
       - "09 · Career Growth: Analyst to BI Leader": level-4/09-career-growth-analyst-to-bi-leader.md
       - "10 · Capstone — Full BI Program Design": level-4/10-capstone-full-bi-program-design.md
+  - "🎯 Final Quiz": quiz.md
+
