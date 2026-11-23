@@ -21,7 +21,7 @@ you can retake it as many times as you like. Your best result is saved in this b
       "{'E': 400, 'W': 200} 200.0 300.0"
     ],
     "correctIndex": 0,
-    "explanation": "The average of region totals differs from the average of rows because they aggregate at different levels. (A Python model of Tableau's calculation semantics; Tableau itself was not run.) Verified by running it."
+    "explanation": "The average of region totals differs from the average of rows because they aggregate at different levels. (A Python model of Tableau's calculation semantics; Tableau itself was not used.) The Python was run and its output checked."
   },
   {
     "question": "What does this table-calculation model print?\n```python\nfrom itertools import accumulate\nv=[5,10,15,20]\nprint(list(accumulate(v)), [round(100*x/sum(v),1) for x in v], [None]+[v[i]-v[i-1] for i in range(1,4)])\n```\n",
@@ -32,7 +32,7 @@ you can retake it as many times as you like. Your best result is saved in this b
       "[5, 15, 30, 50] [10.0, 20.0, 30.0, 40.0] [None, 5, 5, 5]"
     ],
     "correctIndex": 3,
-    "explanation": "Running sum, percent of total and difference are table calculations along the addressing direction. (A Python model of Tableau's calculation semantics; Tableau itself was not run.) Verified by running it."
+    "explanation": "Running sum, percent of total and difference are table calculations along the addressing direction. (A Python model of Tableau's calculation semantics; Tableau itself was not used.) The Python was run and its output checked."
   },
   {
     "question": "What does competition ranking give for [30, 10, 30, 20]?\n```python\nv=[30,10,30,20]\nprint([1+sum(1 for y in v if y>x) for x in v])\n```\n",
@@ -43,7 +43,7 @@ you can retake it as many times as you like. Your best result is saved in this b
       "[1, 4, 1, 3]"
     ],
     "correctIndex": 3,
-    "explanation": "Ties share a rank and the next rank is skipped; dense ranking would not skip. (A Python model of Tableau's calculation semantics; Tableau itself was not run.) Verified by running it."
+    "explanation": "Ties share a rank and the next rank is skipped; dense ranking would not skip. (A Python model of Tableau's calculation semantics; Tableau itself was not used.) The Python was run and its output checked."
   },
   {
     "question": "A join of orders to a customer table with a duplicated key. What happens to totals?\n```python\norders=[('c1',100),('c2',200)]\ncust=[('c1','R'),('c2','C'),('c2','C')]\nj=[(o,c) for o in orders for c in cust if o[0]==c[0]]\nprint(len(j), sum(o[1] for o,_ in j), sum(o[1] for o in orders))\n```\n",
@@ -54,7 +54,7 @@ you can retake it as many times as you like. Your best result is saved in this b
       "3 500 300"
     ],
     "correctIndex": 3,
-    "explanation": "Duplicate keys fan out rows and inflate SUM; relationships and deduplication avoid it. (A Python model of Tableau's calculation semantics; Tableau itself was not run.) Verified by running it."
+    "explanation": "Duplicate keys fan out rows and inflate SUM; relationships and deduplication avoid it. (A Python model of Tableau's calculation semantics; Tableau itself was not used.) The Python was run and its output checked."
   },
   {
     "question": "A row-level security filter maps users to regions. What does ana (East, North) see?\n```python\norders=[('E',1),('W',2),('N',3),('E',4)]\nent={'ana':{'E','N'}}\nprint([o for o in orders if o[0] in ent.get('ana',set())], [o for o in orders if o[0] in ent.get('dan',set())])\n```\n",
@@ -65,7 +65,7 @@ you can retake it as many times as you like. Your best result is saved in this b
       "[('E', 1), ('N', 3), ('E', 4)] [('W', 2)]"
     ],
     "correctIndex": 2,
-    "explanation": "A user with no entitlement should see nothing (fail closed). (A Python model of Tableau's calculation semantics; Tableau itself was not run.) Verified by running it."
+    "explanation": "A user with no entitlement should see nothing (fail closed). (A Python model of Tableau's calculation semantics; Tableau itself was not used.) The Python was run and its output checked."
   },
   {
     "question": "Which order of operations is right for these Tableau filters, earliest first?",
