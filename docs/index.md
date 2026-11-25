@@ -35,8 +35,7 @@ governing content, and running BI at enterprise scale.
   every result by hand before trusting it against your own data.
 - Each topic ends with a cheat-sheet table of the key concepts covered, plus
   an **Exercise** to practice the workflow on your own workbook.
-- Each level ends with a project that combines everything learned in that
-  level.
+- Levels 1–3 each end with a project that combines everything learned in that level, and Level 4 ends with the course capstone.
 - Use the search bar (top of the page) to jump straight to a topic.
 
 Start here → [Level 1 · Entry](level-1/index.md)
